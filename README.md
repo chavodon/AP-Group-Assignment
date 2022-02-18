@@ -1,4 +1,4 @@
-# APL-Group-Assignment
+# AP-Group-Assignment
 
 Graded group assignment to serve in the completion of the Advanced Programming (CIT3009) course at the University of Technology Jamaica. 
 
