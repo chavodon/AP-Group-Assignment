@@ -5,6 +5,6 @@ Graded group assignment to serve in the completion of the Advanced Programming (
 Group Members: 
 - Chavaree Campbell
 - Everald Clarke
-- Garciann Mears
+- Garcian Mairs
 - Saskia Milson
 - La-Shawn Reynolds
