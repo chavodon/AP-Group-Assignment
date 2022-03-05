@@ -135,6 +135,10 @@ public class UserLogin
 					passwordField.setText("");
 					bg.clearSelection();
 				}
+				else if(!rbtnCustomer.isSelected() && !rbtnStaff.isSelected())
+				{
+					JOptionPane.showMessageDialog(null, "You have to select a user type!");
+				}
 				else 
 				{
 					if(rbtnCustomer.isSelected())
