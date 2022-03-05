@@ -1,7 +1,5 @@
 package login;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +16,9 @@ import javax.swing.JTextField;
 
 import dashboard.StaffDashboard;
 
-public class UserLogin 
+import java.awt.*;
+
+public class UserLogin
 {
 	private JFrame frame;
 	private JLabel idLbl, passwordLbl, userLbl, titleLbl;
@@ -29,7 +29,7 @@ public class UserLogin
 	private JRadioButton rbtnStaff;
 	private JRadioButton rbtnCustomer;
 	
-	public UserLogin() 
+    public UserLogin() 
     {
     	frame = new JFrame();		
 		frame.setTitle("User Login");
@@ -38,14 +38,11 @@ public class UserLogin
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setBackground(new Color(255, 255, 153));
-	       
-		//Light Yellow = 255-255-153
-		//Light Blue = 51-153-255
 		
-		userLbl= new JLabel("Welcome to Micro-Star Cable Vision");
-		userLbl.setFont(new Font("Serif", Font.BOLD, 25));
-		userLbl.setBounds(80, 50, 390, 25);
-		frame.getContentPane().add(userLbl);
+		titleLbl= new JLabel("Welcome to Micro-Star Cable Vision");
+		titleLbl.setFont(new Font("Serif", Font.BOLD, 25));
+		titleLbl.setBounds(80, 50, 390, 25);
+		frame.getContentPane().add(titleLbl);
 		
 		idLbl= new JLabel("User ID");
 		idLbl.setFont(new Font("Serif", Font.BOLD, 20));
@@ -116,12 +113,13 @@ public class UserLogin
 		signinBtn.setFont(new Font("Serif", Font.BOLD, 21));
 		signinBtn.setBackground(new Color(255, 204, 51));
 		signinBtn.setBorderPainted(false);
+		
 		signinBtn.addActionListener(new ActionListener() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				String user = "staff";
+				String user = "user";
 				String pwd = "123";
 				
 				@SuppressWarnings("deprecation")
@@ -130,24 +128,31 @@ public class UserLogin
 				
 				if (!username.equals(user) || !password.equals(pwd))
 				{
-					JOptionPane.showMessageDialog(null, "Incorrect login details!");
+					JOptionPane.showMessageDialog(null, "Incorrect Login Details!");
+					
+					//Clear input
+					idTextfield.setText("");
+					passwordField.setText("");
+					bg.clearSelection();
 				}
 				else 
 				{
-					//StaffDashboard staff= new StaffDashboard();
-					//staff.serviceList();
+					if(rbtnCustomer.isSelected())
+					{
+						//JOptionPane.showMessageDialog(null, "Male Selected");
+					}
+					if(rbtnStaff.isSelected())
+					{
+						StaffDashboard staff= new StaffDashboard();
+						frame.dispose();//close current JFrame to open new one
+					}
+					JOptionPane.showMessageDialog(null, "Access Granted!");
 				}
 			}
 		});
 
 		signinBtn.setBounds(241, 389, 117, 39);
 		frame.getContentPane().add(signinBtn);
-		
-		JLabel backgroundJLabel = new JLabel(new ImageIcon("image/logo.png")); //\\src\\project
-        backgroundJLabel.setBounds(80, 50, 390, 25);
-        backgroundJLabel.setVisible(true);
-        frame.add(backgroundJLabel);
-        
 		frame.setVisible(true);
 	}
 }
