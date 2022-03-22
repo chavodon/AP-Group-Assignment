@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class EmployeeLogInWindow extends JFrame {
+public class EmployeeLogInWindow extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -22,6 +25,7 @@ public class EmployeeLogInWindow extends JFrame {
 	private JTextField usernameTextField;
 	private JPasswordField passwordField;
 	private JButton button;
+	private JButton bckBtn;
 	@SuppressWarnings("unused")
 	private JPanel namePanel;
 	@SuppressWarnings("unused")
@@ -46,9 +50,15 @@ private JLabel welcomeLabel;
 		passwordField = new JPasswordField(20);
 		button = new JButton("Sign In");
 		button.setForeground(Color.red);
+		bckBtn = new JButton("<<");
+		bckBtn.setForeground(Color.blue);
+		bckBtn.setBackground(Color.blue);
 		gbc = new GridBagConstraints();
 		
 		welcomeLabel= new JLabel("WELCOME");
+		
+		bckBtn.addActionListener(this);
+		button.addActionListener(this);
 		
 		layoutComponents();
 	}
@@ -139,12 +149,38 @@ private JLabel welcomeLabel;
 		gbc.insets = new Insets(17,0,0,0);
 		frame.add(button, gbc);
 		
+		gbc = new GridBagConstraints();
+		gbc.gridx = 4;
+		gbc.gridy = 4;
+		gbc.gridwidth = 1;
+		gbc.ipadx = 4;
+		gbc.ipady = 4;
+		gbc.anchor = GridBagConstraints.CENTER;
+		gbc.insets = new Insets(17,-10,-3,-3);
+		frame.add(bckBtn, gbc);
+		
 		frame.setSize(new Dimension(550,450));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.getContentPane().setBackground(Color.BLACK);
 	}
 	
+	@SuppressWarnings("unused")
+	public void actionPerformed(ActionEvent e) {
+		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
+
+				if (e.getSource() == button) {
+					EmployeeLogInWindow emp = new EmployeeLogInWindow();
+					//validate password
+				} 
+				
+			else if (e.getSource() == bckBtn) {
+					WelcomeWindow ww = new WelcomeWindow();	
+				} 
+
+				
+			}  
+
 	public static void main(String args[]){
         
 		  new EmployeeLogInWindow();
