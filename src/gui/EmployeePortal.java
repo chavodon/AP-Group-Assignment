@@ -26,7 +26,7 @@ public class EmployeePortal extends JFrame {
 	public JMenuItem menuItem;
 	public JRadioButtonMenuItem rbtnMenuItem;
 	public JCheckBoxMenuItem rbMenuItem;
-	private JButton allBtn;
+	private JButton vrcBtn;
 	private JButton editBtn;
 	private JButton viewBtn;
 
@@ -53,24 +53,24 @@ public class EmployeePortal extends JFrame {
 		
 		viewBtn = new JButton("VIEW COMPLAINTS");
 		editBtn= new JButton("EDIT SOLUTION");
-		allBtn = new JButton("SHOW RESOLVED COMPLAINT");
+		vrcBtn = new JButton("SHOW RESOLVED COMPLAINT");
 		
 		
 		viewBtn.setBackground(Color.GREEN);
 		viewBtn.setForeground(Color.blue);
 		viewBtn.setOpaque(true);
 		
-		editBtn.setForeground(Color.blue);
+		vrcBtn.setForeground(Color.blue);
 		editBtn.setBackground(Color.gray);
 		editBtn.setOpaque(true);
 		
-		allBtn.setBackground(Color.yellow);
-		allBtn.setForeground(Color.blue);
-		allBtn.setOpaque(true);
+		vrcBtn.setBackground(Color.yellow);
+		vrcBtn.setForeground(Color.blue);
+		vrcBtn.setOpaque(true);
 		
 	    viewBtn.setBounds(185,105, 220,50);
 		editBtn.setBounds(185,205,220,50);
-		allBtn.setBounds(185,305,220,50);
+		vrcBtn.setBounds(185,305,220,50);
 		
 		//-----------------ADD LISTENERS---------------------
 		
@@ -78,7 +78,7 @@ public class EmployeePortal extends JFrame {
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
 		frame.add(viewBtn);
 		frame.add(editBtn);
-		frame.add(allBtn);
+		frame.add(vrcBtn);
 		
 		navbar();
 	
@@ -100,11 +100,25 @@ public class EmployeePortal extends JFrame {
 		//menuItem = new JMenuItem("")
 		
 		//menu items
-		menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
+		menuItem = new JMenuItem("View List of Resolved Complaint", KeyEvent.VK_T);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-		menuItem.setBackground(Color.green);
-	    menu.setForeground(Color.yellow);
+		menuItem.setBackground(Color.white);
+	    menu.setForeground(Color.black);
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Resolve a Complaint", KeyEvent.VK_T);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+		menuItem.setBackground(Color.white);
+	    menu.setForeground(Color.black);
+		menu.add(menuItem);
+		
+		menuItem = new JMenuItem("Edit a complaint solution", KeyEvent.VK_T);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+		menuItem.setBackground(Color.white);
+	    menu.setForeground(Color.black);
 		menu.add(menuItem);
 		
 		menu = new JMenu("Back");
@@ -132,6 +146,26 @@ public class EmployeePortal extends JFrame {
 		frame.add(menuBar);
 		frame.setJMenuBar(menuBar); 
 		}
+	
+	@SuppressWarnings("unused")
+	public void actionPerformed(ActionEvent e) {
+		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
+
+				if (e.getSource() == viewBtn) {
+					 ViewComplaint vc = new ViewComplaint();
+					
+				} 
+				
+			else if (e.getSource() == editBtn) {
+					WelcomeWindow ww = new WelcomeWindow();	
+				} 
+				
+			else if (e.getSource() == vrcBtn) {
+				ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
+			} 
+
+				
+			}  
 
 	public static void main(String[] args) {
 		new EmployeePortal();
