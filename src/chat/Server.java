@@ -1,176 +1,246 @@
 package chat;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
 
-public class Server {
-
-	private JFrame frmServerChat;
-	private JTextField textField;
-	private static   JTextArea textArea;
-	private JButton btnNewButton;
+public class Server 
+{
 	static ServerSocket server ;
 	static Socket con;
-	private JScrollPane scrollPane;
-	private static JLabel lblNewLabel_2;
-	private static JLabel lblNewLabel;
+	private JFrame serverFrame;
+    private static JTextArea chatArea;
+    private JButton sendBtn;
+    private JButton backBtn;
+    private JLabel label;
+    private JLabel title;
+    private JLabel status;
+    private JPanel chatPanel;
+    private JScrollPane scrollPanel;
+    private JTextField messageText;
 
-	
-	public static void main(String[] args) throws IOException   {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public Server() throws IOException
+	{
+		initialize();
+	}
+	private void initialize() throws IOException 
+	{
+		serverFrame = new JFrame();	
+    	serverFrame.setTitle("Staff Chat");
+		serverFrame.setBounds(700, 300, 584, 531);
+		serverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		serverFrame.setResizable(false);
+		serverFrame.getContentPane().setLayout(null);
+		serverFrame.setLocationRelativeTo(null); //center output on screen
+		serverFrame.setVisible(true);
+		serverFrame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		
+		 chatPanel = new JPanel();
+	     title = new JLabel();
+	     status = new JLabel();
+	     scrollPanel = new JScrollPane();
+	     chatArea = new JTextArea();
+	     messageText = new JTextField("Type message..");
+	     sendBtn = new JButton();
+	     backBtn = new JButton();
+	     label = new JLabel();
+	        
+	     chatPanel.setBackground(new Color(197, 218, 245));
+	     chatPanel.setLayout(null);
+	     chatArea.setColumns(20);
+	     chatArea.setRows(7);
+	     chatArea.setEditable(false);
+	     chatArea.setFont(new Font ("Serif", Font.PLAIN, 14));
+	     scrollPanel.setViewportView(chatArea);
+
+	     status.setFont(new Font ("Serif", 1, 14));
+	     status.setBounds(10, 60, 300, 40);
+		if (server.isClosed()) 
+		{
+			status.setText("Status: Offline");
+			status.setForeground(new Color(139,0, 0));
+		}else
+		{
+			status.setText("Status: Online");
+			status.setForeground(new Color(34,139,34));
+		}
+		chatPanel.add(status);
+	    chatPanel.add(scrollPanel);
+	    scrollPanel.setBounds(10, 90, 480, 250);
+	    chatPanel.add(messageText);
+	    messageText.setBounds(10, 350, 400, 40);
+	    messageText.setFont(new Font ("Serif", Font.PLAIN, 14));
+	        
+	   title.setFont(new Font("Myriad Pro", Font.ITALIC, 26)); 
+	   title.setForeground(new Color(51, 0, 51));
+	   title.setText("Micro-Star Cable Vision");
+	   title.setBounds(120, 10, 340, 60);
+	   chatPanel.add(title);
+	        
+	   messageText.addMouseListener(new MouseListener() 
+	   {
+		   @Override
+		   public void mouseClicked(MouseEvent e)
+			{
+				 messageText.setText("");
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+	    });
+	        backBtn.setBackground(new Color(102, 102, 255));
+	        backBtn.setFont(new Font("Garamond", Font.PLAIN, 14)); 
+	        backBtn.setForeground(new Color(255, 255, 255));
+	        backBtn.setText("End Chat");
+	        backBtn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+	        backBtn.setBounds(445, 10, 65, 20);
+	        chatPanel.add(backBtn);
+	        
+	        sendBtn.setBackground(new Color(102, 102, 255));
+	        sendBtn.setFont(new Font("Garamond", Font.PLAIN, 24)); 
+	        sendBtn.setForeground(new Color(255, 255, 255));
+	        sendBtn.setText("Send");
+	        sendBtn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+	        sendBtn.setBounds(420, 350, 80, 40);
+	        chatPanel.add(sendBtn);
+	        backBtn.addActionListener(new ActionListener()
+	        {
+	        	@Override
+	             public void actionPerformed(ActionEvent e)
+	             {
+	        		 if (JOptionPane.showConfirmDialog( serverFrame,"Are you sure you want to exit?","Customer-Staff Live Chat", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
+	        		 {
+	        			 System.exit(0); 
+	        		 }           
+	             }
+	        });
+	        
+	        sendBtn.addActionListener(new ActionListener()
+	        {
+	        	@Override
+	             public void actionPerformed(ActionEvent e)
+	             {
+	        		if (messageText.getText().equals("")) 
+	        		{
+	    				JOptionPane.showMessageDialog(null, "Text Required!");
+	    			}
+	    				else if(messageText.isFocusable())
+	    				{
+	    					sendBtn.setEnabled(true);
+	    					chatArea.setText(chatArea.getText() + "Staff: " + messageText.getText()+"\n");
+	    					try
+	    					{
+	    						DataOutputStream output = new DataOutputStream(con.getOutputStream());
+	    						output.writeUTF(messageText.getText());
+	    					} 
+	    					catch(NullPointerException nullEx)
+    						{
+    							JOptionPane.showMessageDialog(null, "Client Offline!","Connection Status", JOptionPane.ERROR_MESSAGE);
+    						}
+	    					catch (IOException e1) 
+	    					{
+	    						chatArea.setText(chatArea.getText() + "\nOops! Client Went Offline..");
+	    						try 
+	    						{
+	    							Thread.sleep(2000);
+	    							System.exit(0);
+	    						} catch (InterruptedException e2) 
+	    						{
+	    							e2.printStackTrace();
+	    						}			
+	    					}
+	    					messageText.setText("");
+	    				}
+	             }
+	        });	        
+	        label.setBackground(new Color(153, 255, 204));
+	        chatPanel.add(label);
+	        label.setBounds(0, 35, 460, 410);
+
+	        GroupLayout layout = new GroupLayout(serverFrame.getContentPane());
+	        serverFrame.getContentPane().setLayout(layout);
+	        
+	        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	            .addComponent(chatPanel, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 515, GroupLayout.PREFERRED_SIZE)
+	        );
+	        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+	            .addGroup(layout.createSequentialGroup()
+	                .addComponent(chatPanel, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+	                .addGap(0, 0, Short.MAX_VALUE))
+	        );
+	    serverFrame.setSize(new Dimension(530, 447));
+	    serverFrame.setLocationRelativeTo(null);
+	}
+
+	private static void serverConnection() throws IOException 
+	{
+		 server = new ServerSocket(4433);
+		 con = server.accept();
+		 while (true) 
+		 {
+			try 
+			{
+				DataInputStream input = new DataInputStream(con.getInputStream());
+				String string = input.readUTF();
+				chatArea.setText(chatArea.getText() + "Client: " + string + "\n");
+			} 
+			catch (Exception ev) 
+			{
+				chatArea.setText(chatArea.getText() + "\nOops! Client Went Offline..");
+				 try 
+				 {
+					Thread.sleep(2000);
+					System.exit(0);
+				 } catch (InterruptedException e) 
+				 {
+					e.printStackTrace();
+				}
+			}
+		}//ENDWHILE
+	}
+	public static void main(String[] args) throws IOException   
+	{
+		EventQueue.invokeLater(new Runnable() 
+		{
+			public void run() 
+			{
+				try 
+				{
 					Server window = new Server();
-					window.frmServerChat.setVisible(true);
+					window.serverFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	
 		 serverConnection();
-	
-	
-	}
-
-	private static void serverConnection() throws IOException {
-		server = new ServerSocket(4433);
-		
-		 con = server.accept();
-		 lblNewLabel_2.setText("Client found !");
-			lblNewLabel_2.setForeground(new Color(0, 0, 128));
-		 while (true) {
-			try {
-				
-				DataInputStream input = new DataInputStream(con.getInputStream());
-				String string = input.readUTF();
-				textArea.setText(textArea.getText() + "\n " + "Client: " + string);
-			} catch (Exception ev) {
-				 textArea.setText(textArea.getText()+" \n" +"Network issues ");
-				 
-					try {
-						Thread.sleep(2000);
-						System.exit(0);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-
-		}
-	}
-
-	public Server() throws IOException {
-		initialize();
-
-
-		 
-	}
-
-	private void initialize() throws IOException {
-		frmServerChat = new JFrame();
-		frmServerChat.getContentPane().setBackground(UIManager.getColor("MenuBar.highlight"));
-		frmServerChat.setForeground(Color.WHITE);
-		frmServerChat.setBackground(Color.WHITE);
-		frmServerChat.setTitle("Server Chat");
-		frmServerChat.getContentPane().setForeground(Color.WHITE);
-		frmServerChat.setBounds(100, 100, 605, 403);
-		frmServerChat.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmServerChat.getContentPane().setLayout(null);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("Lato Semibold", Font.PLAIN, 24));
-		textField.setForeground(new Color(255, 255, 255));
-		textField.setBackground(Color.DARK_GRAY);
-		textField.setBounds(12, 67, 344, 38);
-		frmServerChat.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		btnNewButton = new JButton("Send");
-		
-		btnNewButton.addActionListener(new ActionListener() {
-			 
-			public void actionPerformed(ActionEvent e) {
-				
-				if (textField.getText().equals("")) {
-				JOptionPane.showMessageDialog(null, "Please write some text !");
-			 
-				}
-				else if(textField.isFocusable()){
-					btnNewButton.setEnabled(true);
-					textArea.setText(textArea.getText() + "\n" + "Server : " + textField.getText());
-					try {
-						DataOutputStream output = new DataOutputStream(con.getOutputStream());
-						output.writeUTF(textField.getText());
-					} catch (IOException e1) {
-						textArea.setText(textArea.getText() + "\n " + " Network issues");
-						try {
-							Thread.sleep(2000);
-							System.exit(0);
-						} catch (InterruptedException e2) {
-							
-							e2.printStackTrace();
-						}
-
-					}
-					textField.setText("");
-				}
-			}
-		});
-		btnNewButton.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(Color.BLUE);
-		btnNewButton.setBounds(390, 66, 164, 38);
-		frmServerChat.getContentPane().add(btnNewButton);
-		 
-		 scrollPane = new JScrollPane();
-		 scrollPane.setBounds(12, 134, 557, 157);
-		 frmServerChat.getContentPane().add(scrollPane);
-		
-		 textArea = new JTextArea();
-		 scrollPane.setViewportView(textArea);
-		textArea.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
-		textArea.setForeground(Color.ORANGE);
-		textArea.setBackground(Color.DARK_GRAY);
-		
-		lblNewLabel = new JLabel();
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 16));
-		
-		lblNewLabel.setBounds(154, 13, 242, 33);
-		frmServerChat.getContentPane().add(lblNewLabel);
-		 if (server.isClosed()) {
-			lblNewLabel.setText("Server is closed");
-		}else{
-			lblNewLabel.setText("Waiting for connection");
-			lblNewLabel.setForeground(Color.GREEN);
-		}
-		JLabel lblNewLabel_1 = new JLabel("Status");
-		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 22));
-		lblNewLabel_1.setBounds(37, 12, 95, 30);
-		frmServerChat.getContentPane().add(lblNewLabel_1);
-		
-		lblNewLabel_2 = new JLabel();
-		lblNewLabel_2.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-		lblNewLabel_2.setBounds(22, 303, 128, 30);
-		frmServerChat.getContentPane().add(lblNewLabel_2);
-	
-
 	}
 }
