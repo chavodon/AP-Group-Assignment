@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.event.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -13,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class EmployeeLogInWindow extends JFrame {
+public class EmployeeLogInWindow extends JFrame implements ActionListener, WindowListener {
 	
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -47,12 +48,31 @@ private JLabel welcomeLabel;
 		button = new JButton("Sign In");
 		button.setForeground(Color.red);
 		gbc = new GridBagConstraints();
-		
+		button.addActionListener(this);
 		welcomeLabel= new JLabel("WELCOME");
 		
 		layoutComponents();
 	}
-	
+	//define abstract method actionPerformed() which will be called on button click   
+    public void actionPerformed(ActionEvent ae)     //pass action listener as a parameter  
+    {  
+    	String userValue = usernameTextField.getText();
+		String passValue= String.valueOf(passwordField.getPassword());  
+        //check whether the credentials are authentic or not  
+        if (userValue.equals("Admin") && passValue.equals("Password")) {  //if authentic, navigate user to a new page  
+              
+            //create instance of the NewPage  
+            EmployeePortal page = new EmployeePortal();  
+              
+            //make page visible to the user  
+            page.setVisible(true);  
+              
+        }  
+        else{  
+            //show error message  
+            System.out.println("Please enter valid username and password");  
+        }  
+    }  
 	private void layoutComponents()
 	{
 		//Set the Layout Manager for the frame
@@ -148,8 +168,49 @@ private JLabel welcomeLabel;
 	public static void main(String args[]){
         
 		  new EmployeeLogInWindow();
-	       
 	     }
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 

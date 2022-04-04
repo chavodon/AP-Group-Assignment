@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -16,7 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
-public class EmployeePortal extends JFrame {
+public class EmployeePortal extends JFrame implements ActionListener, WindowListener {
 	
 	//Declare global variables
 	private static final long serialVersionUID = 1L;
@@ -55,7 +58,6 @@ public class EmployeePortal extends JFrame {
 		editBtn= new JButton("EDIT SOLUTION");
 		allBtn = new JButton("SHOW RESOLVED COMPLAINT");
 		
-		
 		viewBtn.setBackground(Color.GREEN);
 		viewBtn.setForeground(Color.blue);
 		viewBtn.setOpaque(true);
@@ -72,7 +74,9 @@ public class EmployeePortal extends JFrame {
 		editBtn.setBounds(185,205,220,50);
 		allBtn.setBounds(185,305,220,50);
 		
-		//-----------------ADD LISTENERS---------------------
+		viewBtn.addActionListener(this);
+		editBtn.addActionListener(this);
+		allBtn.addActionListener(this);
 		
 		
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
@@ -82,7 +86,34 @@ public class EmployeePortal extends JFrame {
 		
 		navbar();
 	
-}
+	}
+	
+	public void actionPerformed(ActionEvent ae)     //pass action listener as a parameter  
+    {  
+		//Link to correct page when those are completed
+		if(ae.getSource() == viewBtn) {
+			//create instance of the NewPage  
+            EmployeePortal page = new EmployeePortal();  
+              
+            //make page visible to the user  
+            page.setVisible(true);
+		}
+		if(ae.getSource() == editBtn) {
+			//create instance of the NewPage  
+            WelcomeWindow page = new WelcomeWindow();  
+              
+            //make page visible to the user  
+            page.setVisible(true);
+		}
+		if(ae.getSource() == allBtn) {
+			//create instance of the NewPage  
+            EmployeeLogInWindow page = new EmployeeLogInWindow();  
+              
+            //make page visible to the user  
+            page.setVisible(true);
+		}
+        
+    }
 	
 	public void navbar() {
 		//Create the Menu Bar
@@ -136,6 +167,48 @@ public class EmployeePortal extends JFrame {
 	public static void main(String[] args) {
 		new EmployeePortal();
 
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
