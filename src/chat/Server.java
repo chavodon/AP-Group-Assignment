@@ -26,6 +26,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Server 
 {
@@ -41,6 +43,8 @@ public class Server
     private JPanel chatPanel;
     private JScrollPane scrollPanel;
     private JTextField messageText;
+    
+    private static final Logger logger = LogManager.getLogger(Server.class);
 
 	public Server() throws IOException
 	{
@@ -138,6 +142,7 @@ public class Server
 	             {
 	        		 if (JOptionPane.showConfirmDialog( serverFrame,"Are you sure you want to exit?","Customer-Staff Live Chat", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
 	        		 {
+	        			 logger.info("Server Live Chat Ended");
 	        			 System.exit(0); 
 	        		 }           
 	             }
@@ -236,6 +241,7 @@ public class Server
 				{
 					Server window = new Server();
 					window.serverFrame.setVisible(true);
+					 logger.info("Server Live Chat Started");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
