@@ -79,35 +79,24 @@ public WelcomeWindow() {
   }
 
 
-public void Design() {
-	setTitle("WELCOME TO CLEGS COMPLAINT MANAGEMENT- LOG IN");
-}
-
-
-@Override
-public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
+	public void Design() {
+		setTitle("WELCOME TO CLEGS COMPLAINT MANAGEMENT- LOG IN");
+	}
 	
-}
-
-/* *@Override*
+	
+	
+	@SuppressWarnings("unused")
 	public void actionPerformed(ActionEvent e) {
-//IF statement to select or determine what specific method to execute if the user clicks a particular button.
-
+		// TODO Auto-generated method stub
 		if (e.getSource() == empBtn) {
-			EmployeeWindow emp = new EmployeeWindow();
-		} 
-		
-	else if (e.getSource() == deptBtn) {
-			DepartmentWindow dept = new DepartmentWindow();	
-		} 
-
-	else if (e.getSource() == payBtn) {
-			PayrollWindow payroll = new PayrollWindow();	
-			
+			EmployeeLogInWindow page = new EmployeeLogInWindow();
+		}
+		if (e.getSource() == deptBtn) {
+			CustomerLoginWindow page = new CustomerLoginWindow();
 		}
 		
-	}  */
+	}
+
 
 	public static void main(String args[]){
 	    
