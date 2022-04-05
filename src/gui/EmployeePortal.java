@@ -160,7 +160,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 				} 
 				
 			else if (e.getSource() == editBtn) {
-					CompleteSolution ww = new CompleteSolution();	
+					CompleteSolution ww = new CompleteSolution(" ");	
 				} 
 				
 			else if (e.getSource() == vrcBtn) {
