@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
@@ -16,7 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
-public class EmployeePortal extends JFrame {
+public class EmployeePortal extends JFrame implements ActionListener {
 	
 	//Declare global variables
 	private static final long serialVersionUID = 1L;
@@ -73,7 +74,9 @@ public class EmployeePortal extends JFrame {
 		vrcBtn.setBounds(185,305,220,50);
 		
 		//-----------------ADD LISTENERS---------------------
-		
+		viewBtn.addActionListener(this);
+		editBtn.addActionListener(this);
+		vrcBtn.addActionListener(this);
 		
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
 		frame.add(viewBtn);
@@ -152,7 +155,7 @@ public class EmployeePortal extends JFrame {
 		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
 
 				if (e.getSource() == viewBtn) {
-					 ViewComplaint vc = new ViewComplaint();
+					 ViewAllComplaint vc = new ViewAllComplaint();
 					
 				} 
 				
