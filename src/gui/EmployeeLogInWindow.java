@@ -170,7 +170,7 @@ private JLabel welcomeLabel;
 		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
 
 				if (e.getSource() == button) {
-					EmployeeLogInWindow emp = new EmployeeLogInWindow();
+					EmployeePortal emp = new EmployeePortal();
 					//validate password
 				} 
 				
