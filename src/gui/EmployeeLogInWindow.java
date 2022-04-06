@@ -160,7 +160,7 @@ private JLabel welcomeLabel;
 		frame.add(bckBtn, gbc);
 		
 		frame.setSize(new Dimension(550,450));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.getContentPane().setBackground(Color.BLACK);
 	}
