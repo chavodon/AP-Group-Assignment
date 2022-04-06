@@ -54,7 +54,6 @@ public class EditComplaint_1 extends JFrame{
 		//frame.setLayout(null);
 		frame.setSize(new Dimension(700,550));
 		panel.setBackground(Color.darkGray);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.getContentPane().setBackground(Color.darkGray);
 		
