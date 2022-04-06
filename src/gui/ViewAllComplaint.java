@@ -58,7 +58,6 @@ public class ViewAllComplaint {
 		
 		frame.setLayout(null);
 		frame.setSize(new Dimension(550,500));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.getContentPane().setBackground(Color.black);
 	    
