@@ -33,7 +33,7 @@ public class EmployeeLogInWindow extends JFrame implements ActionListener {
 	@SuppressWarnings("unused")
 	private JPanel buttonPanel;
 	
-private JLabel welcomeLabel;
+	private JLabel welcomeLabel;
 	
 	//Create an object of the GridBagConstraints/ Settings
 	
@@ -158,9 +158,8 @@ private JLabel welcomeLabel;
 		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(17,-10,-3,-3);
 		frame.add(bckBtn, gbc);
-		
 		frame.setSize(new Dimension(550,450));
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.getContentPane().setBackground(Color.BLACK);
 	}
@@ -169,18 +168,18 @@ private JLabel welcomeLabel;
 	public void actionPerformed(ActionEvent e) {
 		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
 
-				if (e.getSource() == button) {
-					EmployeePortal emp = new EmployeePortal();
-					//validate password
-				} 
-				
-			else if (e.getSource() == bckBtn) {
-					WelcomeWindow ww = new WelcomeWindow();	
-				} 
+		if (e.getSource() == button) {
+			frame.dispose();
+			employee.EmployeePortal emp = new employee.EmployeePortal();
+			//validate password
+		}
+		else if (e.getSource() == bckBtn) {
+			frame.dispose();
+			WelcomeWindow ww = new WelcomeWindow();	
+		}
+	}  
 
-				
-			}  
-
+	
 	public static void main(String args[]){
         
 		  new EmployeeLogInWindow();
