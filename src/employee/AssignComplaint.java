@@ -28,9 +28,8 @@ public class AssignComplaint extends JFrame implements ActionListener {
 	
 	public AssignComplaint() {
 		
-		frame.setSize(300, 200);
+		frame.setSize(400, 200);
 		frame.setLayout(new GridLayout(2,1));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		compID = new JTextField(5);
 		compID.addActionListener(this);
