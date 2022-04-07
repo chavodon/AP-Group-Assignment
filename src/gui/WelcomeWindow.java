@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,119 +8,75 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-	
-//Implements ActionListener to listen and respond to call.
 
-public class WelcomeWindow extends JFrame implements ActionListener 
+public class WelcomeWindow extends JFrame
 { 
-	
 	//Declare global variables
-	
 	private static final long serialVersionUID = 1L;
-	//JPanel jp = new JPanel();
 	private JButton customerBtn;
 	private JButton adminBtn;
-	private JButton signUpBtn;
-	private JLabel msgLabel;
-	JFrame frame = new JFrame("CLEGS COMPLAINT MANAGEMENT SYSTEM - LOG IN");
+	private JLabel title;
 
-
-public WelcomeWindow() {
-		
-		setLayout(null);
-		setSize(new Dimension(550,450));
+public WelcomeWindow() 
+{
+		setTitle("Micro-Star Cable Vision Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setVisible(true);
-		getContentPane().setBackground(Color.BLACK);
+		getContentPane().setBackground(new Color(160, 160, 160));
+		setResizable(false);
+		setBounds(700, 300, 584, 531);
+		getContentPane().setLayout(null);
+		setLocationRelativeTo(null); //center output on screen
 		
 		//--------------CREATE BUTTONS----------------------
-		
-		adminBtn = new JButton("ADMIN LOGIN");
-		customerBtn= new JButton("CUSTOMER LOGIN");
-		signUpBtn = new JButton("SIGN UP");
-		
+		adminBtn = new JButton("Admin Login");
+		customerBtn= new JButton("Customer Login");
 		//--------------BUTTON LAYOUT AND ALIGNMENT----------
-/*
- *In a setBounds method, the:
- -First digit controls the x axis of the component 
- *Second digit controls the y axis of the component 
- *Third digit controls the component length 
- *Fourth digit controls the component height 
- */
-		 msgLabel = new JLabel("CLEGS COMPLAINT MANAGEMENT SYSTEM\n - LOG IN\n");
-		    msgLabel.setBounds(100,75,350,50);
-		    msgLabel.setFont(new Font("Ariel", Font.BOLD, 12));
-		    msgLabel.setBackground(Color.black);
-		    msgLabel.setForeground(Color.WHITE);
-		    msgLabel.setOpaque(true);
-		    add(msgLabel);
+		 title = new JLabel();
+	     title.setFont(new Font("Myriad Pro", Font.ITALIC, 28)); 
+	     title.setForeground(Color.black);
+	     title.setText("Welcome To Micro-Star Cable Vision");
+	     title.setBounds(50, 120, 480, 60); //x axis, y axis, length, width
+		 add(title);
 		
-	    adminBtn.setFont(new Font("Trattatello", Font.BOLD, 15));
+	    adminBtn.setFont(new Font("Serif", Font.BOLD, 18));
 		adminBtn.setBackground(Color.PINK);
-		adminBtn.setForeground(Color.darkGray);
+		adminBtn.setForeground(Color.black);
 		adminBtn.setOpaque(true);
 		
-		customerBtn.setFont(new Font("Trattatello", Font.BOLD, 15));
-		customerBtn.setForeground(Color.darkGray);
+		customerBtn.setFont(new Font("Serif", Font.BOLD, 18));
+		customerBtn.setForeground(Color.black);
 		customerBtn.setBackground(Color.cyan);
 		customerBtn.setOpaque(true);
 		
-		signUpBtn.setFont(new Font("Trattatello", Font.BOLD, 15));
-		signUpBtn.setForeground(Color.darkGray);
-		signUpBtn.setBackground(Color.red);
-		signUpBtn.setOpaque(true);
-		
-		
 		adminBtn.setBounds(95,205,150,50);
-		customerBtn.setBounds(295,205,150,50);
-		signUpBtn.setBounds(205,305,150,50);
+		customerBtn.setBounds(295,205,170,50); //x,y,length, width
 		
 		//-----------------ADD LISTENERS---------------------
-		adminBtn.addActionListener(this);
-		customerBtn.addActionListener(this);
-		signUpBtn.addActionListener(this);
-		
+		adminBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				EmployeeLogInWindow emp = new EmployeeLogInWindow();
+				dispose();
+			}
+		});
+		customerBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				CustomerLoginWindow cus = new CustomerLoginWindow();	
+				dispose();
+			}
+		});
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
 		add(adminBtn);
 		add(customerBtn);
-		add(signUpBtn);
-		
-		
-		Design();
+		setVisible(true);
   }
-
-
-public void Design() {
-	setTitle("WELCOME TO CLEGS COMPLAINT MANAGEMENT- LOG IN");
-}
-
-
- @SuppressWarnings("unused")
-@Override
-	public void actionPerformed(ActionEvent e) {
-//IF statement to select or determine what specific method to execute if the user clicks a particular button.
-
-		if (e.getSource() == adminBtn) {
-			dispose();
-			EmployeeLogInWindow emp = new EmployeeLogInWindow();
-		} 
-		
-		else if (e.getSource() == customerBtn) {
-			dispose();
-			CustomerLoginWindow cus = new CustomerLoginWindow();	
-		} 
-
-		else if (e.getSource() == signUpBtn) {
-			dispose();
-			SignUpWindow signup = new SignUpWindow();	
-		}
-		
-	}  
-
-	public static void main(String args[]){
-	    
+	public static void main(String args[])
+	{    
 		  new WelcomeWindow();
-	     
-	   }
-
+	}
 }
