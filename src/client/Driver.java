@@ -1,4 +1,4 @@
-package tcpClient;
+package client;
 
 public class Driver {
 
