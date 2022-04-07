@@ -52,8 +52,6 @@ public class ViewComplaint implements ActionListener
     
     Complaints complaint = new Complaints();
 	
-	private static final long serialVersionUID = 1L;
-	
 	public ViewComplaint()
 	{
 		frame.setResizable(false);
@@ -86,12 +84,14 @@ public class ViewComplaint implements ActionListener
 		searchB.setBorderPainted(false);
 		searchB.setBounds(265, 10, 80, 30);
 		searchB.setBackground(new Color(96, 96, 96));
+		frame.getContentPane().add(searchB);
 		searchB.addActionListener(new ActionListener()
 		{
-			Client client = new Client();
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
+				Client client = new Client();
+				
 				complaint.setcNo(searchField.getText());
 				client.sendAction("Search");
 				client.sendComplaintId(complaint.getcNo());
@@ -99,7 +99,7 @@ public class ViewComplaint implements ActionListener
 				frame.dispose();
 			}
 	});
-		frame.getContentPane().add(searchB);
+
 		menu();
 		frame.setVisible(true);
 		}

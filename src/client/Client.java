@@ -4,12 +4,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.swing.JOptionPane;
 
 import customer.Complaints;
+import customer.Payments;
+import gui.QueryAccountStatus;
+import gui.ViewAllComplaint;
 import gui.ViewComplaint;
-import gui.ViewComplaintStatus;
+import gui.WelcomeWindow;
 
 public class Client 
 {
@@ -18,6 +23,8 @@ public class Client
 	private ObjectInputStream objIs;
 	private String action = "";
 	Complaints complaint = new Complaints();
+	Payments payment = new Payments();
+	Queue<Complaints> allComplaints = new LinkedList<Complaints>();
 	
 	public Client()
 	{
@@ -97,8 +104,21 @@ public class Client
 			e.printStackTrace();
 		}
 	}
+	public void sendCustomerId(String customerId)
+	{
+		try
+		{
+			System.out.println("In Send Customer Id");
+			objOs.writeObject(customerId);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
 	public void receiveResponse()
 	{
+		System.out.println("Receive");
 		try
 		{
 			if(action.equalsIgnoreCase("Add"))
@@ -111,7 +131,6 @@ public class Client
 			}
 			if(action.equals("Search"))
 			{
-				//Complaints complaint = new Complaints();
 				complaint =  (Complaints) objIs.readObject();
 				
 				if(complaint == null)
@@ -124,6 +143,40 @@ public class Client
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
 					ViewComplaint view = new ViewComplaint();
 					view.setText(complaint);
+					System.out.println(complaint);
+				}
+			}
+			if(action.equals("Query"))
+			{
+				payment =  (Payments) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					QueryAccountStatus query = new QueryAccountStatus();
+					query.setText(payment);
+					System.out.println(payment);
+				}
+			}
+			if(action.equals("All Complaints"))
+			{
+				allComplaints =  (Queue<Complaints>) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					ViewAllComplaint viewAll = new ViewAllComplaint();
+					viewAll.table(allComplaints);
 				}
 			}
 		}
@@ -140,9 +193,9 @@ public class Client
 			ioe.printStackTrace();
 		}
 	}
-	public class Driver {
-		public static void main(String[] args) 
-		{
-		}
-}
+	public static void main(String[] args) 
+	{
+		new Client();
+		//new WelcomeWindow();
+	}
 }

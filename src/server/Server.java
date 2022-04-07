@@ -6,14 +6,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.swing.JOptionPane;
 
 import customer.Complaints;
+import customer.Payments;
 
 public class Server 
 {
@@ -94,7 +98,7 @@ public class Server
 			if((stmt.executeUpdate(query)==1))
 			{
 				objOs.writeObject(true);
-				JOptionPane.showMessageDialog(null, "Complaint Added Successfully!","Add Complaint Status", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Record added successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
 			}
 			else
 			{
@@ -112,9 +116,13 @@ public class Server
 	}
 	private Complaints viewComplaint(String compId)
 	{
+		System.out.println("In View Complaint");
 		Complaints complaint = new Complaints();
+		//String query = "SELECT * FROM complaints WHERE cNo = "+compId+" ";
+		//String query = "SELECT * FROM complaints";
 		String query = "SELECT * FROM complaints WHERE cNo = '"+compId+"' ";
-	
+		//String query = "UPDATE assignment SET assignment_grade = '"+assignment_grade+"' WHERE student_id = "+student_id+" ";
+		  
 		try
 		{
 			stmt = dBConn.createStatement();
@@ -130,6 +138,7 @@ public class Server
 				complaint.setResponseDate(result.getString(6));
 				complaint.setRespondent(result.getString(7));
 			}
+			//objOs.writeObject(true);
 		}
 		catch(SQLException e)
 		{
@@ -137,12 +146,80 @@ public class Server
 		}
 		return complaint;
 	}
+	private Payments queryAccount(String customerId)
+	{
+		System.out.println("In Query");
+		Payments payment = new Payments();
+		
+		String query = "SELECT * FROM payments WHERE customerId = '"+customerId+"' ORDER BY dueDate DESC LIMIT 1 "; //get latest due date payment
+		
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			if(result.next())
+			{
+				payment.setpNo(result.getString(1));
+				payment.setCustomerId(result.getString(2));
+				payment.setAmountDue(result.getDouble(3));
+				payment.setAmountPaid(result.getDouble(4));
+				payment.setPaymentDate(result.getString(5));
+				payment.setDueDate(result.getString(6));
+				payment.setStatus(result.getString(7));
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return payment;
+	}
+	private Queue<Complaints> viewPastComplaint(String customerId)
+	{
+		System.out.println("In View All Complaint");
+		Complaints complaint = new Complaints();
+		String query = "SELECT * FROM complaints WHERE customerId  = '"+customerId+"' ";
+		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
+		//LinkedList<Complaints> allComplaints = new LinkedList<Complaints>();
+		//String query = "UPDATE assignment SET assignment_grade = '"+assignment_grade+"' WHERE student_id = "+student_id+" ";
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			while(result.next())
+			{
+				//System.out.println("1");
+				complaint.setcNo(result.getString(1));
+				complaint.setCategory(result.getString(2));
+				complaint.setDate(result.getString(3));
+				complaint.setDetails(result.getString(4));
+				complaint.setCustomerId(result.getString(5));
+				complaint.setStatus(result.getString(6));
+				complaint.setResponseDate(result.getString(7));
+				complaint.setRespondent(result.getString(8));
+				
+				//System.out.println("1");
+				allComplaints.add(complaint);
+				System.out.println(complaint);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return allComplaints;
+	}
+	
 	private void waitForRequests()
 	{
 		String action = "";
 		String customerId = "";
 		getDatabaseConnection();
 		Complaints complaint = new Complaints();
+		Payments payment = new Payments();
+		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
 		
 		try
 		{
@@ -168,6 +245,21 @@ public class Server
 						complaint = viewComplaint(comId);
 						objOs.writeObject(complaint);
 					}
+					else if (action.equals("Query"))
+					{
+						System.out.println("Wait for Requests");
+						customerId  = (String)objIs.readObject();
+						payment = queryAccount(customerId);
+						objOs.writeObject(payment);
+					}
+					else if (action.equals("All Complaints"))
+					{
+						System.out.println("Wait for Requests");
+						customerId  = (String)objIs.readObject();
+						
+						allComplaints = viewPastComplaint(customerId);
+						objOs.writeObject(allComplaints);
+					}
 				}
 				catch(ClassNotFoundException ex)
 				{
@@ -177,12 +269,13 @@ public class Server
 				{
 					e.printStackTrace();
 				}
+				//this.closeConnection();
 			}
 		}
 		catch(EOFException ex)
 		{
 			System.out.println("Client has terminated connections with the server");
-			ex.printStackTrace();
+			//ex.printStackTrace();
 		}
 		catch(IOException e)
 		{
@@ -191,8 +284,6 @@ public class Server
 	}
 	public static void main(String[] args)
 	{
-		//System.out.println("Client has terminated connections with the server");
-//		Server server = new Server();
-		 new Server();
+		new Server();
 	}
 }

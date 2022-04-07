@@ -189,6 +189,11 @@ public class Payments implements Serializable
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "Payments [pNo=" + pNo + ", status=" + status + ", amountDue=" + amountDue + ", amountPaid=" + amountPaid
+				+ ", dueDate=" + dueDate + ", paymentDate=" + paymentDate + ", customerId=" + customerId + "]";
+	}
 	public void registerPayment()
 	{
 		Scanner inp = new Scanner(System.in);

@@ -164,7 +164,7 @@ public class CustomerLoginWindow extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == button) {
-			CustomerPortal cport = new CustomerPortal();
+			CustomerDashboard cport = new CustomerDashboard();
 			//validate password
 		} 
 		
@@ -172,30 +172,30 @@ public class CustomerLoginWindow extends JFrame implements ActionListener {
 			WelcomeWindow ww = new WelcomeWindow();	
 		} 
 		
-        String userName = usernameTextField.getText();
-        String password = passwordField.getText();
-        try {
-            Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbcdemo",
-                "root", "Saskim1618");
-
-            PreparedStatement st = (PreparedStatement) connection
-                .prepareStatement("Select name, password from student where name=? and password=?");
-
-            st.setString(1, userName);
-            st.setString(2, password);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                dispose();
-                WelcomeWindow ah = new WelcomeWindow();
-                ah.setTitle("Welcome");
-                ah.setVisible(true);
-                JOptionPane.showMessageDialog(button, "You have successfully logged in");
-            } else {
-                JOptionPane.showMessageDialog(button, "Wrong Username & Password");
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+//        String userName = usernameTextField.getText();
+//        String password = passwordField.getText();
+//        try {
+//            Connection connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/jdbcdemo",
+//                "root", "Saskim1618");
+//
+//            PreparedStatement st = (PreparedStatement) connection
+//                .prepareStatement("Select name, password from student where name=? and password=?");
+//
+//            st.setString(1, userName);
+//            st.setString(2, password);
+//            ResultSet rs = st.executeQuery();
+//            if (rs.next()) {
+//                dispose();
+//                WelcomeWindow ah = new WelcomeWindow();
+//                ah.setTitle("Welcome");
+//                ah.setVisible(true);
+//                JOptionPane.showMessageDialog(button, "You have successfully logged in");
+//            } else {
+//                JOptionPane.showMessageDialog(button, "Wrong Username & Password");
+//            }
+//        } catch (SQLException sqlException) {
+//            sqlException.printStackTrace();
+//        }
     }
     
 	
