@@ -186,7 +186,6 @@ public class ViewComplaint implements ActionListener
 				frame.add(menuBar);
 				frame.setJMenuBar(menuBar); 
 		 }
-
 		 public void setText(Complaints co)
 		 {
 			 resultTxt.setVisible(true);

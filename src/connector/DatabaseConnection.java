@@ -18,7 +18,8 @@ public class DatabaseConnection
 			
 			if(dbConnect != null) //if connection was made to xampp server
 			{
-				JOptionPane.showMessageDialog(null, "Connection Successful!","JDBC Connection Status", JOptionPane.INFORMATION_MESSAGE);
+				//JOptionPane.showMessageDialog(null, "Connection Successful!","JDBC Connection Status", JOptionPane.INFORMATION_MESSAGE);
+				
 			}
 		}
 		catch(Exception e)

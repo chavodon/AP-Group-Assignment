@@ -177,7 +177,6 @@ public class Server
 				{
 					e.printStackTrace();
 				}
-				//this.closeConnection();
 			}
 		}
 		catch(EOFException ex)
@@ -192,6 +191,8 @@ public class Server
 	}
 	public static void main(String[] args)
 	{
-		new Server();
+		//System.out.println("Client has terminated connections with the server");
+//		Server server = new Server();
+		 new Server();
 	}
 }

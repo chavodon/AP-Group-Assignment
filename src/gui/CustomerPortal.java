@@ -76,9 +76,8 @@ public class CustomerPortal extends JFrame implements ActionListener{
 					} 
 					
 				else if (e.getSource() == viewBtn) {
-					ViewComplaintStatus view = new ViewComplaintStatus();	
+					ViewComplaint view = new ViewComplaint();	
 				} 
-
 					
 				}  
 

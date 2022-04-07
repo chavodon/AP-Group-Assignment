@@ -8,6 +8,7 @@ import java.net.Socket;
 import javax.swing.JOptionPane;
 
 import customer.Complaints;
+import gui.ViewComplaint;
 import gui.ViewComplaintStatus;
 
 public class Client 
@@ -121,7 +122,7 @@ public class Client
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
-					ViewComplaintStatus view = new ViewComplaintStatus();
+					ViewComplaint view = new ViewComplaint();
 					view.setText(complaint);
 				}
 			}
