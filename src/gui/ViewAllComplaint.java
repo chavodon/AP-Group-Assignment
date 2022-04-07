@@ -28,8 +28,14 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ViewAllComplaint {
+import employee.AssignComplaint;
 
+public class ViewAllComplaint extends JFrame implements ActionListener {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame("View All Complaints");
 	private JLabel label;
 	public JMenuBar menuBar;
@@ -46,6 +52,7 @@ public class ViewAllComplaint {
     private GridBagConstraints gbc;
     private JLabel instruction;
     private JLabel header= new JLabel();
+    private JButton assignBtn;
 	
 	public ViewAllComplaint() {
 		label = new JLabel("Complaint Listings: ");
@@ -56,8 +63,17 @@ public class ViewAllComplaint {
 	    label.setOpaque(true);
 	    frame.add(label);
 		
+	    assignBtn = new JButton("ASSIGN COMPLAINT TO TECHNICIAN");
+	    
+	    assignBtn.setBackground(Color.blue);
+	    assignBtn.setForeground(Color.yellow);
+	    assignBtn.setOpaque(true);
+	    assignBtn.setBounds(160,450,260,50);
+	    assignBtn.addActionListener(this);
+	    
+	    frame.add(assignBtn);
 		frame.setLayout(null);
-		frame.setSize(new Dimension(550,500));
+		frame.setSize(new Dimension(600,600));
 		frame.setVisible(true);
 		frame.getContentPane().setBackground(Color.black);
 	    
@@ -67,6 +83,12 @@ public class ViewAllComplaint {
 			
 	 }
 	
+	@SuppressWarnings("unused")
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == assignBtn) {
+			AssignComplaint ac = new AssignComplaint();
+		}
+	}
 	
 	public void navbar() {
 		//Create the Menu Bar
@@ -196,10 +218,10 @@ public class ViewAllComplaint {
 		} 
 		
 		
-		//public static void main(String[] args) {
-			//new ViewAllComplaint();
+		public static void main(String[] args) {
+			new ViewAllComplaint();
 	
-		//}
+		}
 
 
 }
