@@ -102,16 +102,18 @@ public void Design() {
 //IF statement to select or determine what specific method to execute if the user clicks a particular button.
 
 		if (e.getSource() == adminBtn) {
+			dispose();
 			EmployeeLogInWindow emp = new EmployeeLogInWindow();
 		} 
 		
-	else if (e.getSource() == customerBtn) {
+		else if (e.getSource() == customerBtn) {
+			dispose();
 			CustomerLoginWindow cus = new CustomerLoginWindow();	
 		} 
 
-	else if (e.getSource() == signUpBtn) {
+		else if (e.getSource() == signUpBtn) {
+			dispose();
 			SignUpWindow signup = new SignUpWindow();	
-			
 		}
 		
 	}  
