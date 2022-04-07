@@ -14,6 +14,7 @@ import customer.Payments;
 import gui.QueryAccountStatus;
 import gui.ViewAllComplaint;
 import gui.ViewComplaint;
+import gui.ViewPayments;
 import gui.WelcomeWindow;
 
 public class Client 
@@ -25,6 +26,7 @@ public class Client
 	Complaints complaint = new Complaints();
 	Payments payment = new Payments();
 	Queue<Complaints> allComplaints = new LinkedList<Complaints>();
+	Queue<Payments> allPayments = new LinkedList<Payments>();
 	
 	public Client()
 	{
@@ -177,6 +179,24 @@ public class Client
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
 					ViewAllComplaint viewAll = new ViewAllComplaint();
 					viewAll.table(allComplaints);
+				}
+			}
+			if(action.equals("All Payments"))
+			{
+				allPayments =  (Queue<Payments>) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					ViewPayments viewAll = new ViewPayments();
+					System.out.println(allPayments);
+					viewAll.table(allPayments);
+					
 				}
 			}
 		}

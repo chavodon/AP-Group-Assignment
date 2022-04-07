@@ -118,11 +118,7 @@ public class Server
 	{
 		System.out.println("In View Complaint");
 		Complaints complaint = new Complaints();
-		//String query = "SELECT * FROM complaints WHERE cNo = "+compId+" ";
-		//String query = "SELECT * FROM complaints";
 		String query = "SELECT * FROM complaints WHERE cNo = '"+compId+"' ";
-		//String query = "UPDATE assignment SET assignment_grade = '"+assignment_grade+"' WHERE student_id = "+student_id+" ";
-		  
 		try
 		{
 			stmt = dBConn.createStatement();
@@ -138,7 +134,6 @@ public class Server
 				complaint.setResponseDate(result.getString(6));
 				complaint.setRespondent(result.getString(7));
 			}
-			//objOs.writeObject(true);
 		}
 		catch(SQLException e)
 		{
@@ -181,8 +176,6 @@ public class Server
 		Complaints complaint = new Complaints();
 		String query = "SELECT * FROM complaints WHERE customerId  = '"+customerId+"' ";
 		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
-		//LinkedList<Complaints> allComplaints = new LinkedList<Complaints>();
-		//String query = "UPDATE assignment SET assignment_grade = '"+assignment_grade+"' WHERE student_id = "+student_id+" ";
 		try
 		{
 			stmt = dBConn.createStatement();
@@ -202,6 +195,7 @@ public class Server
 				
 				//System.out.println("1");
 				allComplaints.add(complaint);
+				complaint = new Complaints();
 				System.out.println(complaint);
 			}
 		}
@@ -211,6 +205,41 @@ public class Server
 		}
 		return allComplaints;
 	}
+	private Queue<Payments> viewPastPayments(String customerId)
+	{
+		System.out.println("In View payments");
+		Payments payment = new Payments();
+		String query = "SELECT * FROM payments WHERE customerId  = '"+customerId+"' ";
+		Queue<Payments> allPayments = new LinkedList<Payments>();
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			while(result.next())
+			{
+				//System.out.println("1");
+				payment.setpNo(result.getString(1));
+				payment.setCustomerId(result.getString(2));
+				payment.setAmountDue(result.getDouble(3));
+				payment.setAmountPaid(result.getDouble(4));
+				payment.setPaymentDate(result.getString(5));
+				payment.setDueDate(result.getString(6));
+				payment.setStatus(result.getString(7));
+				
+				//System.out.println("1");
+				allPayments.add(payment);
+				payment = new Payments();
+				System.out.println(payment);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return allPayments;
+	}
+	
 	
 	private void waitForRequests()
 	{
@@ -220,6 +249,7 @@ public class Server
 		Complaints complaint = new Complaints();
 		Payments payment = new Payments();
 		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
+		Queue<Payments> allPayments = new LinkedList<Payments>();
 		
 		try
 		{
@@ -259,6 +289,14 @@ public class Server
 						
 						allComplaints = viewPastComplaint(customerId);
 						objOs.writeObject(allComplaints);
+					}
+					else if (action.equals("All Payments"))
+					{
+						System.out.println("Wait for Requests");
+						customerId  = (String)objIs.readObject();
+						
+						allPayments = viewPastPayments(customerId);
+						objOs.writeObject(allPayments);
 					}
 				}
 				catch(ClassNotFoundException ex)

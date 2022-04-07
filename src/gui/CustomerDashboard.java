@@ -120,8 +120,8 @@ public class CustomerDashboard extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				//ViewAllComplaint view = new ViewAllComplaint();
-				//view.callClient();
+				ViewPayments view = new ViewPayments();
+				view.callClient();
 			}
 		});
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
