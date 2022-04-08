@@ -193,7 +193,7 @@ package gui;
 
 					@Override
 					public void menuSelected(MenuEvent e) {
-						new CustomerPortal();
+						new EmployeePortal();
 						
 					}
 
