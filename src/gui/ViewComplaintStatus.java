@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.mysql.cj.xdevapi.Table;
 
-public class ViewComplaintStatus implements ActionListener {
+public class ViewComplaintStatus extends JFrame implements ActionListen, MenuKeyListener, javax.swing.event.MenuListener, KeyListener{ {
 	private JFrame frame = new JFrame("View Complaint Status ");
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
@@ -113,14 +113,17 @@ public class ViewComplaintStatus implements ActionListener {
 
 		 }
 		 
+		 
 		 public void menu() {
 			//Create the Menu Bar
 				menuBar = new JMenuBar();
 				
+				this.addKeyListener(this);
 				
 				//Build Menu
 				menu = new JMenu("Services");
 				menu.setMnemonic(KeyEvent.VK_A);
+				menu.addMenuListener(this);
 				menu.getAccessibleContext().setAccessibleDescription(null);
 				menu.setBounds(250,70,50,15);
 			    menu.setFont(new Font("Ariel", Font.BOLD, 12));
@@ -130,6 +133,7 @@ public class ViewComplaintStatus implements ActionListener {
 				
 				//menu items
 				menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
+				menuItem.addKeyListener(this);
 				menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
 				menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
 				menuItem.addActionListener(new ActionListener(){
@@ -146,6 +150,7 @@ public class ViewComplaintStatus implements ActionListener {
 				
 				
 				menuItem = new JMenuItem("Live Chat", KeyEvent.VK_T);
+				menuItem.addKeyListener(this);
 				menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
 				menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
 				menuItem.setBackground(Color.yellow);
@@ -160,6 +165,7 @@ public class ViewComplaintStatus implements ActionListener {
 				});
 				
 				menuItem = new JMenuItem("Video Call A Representative", KeyEvent.VK_T);
+				menuItem.addKeyListener(this);
 				menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
 				menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
 				menuItem.setBackground(Color.yellow);
@@ -173,52 +179,130 @@ public class ViewComplaintStatus implements ActionListener {
 					
 				});
 				
-				menu = new JMenu("Back");
+				JMenu back = new JMenu("Back");
 				
-				menu.setFont(new Font("Ariel", Font.BOLD, 12));
-				menu.setMnemonic(KeyEvent.VK_A);
-				menu.getAccessibleContext().setAccessibleDescription(null);
-				menuBar.add(menu);
-				menu.addActionListener(new ActionListener(){
+				back.setFont(new Font("Ariel", Font.BOLD, 12));
+				back.setMnemonic(KeyEvent.VK_A);
+				back.addMenuListener(this);
+				back.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(back);
+				back.addMenuListener(new javax.swing.event.MenuListener(){
+
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						new EmployeePortal();
+					public void menuSelected(MenuEvent e) {
+						new CustomerPortal();
+						
 					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				
 					
 				});
 				
 				
-				menu = new JMenu("Help");
-				menu.setFont(new Font("Ariel", Font.BOLD, 12));
-				menu.setMnemonic(KeyEvent.VK_A);
-				menu.getAccessibleContext().setAccessibleDescription(null);
-				menuBar.add(menu);
-				menuItem.addActionListener(new ActionListener(){
+				JMenu help = new JMenu("Help");
+				help.setFont(new Font("Ariel", Font.BOLD, 12));
+				help.setMnemonic(KeyEvent.VK_A);
+				help.addMenuListener(this);
+				help.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(help);
+				help.addMenuListener(new javax.swing.event.MenuListener(){
+
 					@Override
-					public void actionPerformed(ActionEvent e) {
+					public void menuSelected(MenuEvent e) {
 						//new LiveChat();
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
 					}
 					
 				});
 				
-				menu = new JMenu("Log Out");
-				menu.setFont(new Font("Ariel", Font.BOLD, 12));
-				menu.setMnemonic(KeyEvent.VK_A);
-				menu.getAccessibleContext().setAccessibleDescription(null);
-				menuBar.add(menu);
-				//menuItem = new JMenuItem("")
+				JMenu logout = new JMenu("Log Out");
+				logout.setFont(new Font("Ariel", Font.BOLD, 12));
+				logout.setMnemonic(KeyEvent.VK_A);
+				logout.addMenuListener(this);
+				logout.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(logout);
+				logout.addMenuListener(new javax.swing.event.MenuListener(){
+
+					@Override
+					public void menuSelected(MenuEvent e) {
+						new CustomerLoginWindow();
+						
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+		
+		 
+				});
 				
-				class MenuListener{
-				  MenuListener listener =  new MenuListener();
-				}
-				
+				JMenu exit = new JMenu("Exit Program");
+				exit.setFont(new Font("Ariel", Font.BOLD, 12));
+				exit.setMnemonic(KeyEvent.VK_A);
+				exit.addMenuListener(this);
+				exit.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(exit);
+				exit.addMenuListener(new javax.swing.event.MenuListener(){
+
+					@Override
+					public void menuSelected(MenuEvent e) {
+							System.exit(0);
+						
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+		
+		 
+				});
 				
 				frame.add(menuBar);
 				frame.setJMenuBar(menuBar); 
-				//searchBox();
-				
-				
 		 }
+				
 		//searchBox();
 		
 		public void table() {
@@ -258,6 +342,69 @@ public class ViewComplaintStatus implements ActionListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void menuSelected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuDeselected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuCanceled(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuKeyTyped(MenuKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuKeyPressed(MenuKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuKeyReleased(MenuKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 
 }
