@@ -190,7 +190,7 @@ public class ViewComplaintStatus extends JFrame implements ActionListen, MenuKey
 
 					@Override
 					public void menuSelected(MenuEvent e) {
-						new CustomerPortal();
+						new EmployeePortal();
 						
 					}
 
