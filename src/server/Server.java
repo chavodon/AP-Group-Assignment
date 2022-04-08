@@ -141,6 +141,33 @@ public class Server
 		}
 		return complaint;
 	}
+	private Complaints respondToComplaint(String compId)
+	{
+		System.out.println("In respond");
+		Complaints complaint = new Complaints();
+		String query = "SELECT * FROM complaints WHERE cNo = '"+compId+"' ";
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			if(result.next())
+			{
+				complaint.setcNo(result.getString(1));
+				complaint.setCategory(result.getString(2));
+				complaint.setDate(result.getString(3));
+				complaint.setDetails(result.getString(4));
+				complaint.setCustomerId(result.getString(5));
+				complaint.setResponseDate(result.getString(6));
+				complaint.setRespondent(result.getString(7));
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return complaint;
+	}
 	private Payments queryAccount(String customerId)
 	{
 		System.out.println("In Query");
@@ -273,6 +300,13 @@ public class Server
 						System.out.println("Wait for Requests");
 						String comId = (String)objIs.readObject();
 						complaint = viewComplaint(comId);
+						objOs.writeObject(complaint);
+					}
+					else if (action.equals("Respond"))
+					{
+						System.out.println("Wait for Requests");
+						String comId = (String)objIs.readObject();
+						complaint = respondToComplaint(comId);
 						objOs.writeObject(complaint);
 					}
 					else if (action.equals("Query"))

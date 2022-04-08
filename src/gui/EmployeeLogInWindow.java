@@ -170,7 +170,7 @@ public class EmployeeLogInWindow extends JFrame implements ActionListener {
 
 		if (e.getSource() == button) {
 			frame.dispose();
-			employee.EmployeePortal emp = new employee.EmployeePortal();
+			EmployeePortal emp = new EmployeePortal();
 			//validate password
 		}
 		else if (e.getSource() == bckBtn) {

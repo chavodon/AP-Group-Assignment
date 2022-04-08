@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import customer.Complaints;
 import customer.Payments;
 import gui.QueryAccountStatus;
+import gui.RespondToComplaint;
 import gui.ViewAllComplaint;
 import gui.ViewComplaint;
 import gui.ViewPayments;
@@ -197,6 +198,23 @@ public class Client
 					System.out.println(allPayments);
 					viewAll.table(allPayments);
 					
+				}
+			}
+			if(action.equals("Respond"))
+			{
+				complaint =  (Complaints) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					RespondToComplaint respond = new RespondToComplaint();
+					respond.setText(complaint);
+					System.out.println(complaint);
 				}
 			}
 		}
