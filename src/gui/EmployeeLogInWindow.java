@@ -22,22 +22,6 @@ public class EmployeeLogInWindow extends JFrame implements ActionListener {
 	private JPasswordField passwordTxt;
 	private JButton submitBtn;	
 	private JButton bckBtn;
-	/*private JLabel usernameLabel;
-	private JLabel passwordLabel;
-	private JTextField usernameTextField;
-	private JPasswordField passwordField;
-	private JButton button;
-	@SuppressWarnings("unused")
-	private JPanel namePanel;
-	@SuppressWarnings("unused")
-	private JPanel passwordPanel;
-	@SuppressWarnings("unused")
-	private JPanel buttonPanel;*/
-	
-	
-	//Create an object of the GridBagConstraints/ Settings
-	
-	private GridBagConstraints gbc;
 	
 	public EmployeeLogInWindow()
 	{
