@@ -7,6 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -22,9 +23,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.table.DefaultTableModel;
 
-public class ViewResolvedComplaint {
+public class ViewResolvedComplaint implements MenuListener, KeyListener {
 	
 
 	private JFrame frame = new JFrame("Resolved Complaints");
@@ -68,106 +71,198 @@ public class ViewResolvedComplaint {
 	
 	public void navbar() {
 		//Create the Menu Bar
-		menuBar = new JMenuBar();
-		
-		
-		//Build Menu
-		menu = new JMenu("Services");
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menu.setBounds(250,70,50,15);
-	    menu.setFont(new Font("Ariel", Font.BOLD, 12));
-	    menu.setOpaque(true);
-	    menuBar.add(menu);
-		//menuItem = new JMenuItem("")
-		
-		//menu items
-		menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-		menuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new CustomerComplaintWindow();
-			}
+				menuBar = new JMenuBar();
+				
+				this.addKeyListener(this);
+				
+				//Build Menu
+				menu = new JMenu("Services");
+				menu.setMnemonic(KeyEvent.VK_A);
+				menu.addMenuListener(this);
+				menu.getAccessibleContext().setAccessibleDescription(null);
+				menu.setBounds(250,70,50,15);
+			    menu.setFont(new Font("Ariel", Font.BOLD, 12));
+			    menu.setOpaque(true);
+			    menuBar.add(menu);
+				//menuItem = new JMenuItem("")
+				
+				//menu items
+				menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
+				menuItem.addKeyListener(this);
+				menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+				menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+				menuItem.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						new CustomerComplaintWindow();
+					}
+					
+				});
 			
-		});
-	
-		menuItem.setBackground(Color.green);
-	    menu.setForeground(Color.yellow);
-		menu.add(menuItem);
-		
-		
-		menuItem = new JMenuItem("Live Chat", KeyEvent.VK_T);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-		menuItem.setBackground(Color.yellow);
-	    menu.setForeground(Color.yellow);
-		menu.add(menuItem);
-		menuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//new ChatWindow();
-			}
+				menuItem.setBackground(Color.green);
+			    menu.setForeground(Color.yellow);
+				menu.add(menuItem);
+				
+				
+				menuItem = new JMenuItem("Live Chat", KeyEvent.VK_T);
+				menuItem.addKeyListener(this);
+				menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+				menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+				menuItem.setBackground(Color.yellow);
+			    menu.setForeground(Color.yellow);
+				menu.add(menuItem);
+				menuItem.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//new ChatWindow();
+					}
+					
+				});
+				
+				menuItem = new JMenuItem("Video Call A Representative", KeyEvent.VK_T);
+				menuItem.addKeyListener(this);
+				menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+				menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+				menuItem.setBackground(Color.yellow);
+			    menu.setForeground(Color.yellow);
+				menu.add(menuItem);
+				menuItem.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						//new VideoCall();
+					}
+					
+				});
+				
+				JMenu back = new JMenu("Back");
+				
+				back.setFont(new Font("Ariel", Font.BOLD, 12));
+				back.setMnemonic(KeyEvent.VK_A);
+				back.addMenuListener(this);
+				back.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(back);
+				back.addMenuListener(new javax.swing.event.MenuListener(){
+
+					@Override
+					public void menuSelected(MenuEvent e) {
+						new EmployeePortal();
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				
+					
+				});
+				
+				
+				JMenu help = new JMenu("Help");
+				help.setFont(new Font("Ariel", Font.BOLD, 12));
+				help.setMnemonic(KeyEvent.VK_A);
+				help.addMenuListener(this);
+				help.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(help);
+				help.addMenuListener(new javax.swing.event.MenuListener(){
+
+					@Override
+					public void menuSelected(MenuEvent e) {
+						//new LiveChat();
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
+				
+				JMenu logout = new JMenu("Log Out");
+				logout.setFont(new Font("Ariel", Font.BOLD, 12));
+				logout.setMnemonic(KeyEvent.VK_A);
+				logout.addMenuListener(this);
+				logout.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(logout);
+				logout.addMenuListener(new javax.swing.event.MenuListener(){
+
+					@Override
+					public void menuSelected(MenuEvent e) {
+						new CustomerLoginWindow();
+						
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+		 
+				});
+				
+				JMenu exit = new JMenu("Exit Program");
+				exit.setFont(new Font("Ariel", Font.BOLD, 12));
+				exit.setMnemonic(KeyEvent.VK_A);
+				exit.addMenuListener(this);
+				exit.getAccessibleContext().setAccessibleDescription(null);
+				menuBar.add(exit);
+				exit.addMenuListener(new javax.swing.event.MenuListener(){
+
+					@Override
+					public void menuSelected(MenuEvent e) {
+							System.exit(0);
+						
+						
+					}
+
+					@Override
+					public void menuDeselected(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void menuCanceled(MenuEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+		 
+				});
+				
+				frame.add(menuBar);
+				frame.setJMenuBar(menuBar); 
+		 }
+				
 			
-		});
-		
-		menuItem = new JMenuItem("Video Call A Representative", KeyEvent.VK_T);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-		menuItem.setBackground(Color.yellow);
-	    menu.setForeground(Color.yellow);
-		menu.add(menuItem);
-		menuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//new VideoCall();
+			private void addKeyListener(ViewResolvedComplaint viewResolvedComplaint) {
+				// TODO Auto-generated method stub
+				
 			}
-			
-		});
-		
-		menu = new JMenu("Back");
-		
-		menu.setFont(new Font("Ariel", Font.BOLD, 12));
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menuBar.add(menu);
-		menu.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new EmployeePortal();
-			}
-			
-		});
-		
-		
-		menu = new JMenu("Help");
-		menu.setFont(new Font("Ariel", Font.BOLD, 12));
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menuBar.add(menu);
-		menuItem.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//new LiveChat();
-			}
-			
-		});
-		
-		menu = new JMenu("Log Out");
-		menu.setFont(new Font("Ariel", Font.BOLD, 12));
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menuBar.add(menu);
-		//menuItem = new JMenuItem("")
-		
-		class MenuListener{
-		  MenuListener listener =  new MenuListener();
-		}
-		
-		frame.add(menuBar);
-		frame.setJMenuBar(menuBar); 
-		}
 	
 	public void table() {
 		JTable table = new JTable();
@@ -192,4 +287,46 @@ public class ViewResolvedComplaint {
 		frame.getContentPane().add(scroll);
 		//frame.setVisible(true);
 	  }
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuSelected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuDeselected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuCanceled(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	} 
