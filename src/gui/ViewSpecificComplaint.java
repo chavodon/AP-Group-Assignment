@@ -46,7 +46,7 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 	//private static Connection dbConnect1 = DatabaseConnection.getConnection();
 
 	private static final long serialVersionUID = 1L;
-	private JFrame frame = new JFrame("View All Complaints");
+	private JFrame frame = new JFrame("View Specific Complaints");
 	private JLabel label;
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
@@ -60,10 +60,8 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 	public JPanel panel = new JPanel();
     public JScrollPane scrollPane = new JScrollPane(result);
     private JButton assignBtn;
-    private static Connection dbConnect = DatabaseConnection.getConnection();
     private static Connection dbConnect1 = DatabaseConnection.getConnection();
 	private static String category;
-	private JTable table;
 	
 	public ViewSpecificComplaint(String category) {
 
@@ -84,7 +82,7 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 	    assignBtn.setBackground(Color.blue);
 	    assignBtn.setForeground(Color.yellow);
 	    assignBtn.setOpaque(true);
-	    assignBtn.setBounds(160,450,260,50);
+	    assignBtn.setBounds(260,450,260,50);
 	    assignBtn.addActionListener(this);
 	    frame.add(assignBtn);
 	    
@@ -211,18 +209,25 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 		mode.setColumnIdentifiers(columns);
 			
 		table.setModel(mode);
-		table.setSize(800, 800);
 		table.setBackground(Color.white);
 		table.setForeground(Color.black);
 		table.setSelectionBackground(Color.red);
 		table.setSelectionForeground(Color.white);
-		table.setRowHeight(50);
+		table.setRowHeight(30);
 		table.setFont(new Font("Times", Font.PLAIN, 12));
+		table.getColumnModel().getColumn(0).setPreferredWidth(30);
+		table.getColumnModel().getColumn(1).setPreferredWidth(60);
+		table.getColumnModel().getColumn(2).setPreferredWidth(30);
+		table.getColumnModel().getColumn(3).setPreferredWidth(30);
+		table.getColumnModel().getColumn(4).setPreferredWidth(30);
+		table.getColumnModel().getColumn(5).setPreferredWidth(50);
+		table.getColumnModel().getColumn(6).setPreferredWidth(30);
+		table.getColumnModel().getColumn(7).setPreferredWidth(30);
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setForeground(Color.red);
 		scroll.setBackground(Color.WHITE);
-		scroll.setBounds(10,80,750,350);
+		scroll.setBounds(5,80,770,350);
 		frame.getContentPane().add(scroll);
 		
 		try {
