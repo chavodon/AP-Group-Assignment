@@ -31,7 +31,8 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
 	@SuppressWarnings("unused")
-	public class CustomerComplaintWindow extends JFrame implements ActionListener {
+	public class CustomerComplaintWindow extends JFrame implements ActionListener, MenuKeyListener, javax.swing.event.MenuListener, KeyListener{
+	 {
 		
 		private GridBagConstraints gbc;
 		
@@ -466,6 +467,72 @@ import javax.swing.KeyStroke;
 				
 			} 
 		}
+		 
+		 	@Override
+	public void menuSelected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuDeselected(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuCanceled(MenuEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuKeyTyped(MenuKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuKeyPressed(MenuKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void menuKeyReleased(MenuKeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
+}
+
 			
 	
 		
