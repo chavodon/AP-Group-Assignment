@@ -270,7 +270,7 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
 		if (e.getSource() == viewBtn) {
-			ViewAllComplaint vc = new ViewAllComplaint();
+
 		}			
 		else if (e.getSource() == editBtn) {
 			CompleteSolution ww = new CompleteSolution(" ");	
