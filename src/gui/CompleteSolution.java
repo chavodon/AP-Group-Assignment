@@ -7,8 +7,8 @@ package gui;
 	import java.awt.HeadlessException;
 	import java.awt.Insets;
 	import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+	import java.awt.event.ActionListener;
+	import java.awt.event.KeyEvent;
 	import javax.swing.JButton;
 	import javax.swing.JCheckBoxMenuItem;
 	import javax.swing.JFrame;
@@ -25,7 +25,7 @@ import java.awt.event.KeyEvent;
 	import javax.swing.table.DefaultTableModel;
 	import javax.swing.JTable;
 
-	public class CompleteSolution extends JFrame implements ActionListener{
+	public class CompleteSolution extends JFrame implements ActionListener, MenuKeyListener, javax.swing.event.MenuListener, KeyListener{
 		
 		private JFrame frame = new JFrame("Resolve a Complaint");
 		public JMenuBar menuBar;
@@ -35,13 +35,13 @@ import java.awt.event.KeyEvent;
 		public JCheckBoxMenuItem rbMenuItem;
 		public JTextArea textArea;
 		public JTextField searchField = new JTextField(30);
-	    public JButton searchB = new JButton ("Search");
-	    public JTable result = new JTable();
+	        public JButton searchB = new JButton ("Search");
+	        public JTable result = new JTable();
 		public JPanel panel = new JPanel();
-	    public JScrollPane scrollPane = new JScrollPane(result);
-	    private GridBagConstraints gbc;
-	    private JLabel instruction;
-	    private JLabel header= new JLabel();
+	        public JScrollPane scrollPane = new JScrollPane(result);
+	        private GridBagConstraints gbc;
+	        private JLabel instruction;
+	        private JLabel header= new JLabel();
 		
 		private static final long serialVersionUID = 1L;
 		
@@ -344,6 +344,70 @@ import java.awt.event.KeyEvent;
 			// TODO Auto-generated method stub
 			
 		}
+		
+		@Override
+		public void menuSelected(MenuEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void menuDeselected(MenuEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void menuCanceled(MenuEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void menuKeyTyped(MenuKeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void menuKeyPressed(MenuKeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
+		@Override
+		public void menuKeyReleased(MenuKeyEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+
 		
 
 }
