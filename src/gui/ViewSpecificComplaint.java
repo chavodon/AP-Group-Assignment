@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -34,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 
 import customer.Complaints;
 import customer.Customer;
+import employee.AssignComplaint;
 import connector.DatabaseConnection;
 
 public class ViewSpecificComplaint extends JFrame implements ActionListener {
@@ -41,7 +43,7 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 	/**
 	 * 
 	 */
-	private static Connection dbConnect1 = DatabaseConnection.getConnection();
+	//private static Connection dbConnect1 = DatabaseConnection.getConnection();
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame = new JFrame("View All Complaints");
@@ -57,21 +59,24 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
     public JTable result = new JTable();
 	public JPanel panel = new JPanel();
     public JScrollPane scrollPane = new JScrollPane(result);
-    private GridBagConstraints gbc;
-    private JLabel instruction;
-    private JLabel header= new JLabel();
     private JButton assignBtn;
     private static Connection dbConnect = DatabaseConnection.getConnection();
-	private PreparedStatement pStmt;
-	private ResultSet result1;
+    private static Connection dbConnect1 = DatabaseConnection.getConnection();
+	private static String category;
+	private JTable table;
 	
-	public ViewSpecificComplaint() {
+	public ViewSpecificComplaint(String category) {
+
+		frame.setResizable(false);
+		frame.setLayout(null);
+		frame.setSize(new Dimension(800,600));
+		frame.setLocationRelativeTo(null);
+		frame.getContentPane().setBackground(new Color(160, 160, 160));
+		
 		label = new JLabel("Complaint Listings: ");
 	    label.setBounds(50,45,350,20);
 	    label.setFont(new Font("Ariel", Font.BOLD, 12));
-	    label.setBackground(Color.black);
-	    label.setForeground(Color.WHITE);
-	    label.setOpaque(true);
+	    label.setForeground(Color.black);
 	    frame.add(label);
 		
 	    assignBtn = new JButton("ASSIGN COMPLAINT TO TECHNICIAN");
@@ -81,67 +86,17 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 	    assignBtn.setOpaque(true);
 	    assignBtn.setBounds(160,450,260,50);
 	    assignBtn.addActionListener(this);
-	    
 	    frame.add(assignBtn);
-		frame.setLayout(null);
-		frame.setSize(new Dimension(600,600));
-		frame.setVisible(true);
-		frame.getContentPane().setBackground(Color.black);
 	    
+		frame.setVisible(true);
 	    navbar();
-	   // addComponents();
-	    table();
-			
+	    table(category);
 	 }
 	
 	@SuppressWarnings("unused")
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == assignBtn) {
 			AssignComplaint ac = new AssignComplaint();
-		}
-	}
-	
-	public void makeQuery(String category) 
-	{		
-		try 
-		{	
-			String query = "SELECT * FROM complaints WHERE category = '"+category+"'"; //get latest due date payment
-			//String query = "SELECT * FROM customers WHERE issueType = '"+issueType+"'";
-			//prepare the java statement
-		    PreparedStatement pStmt = dbConnect1.prepareStatement(query);
-		     
-		     // execute the query, and get a java resultset
-		     result1 = pStmt.executeQuery(query);
-		     Complaints sp = new Complaints();
-		     Customer info = new Customer();
-		     // iterate through the java resultset
-		      while (result1.next())
-		      {
-		    	  sp.setcNo(result1.getString("cNo"));
-		    	  sp.setCategory(result1.getString("category"));
-		    	  sp.setDetails(result1.getString("details"));
-		    	  sp.setCustomerId(result1.getString("customerId"));
-		    	  sp.setDate(result1.getString("date"));
-		    	  sp.setStatus(result1.getString("status"));
-		    	  sp.setResponseDate(result1.getString("responseDate"));
-		    	  sp.setRespondent(result1.getString("respondent"));
-		    	  
-		    	  /*info.setId(result1.getString("id"));
-		    	  info.setfName(result1.getString("fName"));
-		    	  info.setlName(result1.getString("lName"));
-		    	  info.setEmail(result1.getString("email"));
-		    	  info.setContact(result1.getString("contact"));
-		    	  info.setAddress(result1.getString("address"));
-		    	  info.setIssueType(result1.getString("issueType"));
-		    	  info.setIssueDetails(result1.getString("issueDetails"));*/
-		    	  
-	    		  System.out.println(sp.getcNo() +"\t"+ sp.getCategory() +"\t\t" + sp.getDetails() +"\t" + sp.getCustomerId() + "\t" + sp.getDate() + "\t" + sp.getStatus() + "\t" + sp.getResponseDate() + "\t" + sp.getRespondent());
-		      }
-		   pStmt.close();
-		} 
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
 		}
 	}
 	
@@ -248,36 +203,57 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 		frame.setJMenuBar(menuBar); 
 	}
 	
-	public void table() {
+	public void table(String category) {
+		
 		JTable table = new JTable();
-		Object[]columns = {"Complaint Number", "Category", "Details", "Customer ID", "Date", "Status", "Response Date", "Respondent"};
-		//Object[]columns = {"Customer ID","First Name", "Last Name", "Email", "Contact", "Address" , "Issue Type", "Issue Details"};
+		Object[]columns = {"Complaint #", "Category", "Details", "Customer ID", "Date", "Status", "Response Date", "Respondent"};
 		DefaultTableModel mode = new DefaultTableModel();
 		mode.setColumnIdentifiers(columns);
-		
+			
 		table.setModel(mode);
+		table.setSize(800, 800);
 		table.setBackground(Color.white);
 		table.setForeground(Color.black);
 		table.setSelectionBackground(Color.red);
 		table.setSelectionForeground(Color.white);
-		table.setGridColor(Color.red);
 		table.setRowHeight(50);
-		table.setFont(new Font("Times", Font.PLAIN, 18));
+		table.setFont(new Font("Times", Font.PLAIN, 12));
 		
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setForeground(Color.red);
 		scroll.setBackground(Color.WHITE);
-		scroll.setBounds(10,80,530,350);
-		
+		scroll.setBounds(10,80,750,350);
 		frame.getContentPane().add(scroll);
-		//frame.setVisible(true);
-		} 
 		
-		
+		try {
+			
+			Statement st = dbConnect1.createStatement();
+			String query = "SELECT * FROM complaints WHERE category = '"+category+"'";
+			ResultSet rs = st.executeQuery(query);
+			
+			while(rs.next()) {
+				mode.addRow(new Object [] {
+						rs.getString("cNo"),
+						rs.getString("category"),
+						rs.getString("details"),
+						rs.getString("customerId"),
+						rs.getString("date"),
+						rs.getString("status"),
+						rs.getString("responseDate"),
+						rs.getString("respondent"),
+				});
+			}
+			
+			rs.close();
+			st.close();
+
+			} catch (Exception e) {
+			System.out.println("Error..");
+		}		
+	}
+	
 	public static void main(String[] args) {
-		new ViewSpecificComplaint();
+		new ViewSpecificComplaint(category);
 
 	}
-
-
 }
