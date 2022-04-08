@@ -166,7 +166,7 @@ public class EmployeePortal extends JFrame implements ActionListener, KeyListene
 
 					@Override
 					public void menuSelected(MenuEvent e) {
-						new CustomerPortal();
+						new EmployeeLogInWindow();
 						
 					}
 
