@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import client.Client;
 import customer.Complaints;
 
-public class ViewAllComplaint 
+public class ViewAllComplaint extends JFrame implements ActionListener
 {
 	private JFrame frame = new JFrame("View Past Complaints");
 	public JMenuBar menuBar;
@@ -254,5 +254,12 @@ public class ViewAllComplaint
 		public static void main(String[] args) 
 		{
 			new ViewAllComplaint();
+		}
+
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 }
