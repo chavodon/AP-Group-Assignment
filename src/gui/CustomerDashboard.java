@@ -5,10 +5,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import chat.ClientChat;
+import chat.ServerChat;
 import client.Client;
 
 public class CustomerDashboard extends JFrame
@@ -21,6 +25,7 @@ public class CustomerDashboard extends JFrame
 		private JButton viewComplaint;
 		private JButton viewPastComplaint;
 		private JButton viewPastPayments;
+		private JButton chatBtn;
 		
 		//Client client = new Client();
 		
@@ -47,6 +52,7 @@ public class CustomerDashboard extends JFrame
 		viewComplaint = new JButton("View a Complaint");
 		viewPastComplaint = new JButton("View Past Complaints");
 		viewPastPayments = new JButton("View Past Payments");
+		chatBtn = new JButton("Live Chat");
 		
 		lodgeBtn.setBackground(Color.PINK);
 		lodgeBtn.setFont(new Font("Serif", Font.BOLD, 18));
@@ -78,6 +84,12 @@ public class CustomerDashboard extends JFrame
 		viewPastPayments.setBounds(50,255,199,40); //x axis, y axis, length, width
 		viewPastPayments.setOpaque(true);
 		
+		chatBtn.setBackground(Color.cyan);
+		chatBtn.setForeground(Color.black);
+		chatBtn.setFont(new Font("Serif", Font.BOLD, 18));
+		chatBtn.setBounds(270,256,199,40); //x axis, y axis, length, width
+		chatBtn.setOpaque(true);
+		
 		//-----------------ADD LISTENERS---------------------
 		lodgeBtn.addActionListener(new ActionListener()
 		{
@@ -85,7 +97,7 @@ public class CustomerDashboard extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				  new LodgeComplaintWindow();
-					//dispose();
+				  dispose();
 			}
 		});
 		queryBtn.addActionListener(new ActionListener()
@@ -94,7 +106,7 @@ public class CustomerDashboard extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				new QueryAccountStatus();
-				//dispose();
+				dispose();
 			}
 		});
 		viewComplaint.addActionListener(new ActionListener()
@@ -112,7 +124,7 @@ public class CustomerDashboard extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				ViewAllComplaint view = new ViewAllComplaint();
-				view.callClient();
+				dispose();
 			}
 		});
 		viewPastPayments.addActionListener(new ActionListener()
@@ -121,7 +133,24 @@ public class CustomerDashboard extends JFrame
 			public void actionPerformed(ActionEvent e) 
 			{
 				ViewPayments view = new ViewPayments();
-				view.callClient();
+				dispose();
+			}
+		});
+		chatBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				try 
+				{
+					new ServerChat();
+					//chat1.serverConnection();
+					new ClientChat();
+				} catch (IOException e1) 
+				{
+					e1.printStackTrace();
+				}
+//				ClientChat chat2 = new ClientChat();
 			}
 		});
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
@@ -130,6 +159,7 @@ public class CustomerDashboard extends JFrame
 		add(viewComplaint);
 		add(viewPastComplaint);
 		add(viewPastPayments);
+		add(chatBtn);
 		setVisible(true);
 	}
 	public static void main(String args[])

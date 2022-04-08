@@ -34,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
 
 import customer.Complaints;
 import customer.Customer;
-import employee.AssignComplaint;
 import connector.DatabaseConnection;
 
 public class ViewSpecificComplaint extends JFrame implements ActionListener {

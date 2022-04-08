@@ -333,22 +333,21 @@ import customer.Complaints;
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
+					Client client = new Client();
 					complaint.setcNo(idTxt.getText());
-					//complaint.setcNo("0001");
+					//complaint.setCustomerId(customerTxt.getText());
 					complaint.setCategory(categoryBox.getSelectedItem().toString());					
 					complaint.setDate(dateTxt.getText());
 					complaint.setDetails(detailsTxt.getText());
 					complaint.setStatus("Unresolved");
 					complaint.setResponseDate("N/A");
 					complaint.setRespondent("N/A");
+					complaint.setResponse("N/A");
+					complaint.setAssignedTo("N/A");
+					complaint.setVisitDate("N/A");
 					
 					client.sendAction("Add");
-					client.sendComplaint(complaint, "1334");
-					
-					if (e.getSource() == lodgeBtn)
-					{
-						//CustomerPortal cport = new CustomerPortal();
-					} 
+					client.sendComplaint(complaint);
 				}
 			});
 		}

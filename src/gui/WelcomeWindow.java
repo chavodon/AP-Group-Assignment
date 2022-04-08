@@ -57,7 +57,7 @@ public WelcomeWindow()
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				EmployeeLogInWindow emp = new EmployeeLogInWindow();
+				 new EmployeeLogInWindow();
 				dispose();
 			}
 		});
@@ -66,7 +66,7 @@ public WelcomeWindow()
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				CustomerLoginWindow cus = new CustomerLoginWindow();	
+				 new CustomerLoginWindow();	
 				dispose();
 			}
 		});

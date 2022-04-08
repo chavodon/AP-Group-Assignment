@@ -1,18 +1,10 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.Random;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -22,22 +14,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-
-import com.mysql.cj.xdevapi.Table;
 
 import client.Client;
 import customer.Complaints;
 
-public class ViewComplaint implements ActionListener 
+public class AssignComplaint implements ActionListener 
 {
-	private JFrame frame = new JFrame("View Complaint");
+	private JFrame frame = new JFrame("Customer Service Rep - Assign Complaint");
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
 	public JMenuItem menuItem;
@@ -45,78 +31,76 @@ public class ViewComplaint implements ActionListener
 	public JCheckBoxMenuItem rbMenuItem;
 	private JTextArea resultTxt;
 
-	public JTextField searchField;
-    public JButton searchB = new JButton ("Search");
+	public JTextField idTxt;
+    public JButton assignBtn;
 	public JPanel panel = new JPanel();
-    private JLabel titleLbl;
-    private JButton bckBtn;
+    private JLabel idLbl;
+    private JLabel techLbl;
+    
+    private JTextField techTxt;
+    private JButton respondBtn;
     
     Complaints complaint = new Complaints();
 	
-	public ViewComplaint()
+	public AssignComplaint()
 	{
 		frame.setResizable(false);
-		frame.setBounds(700, 300, 584, 531);
+		frame.setBounds(700, 300, 534, 421); //x, y, width, length
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null); //center output on screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(160, 160, 160));
 		
-		titleLbl = new JLabel("Complaint Id: ");
-		titleLbl.setBounds(20, 10, 290, 35); //x, y, width, length
-	    titleLbl.setFont(new Font("Serif", Font.BOLD, 16));
-	    frame.getContentPane().add(titleLbl);
+		idLbl = new JLabel("Complaint Id: ");
+		idLbl.setBounds(20, 10, 290, 35); //x, y, width, length
+	    idLbl.setFont(new Font("Serif", Font.BOLD, 18));
+	    frame.getContentPane().add(idLbl);
 	    
+		idTxt = new JTextField();
+		idTxt.setFont(new Font("Serif", Font.PLAIN, 14));
+		idTxt.setBounds(147, 10, 130, 30);
+		frame.getContentPane().add(idTxt );
+	
 	    resultTxt = new JTextArea();
-	    resultTxt.setBounds(50, 90, 430, 300);
+	    resultTxt.setBounds(50, 60, 430, 200); //x, y, width, length
 	    resultTxt.setFont(new Font("Serif", Font.PLAIN, 16));
 	    resultTxt.setBackground(new Color(192, 192, 192));
 	    resultTxt.setVisible(false);
 	    frame.getContentPane().add(resultTxt);
 	    
-		searchField = new JTextField();
-		searchField.setFont(new Font("Serif", Font.PLAIN, 14));
-		searchField.setBounds(117, 10, 130, 30);
-		frame.getContentPane().add(searchField );
-	
-		searchB = new JButton("Search");
-		searchB.setFont(new Font("Serif", Font.BOLD, 14));
-		searchB.setForeground(Color.white);
-		searchB.setBorderPainted(false);
-		searchB.setBounds(265, 10, 80, 30);
-		searchB.setBackground(new Color(96, 96, 96));
-		frame.getContentPane().add(searchB);
-		searchB.addActionListener(new ActionListener()
+		assignBtn = new JButton("Assign");
+		assignBtn.setFont(new Font("Serif", Font.BOLD, 18));
+		assignBtn.setForeground(Color.white);
+		assignBtn.setBorderPainted(false);
+		assignBtn.setBounds(200, 130, 110, 35);
+		assignBtn.setBackground(new Color(96, 96, 96));
+		
+		assignBtn.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
 				Client client = new Client();
 				
-				complaint.setcNo(searchField.getText());
-				client.sendAction("ViewComplaint");
-				client.sendComplaintId(complaint.getcNo());
+				complaint.setcNo(idTxt.getText());
+				complaint.setAssignedTo(techTxt.getText());
+				client.sendAction("Assign");
+				client.sendTechnician(complaint.getAssignedTo());
 				client.receiveResponse();			
-				//frame.dispose();
-			}
-	});
-		bckBtn = new JButton("Back");
-		bckBtn.setFont(new Font("Serif", Font.BOLD, 14));
-		bckBtn.setForeground(Color.white);
-		bckBtn.setBorderPainted(false);
-		bckBtn.setBounds(365, 10, 80, 30);
-		bckBtn.setBackground(new Color(96, 96, 96));
-		bckBtn.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				new CustomerDashboard();
 				frame.dispose();
 			}
-		});
-		frame.getContentPane().add(bckBtn);
-
+	});
+		frame.getContentPane().add(assignBtn);
+		techLbl = new JLabel("Technician Name: ");
+		techLbl.setBounds(20, 70, 290, 35); //x, y, width, length
+	    techLbl.setFont(new Font("Serif", Font.BOLD, 18));
+	    frame.getContentPane().add(techLbl);
+	    
+	    techTxt = new JTextField();
+	    techTxt.setBounds(180, 70, 280, 30); //x, y, width, length
+	    techTxt.setFont(new Font("Serif", Font.PLAIN, 16));
+	    frame.getContentPane().add(techTxt);
+	    
 		menu();
 		frame.setVisible(true);
 		}
@@ -203,15 +187,9 @@ public class ViewComplaint implements ActionListener
 				frame.add(menuBar);
 				frame.setJMenuBar(menuBar); 
 		 }
-		 public void setText(Complaints co)
-		 {
-			 searchField.setText(co.getcNo());
-			 resultTxt.setVisible(true);
-			 resultTxt.setText("Complaint No: " + co.getcNo() + "\nCustomer Id: " + co.getCustomerId() + "\nCategory: " + co.getCategory() + "\nDetails: " + co.getDetails() + "\nStatus: " + co.getStatus() + "\nResponse Date: " + co.getResponseDate() + "\nRespondent: "+co.getRespondent());
-			 resultTxt.setEditable(false);
-		 }	
+		
 	public static void main(String[] args) {
-		new ViewComplaint();
+		new AssignComplaint();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

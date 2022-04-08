@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -32,7 +33,6 @@ public class Server
 	
 	public Server()
 	{
-		System.out.println("In server default class");
 		this.createConnection();
 		this.waitForRequests();
 	}
@@ -70,7 +70,7 @@ public class Server
 			}
 			catch(SQLException e)
 			{
-				JOptionPane.showMessageDialog(null, "Could not connect to database\n" + e,"Connection Failure", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Failed To Connect To Database!" + e,"Connection Failure", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		return dBConn;
@@ -88,9 +88,45 @@ public class Server
 			e.printStackTrace();
 		}
 	}
-	private void addComplaint(Complaints complaint, String customerId)
+	private int numRecords()
 	{
-		String query = "INSERT INTO complaints values ('"+complaint.getcNo()+"', '"+complaint.getCategory()+"', '"+complaint.getDate()+"', '"+complaint.getDetails()+"', '"+customerId+"', '"+complaint.getStatus()+"', '"+complaint.getResponseDate()+"', '"+complaint.getRespondent()+"')";
+		System.out.println("counting");
+		int count = 0;
+		Complaints complaint = new Complaints();
+		String query = "SELECT * FROM complaints";
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			while(result.next())
+			{
+				complaint.setcNo(result.getString(1));
+				complaint.setCustomerId(result.getString(2));
+				complaint.setCategory(result.getString(3));
+				complaint.setDate(result.getString(4));
+				complaint.setDetails(result.getString(5));
+				complaint.setStatus(result.getString(6));
+				complaint.setResponseDate(result.getString(7));
+				complaint.setRespondent(result.getString(8));
+				complaint.setResponse(result.getString(9));
+				complaint.setAssignedTo(result.getString(10));
+				complaint.setVisitDate(result.getString(11));
+
+				count++;
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return count;
+	}
+	//-----------COMPLAINT FUNCTIONALITIES-----------------------
+	private void addComplaint(Complaints complaint)
+	{
+		String query = "INSERT INTO complaints values ('"+complaint.getcNo()+"', '"+complaint.getCustomerId()+"','"+complaint.getCategory()+"', '"+complaint.getDate()+"', '"+complaint.getDetails()+"', '"+complaint.getStatus()+"', '"+complaint.getResponseDate()+"', '"+complaint.getRespondent()+"','"+complaint.getResponse()+"', '"+complaint.getAssignedTo()+"', '"+complaint.getVisitDate()+"')";
 		try
 	     {
 			stmt = dBConn.createStatement();
@@ -127,47 +163,189 @@ public class Server
 			if(result.next())
 			{
 				complaint.setcNo(result.getString(1));
-				complaint.setCategory(result.getString(2));
-				complaint.setDate(result.getString(3));
-				complaint.setDetails(result.getString(4));
-				complaint.setCustomerId(result.getString(5));
-				complaint.setResponseDate(result.getString(6));
-				complaint.setRespondent(result.getString(7));
+				complaint.setCustomerId(result.getString(2));
+				complaint.setCategory(result.getString(3));
+				complaint.setDate(result.getString(4));
+				complaint.setDetails(result.getString(5));
+				complaint.setStatus(result.getString(6));
+				complaint.setResponseDate(result.getString(7));
+				complaint.setRespondent(result.getString(8));
+				complaint.setResponse(result.getString(9));
+				complaint.setAssignedTo(result.getString(10));
+				complaint.setVisitDate(result.getString(11));
 			}
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 		}
+		System.out.println(complaint);
 		return complaint;
 	}
-	private Complaints respondToComplaint(String compId)
+	private void respondToComplaint(String compId, String response, String date)
 	{
-		System.out.println("In respond");
+		String query = "UPDATE complaints SET response = '"+response+"', visitDate = '"+date+"' WHERE cNo = '"+compId+"' ";
+		try
+	     {
+			stmt = dBConn.createStatement();
+			if((stmt.executeUpdate(query)==1))
+			{
+				objOs.writeObject(true);
+				JOptionPane.showMessageDialog(null, "Record updated in update successfully","Record Status", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "sql wrong","Record Status", JOptionPane.INFORMATION_MESSAGE);
+				
+				objOs.writeObject(false);
+				}
+	     } 
+		catch (IOException ioe)
+		{
+			ioe.printStackTrace();
+		}
+	     catch (SQLException e) 
+	     {
+			e.printStackTrace();
+		}
+	}
+	private void respondToComplaint(String compId, String response)
+	{
+		String query = "UPDATE complaints SET response = '"+response+"' WHERE cNo = '"+compId+"' ";
+				try
+	     {
+			stmt = dBConn.createStatement();
+			
+			if((stmt.executeUpdate(query)==1))
+			{
+				objOs.writeObject(true);
+				JOptionPane.showMessageDialog(null, "Record updated in update successfully","Record Status", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "sql wrong","Record Status", JOptionPane.INFORMATION_MESSAGE);
+				
+				objOs.writeObject(false);
+				}
+	     } 
+		catch (IOException ioe)
+		{
+			ioe.printStackTrace();
+		}
+	     catch (SQLException e) 
+	     {
+			e.printStackTrace();
+		}
+	}
+	private Queue<Complaints> viewPastComplaint(String customerId)
+	{
+		System.out.println("In View All Complaint");
 		Complaints complaint = new Complaints();
-		String query = "SELECT * FROM complaints WHERE cNo = '"+compId+"' ";
+		String query = "SELECT * FROM complaints WHERE customerId  = '"+customerId+"' ";
+		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
 		try
 		{
 			stmt = dBConn.createStatement();
 			result = stmt.executeQuery(query);
 			
-			if(result.next())
+			while(result.next())
 			{
 				complaint.setcNo(result.getString(1));
-				complaint.setCategory(result.getString(2));
-				complaint.setDate(result.getString(3));
-				complaint.setDetails(result.getString(4));
-				complaint.setCustomerId(result.getString(5));
-				complaint.setResponseDate(result.getString(6));
-				complaint.setRespondent(result.getString(7));
+				complaint.setCustomerId(result.getString(2));
+				complaint.setCategory(result.getString(3));
+				complaint.setDate(result.getString(4));
+				complaint.setDetails(result.getString(5));
+				complaint.setStatus(result.getString(6));
+				complaint.setResponseDate(result.getString(7));
+				complaint.setRespondent(result.getString(8));
+				complaint.setResponse(result.getString(9));
+				complaint.setAssignedTo(result.getString(10));
+				complaint.setVisitDate(result.getString(11));
+				//System.out.println("1");
+				allComplaints.add(complaint);
+				complaint = new Complaints();
+				//System.out.println(complaint);
 			}
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 		}
-		return complaint;
+		return allComplaints;
 	}
+	private Queue<Complaints> viewComplaintByCategory(String category)
+	{
+		int count = 0;
+		Complaints complaint = new Complaints();
+		String query = "SELECT * FROM complaints WHERE category  = '"+category+"' ";
+		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			while(result.next())
+			{
+				complaint.setcNo(result.getString(1));
+				complaint.setCustomerId(result.getString(2));
+				complaint.setCategory(result.getString(3));
+				complaint.setDate(result.getString(4));
+				complaint.setDetails(result.getString(5));
+				complaint.setStatus(result.getString(6));
+				complaint.setResponseDate(result.getString(7));
+				complaint.setRespondent(result.getString(8));
+				complaint.setResponse(result.getString(9));
+				complaint.setAssignedTo(result.getString(10));
+				complaint.setVisitDate(result.getString(11));
+				
+				allComplaints.add(complaint);
+				count++;
+				complaint = new Complaints();
+			}
+			if(count == 0)
+			{
+				JOptionPane.showMessageDialog(null, "No Record Of Such Category!","Search Status", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Record(s) Found!","Search Status", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return allComplaints;
+	}
+	private void assignComplaint(String compId, String technician)//FIX
+	{
+		System.out.println("method");
+		String query = "UPDATE complaints SET assignedTo = '"+technician+"' WHERE cNo = '"+compId+"' ";
+		try
+	     {
+			stmt = dBConn.createStatement();
+			
+			if((stmt.executeUpdate(query)==1))
+			{
+				objOs.writeObject(true);
+				JOptionPane.showMessageDialog(null, "Record updated in update successfully","Record Status", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "sql wrong","Record Status", JOptionPane.INFORMATION_MESSAGE);
+				objOs.writeObject(false);
+			}
+	     } 
+		catch (IOException ioe)
+		{
+			ioe.printStackTrace();
+		}
+	     catch (SQLException e) 
+	     {
+			e.printStackTrace();
+		}
+	}
+	//-------------ACCOUNT-PAYMENT RELATED FUNCTIONALIES------------------------
 	private Payments queryAccount(String customerId)
 	{
 		System.out.println("In Query");
@@ -195,46 +373,11 @@ public class Server
 		{
 			e.printStackTrace();
 		}
+		System.out.println(payment);
 		return payment;
-	}
-	private Queue<Complaints> viewPastComplaint(String customerId)
-	{
-		System.out.println("In View All Complaint");
-		Complaints complaint = new Complaints();
-		String query = "SELECT * FROM complaints WHERE customerId  = '"+customerId+"' ";
-		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
-		try
-		{
-			stmt = dBConn.createStatement();
-			result = stmt.executeQuery(query);
-			
-			while(result.next())
-			{
-				//System.out.println("1");
-				complaint.setcNo(result.getString(1));
-				complaint.setCategory(result.getString(2));
-				complaint.setDate(result.getString(3));
-				complaint.setDetails(result.getString(4));
-				complaint.setCustomerId(result.getString(5));
-				complaint.setStatus(result.getString(6));
-				complaint.setResponseDate(result.getString(7));
-				complaint.setRespondent(result.getString(8));
-				
-				//System.out.println("1");
-				allComplaints.add(complaint);
-				complaint = new Complaints();
-				System.out.println(complaint);
-			}
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return allComplaints;
 	}
 	private Queue<Payments> viewPastPayments(String customerId)
 	{
-		System.out.println("In View payments");
 		Payments payment = new Payments();
 		String query = "SELECT * FROM payments WHERE customerId  = '"+customerId+"' ";
 		Queue<Payments> allPayments = new LinkedList<Payments>();
@@ -245,7 +388,6 @@ public class Server
 			
 			while(result.next())
 			{
-				//System.out.println("1");
 				payment.setpNo(result.getString(1));
 				payment.setCustomerId(result.getString(2));
 				payment.setAmountDue(result.getDouble(3));
@@ -254,7 +396,6 @@ public class Server
 				payment.setDueDate(result.getString(6));
 				payment.setStatus(result.getString(7));
 				
-				//System.out.println("1");
 				allPayments.add(payment);
 				payment = new Payments();
 				System.out.println(payment);
@@ -267,11 +408,13 @@ public class Server
 		return allPayments;
 	}
 	
-	
+	//---------WAIT FOR REQUEST TO EXECUTE---------------------------------
 	private void waitForRequests()
 	{
 		String action = "";
 		String customerId = "";
+		String category = "";
+		String complaintId = "";
 		getDatabaseConnection();
 		Complaints complaint = new Complaints();
 		Payments payment = new Payments();
@@ -290,12 +433,26 @@ public class Server
 					if(action.equals("Add"))
 					{
 						complaint = (Complaints) objIs.readObject();
-						customerId = (String)objIs.readObject();
-						
-						addComplaint(complaint, customerId);
+						//customerId = (String)objIs.readObject();
+						//System.out.println(complaint);
+						addComplaint(complaint);
 						objOs.writeObject(true);
 					}
-					else if (action.equals("Search"))
+					else if (action.equals("ViewComplaint"))
+					{
+						System.out.println("Wait for Requests");
+						String comId = (String)objIs.readObject();
+						complaint = viewComplaint(comId);
+						objOs.writeObject(complaint);
+					}
+					else if (action.equals("ResponseView"))
+					{
+						System.out.println("Wait for Requests");
+						String comId = (String)objIs.readObject();
+						complaint = viewComplaint(comId);
+						objOs.writeObject(complaint);
+					}
+					else if (action.equals("ResponseViewTech"))
 					{
 						System.out.println("Wait for Requests");
 						String comId = (String)objIs.readObject();
@@ -306,17 +463,27 @@ public class Server
 					{
 						System.out.println("Wait for Requests");
 						String comId = (String)objIs.readObject();
-						complaint = respondToComplaint(comId);
-						objOs.writeObject(complaint);
+						String response = (String)objIs.readObject();
+						String visitDate = (String)objIs.readObject();
+						respondToComplaint(comId, response, visitDate);
+						objOs.writeObject(true);
 					}
-					else if (action.equals("Query"))
+					else if (action.equals("RepRespond"))
+					{
+						System.out.println("Wait for Requests");
+						String comId = (String)objIs.readObject();
+						String response = (String)objIs.readObject();
+						 respondToComplaint(comId, response);
+						objOs.writeObject(true);
+					}
+					else if (action.equals("QueryStatus"))
 					{
 						System.out.println("Wait for Requests");
 						customerId  = (String)objIs.readObject();
 						payment = queryAccount(customerId);
 						objOs.writeObject(payment);
 					}
-					else if (action.equals("All Complaints"))
+					else if (action.equals("AllComplaints"))
 					{
 						System.out.println("Wait for Requests");
 						customerId  = (String)objIs.readObject();
@@ -324,13 +491,47 @@ public class Server
 						allComplaints = viewPastComplaint(customerId);
 						objOs.writeObject(allComplaints);
 					}
-					else if (action.equals("All Payments"))
+					else if (action.equals("AllPayments"))
 					{
 						System.out.println("Wait for Requests");
 						customerId  = (String)objIs.readObject();
 						
 						allPayments = viewPastPayments(customerId);
 						objOs.writeObject(allPayments);
+					}
+					else if (action.equals("ByCategory"))
+					{
+						category  = (String)objIs.readObject();
+						
+						allComplaints = viewComplaintByCategory(category);
+						objOs.writeObject(allComplaints);
+					}
+					if(action.equals("Assign"))
+					{
+						System.out.println("waiting for method");
+						String comId = (String)objIs.readObject();
+						String technician = (String)objIs.readObject();
+						 assignComplaint(comId, technician);
+						objOs.writeObject(true);
+					}
+					else if (action.equals("ViewDetails"))
+					{
+						System.out.println("Wait for Requests");
+						String comId = (String)objIs.readObject();
+						customerId = (String)objIs.readObject();
+						complaint = viewComplaint(comId);
+						payment = queryAccount(customerId);
+						objOs.writeObject(complaint);
+						objOs.writeObject(payment);
+					}
+					
+					else if (action.equals("CountRecords"))
+					{
+						System.out.println("Wait for Requests");
+						//int total = (int)objIs.readObject();
+						int total = numRecords();
+						System.out.println(total);
+						objOs.writeObject(total);
 					}
 				}
 				catch(ClassNotFoundException ex)

@@ -14,8 +14,6 @@ public class Customer implements Serializable
 	private String email;
 	private String contact;
 	private String address;
-	private String issueType;
-	private String issueDetails;
 	
 	//Default Constructor
 	public Customer() 
@@ -26,11 +24,9 @@ public class Customer implements Serializable
 		this.email = "";
 		this.contact = "";
 		this.address = "";
-		this.issueType = "";
-		this.issueDetails = "";
 	}
 	//Primary Constructor
-	public Customer(String id, String fName, String lName, String email, String contact, String address,String issueType, String issueDetails) 
+	public Customer(String id, String fName, String lName, String email, String contact, String address) 
 	{
 		this.id = id;
 		this.fName = fName;
@@ -38,8 +34,6 @@ public class Customer implements Serializable
 		this.email = email;
 		this.contact = contact;
 		this.address = address;
-		this.issueType = issueType;
-		this.issueDetails = issueDetails;
 	}
 	
 	//Accessors
@@ -67,14 +61,6 @@ public class Customer implements Serializable
 	{
 		return address;
 	}
-	public String getIssueType()
-	{
-		return issueType;
-	}
-	public String getIssueDetails() 
-	{
-		return issueDetails;
-	}
 	
 	//Mutators
 	public void setId(String id)
@@ -100,13 +86,5 @@ public class Customer implements Serializable
 	public void setAddress(String address) 
 	{
 		this.address = address;
-	}
-	public void setIssueType(String issueType) 
-	{
-		this.issueType = issueType;
-	}
-	public void setIssueDetails(String issueDetails) 
-	{
-		this.issueDetails = issueDetails;
 	}
 }

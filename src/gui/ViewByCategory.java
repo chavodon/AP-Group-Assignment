@@ -14,6 +14,7 @@ import java.util.Queue;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -33,9 +34,9 @@ import javax.swing.table.DefaultTableModel;
 import client.Client;
 import customer.Complaints;
 
-public class ViewAllComplaint 
+public class ViewByCategory 
 {
-	private JFrame frame = new JFrame("View Past Complaints");
+	private JFrame frame = new JFrame("View Complaints By Category");
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
 	public JMenuItem menuItem;
@@ -43,17 +44,17 @@ public class ViewAllComplaint
 	public JCheckBoxMenuItem rbMenuItem;
 	public JTextArea textArea;
 	public JTextField searchField = new JTextField(30);
-    public JButton searchB = new JButton ("Search");
+    public JButton searchBtn;
     public JTable result = new JTable();
 	public JPanel panel = new JPanel();
     public JScrollPane scrollPane = new JScrollPane(result);
     
-    private JButton bckBtn;
-    private JLabel titleLbl;
-    
-    Complaints complaint = new Complaints();
+    JLabel titleLbl;
+	String category[]= {"Customer Service", "Product/Service", "Bill Payment", "General"};
+	JComboBox<String> categoryBox = new JComboBox<>(category);
+	String categorySelected = "";
 	
-	public ViewAllComplaint() 
+	public ViewByCategory() 
 	{
 		frame.setResizable(false);
 		frame.setBounds(700, 300, 720, 531);
@@ -61,52 +62,59 @@ public class ViewAllComplaint
 		frame.setLocationRelativeTo(null); //center output on screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(160, 160, 160));
-		
-		titleLbl = new JLabel("Complaint No: ");
-		titleLbl.setBounds(20, 10, 290, 35); //x, y, width, length
-	    titleLbl.setFont(new Font("Serif", Font.BOLD, 16));
-	    frame.getContentPane().add(titleLbl);
+
+		titleLbl = new JLabel();
+		titleLbl = new JLabel("Select a Category: ");
+	    titleLbl.setBounds(20,25,250,40);
+	    titleLbl.setFont(new Font("Serif", Font.BOLD, 18));
+	    titleLbl.setForeground(Color.black);
+	    frame.add(titleLbl);
 	    
-		searchField = new JTextField();
-		searchField.setFont(new Font("Serif", Font.PLAIN, 14));
-		searchField.setBounds(117, 10, 130, 30);
-		frame.getContentPane().add(searchField );
+		categoryBox.setSelectedIndex(0);
+		categoryBox.setBounds(170,33,200,30);
+		categoryBox.setFont(new Font("Serif", Font.PLAIN, 14));
+        categoryBox.addActionListener(new ActionListener() 
+        {
+            public void actionPerformed(ActionEvent event) 
+            {
+                Object selected = categoryBox.getSelectedItem();
+                if(selected.toString().equals("Customer Service"))
+                {
+                	categorySelected = "Customer Service";
+                }
+                else if(selected.toString().equals("Bill Payment"))
+                {
+                	categorySelected = "Bill Payment";
+                }  else if(selected.toString().equals("Product/Service"))
+                {
+                	categorySelected = "Product/Service";
+                }  if(selected.toString().equals("General"))
+                {
+                	categorySelected = "General";
+                }
+            }
+        });
+		frame.add(categoryBox);
 		
-		searchB = new JButton("Search");
-		searchB.setFont(new Font("Serif", Font.BOLD, 14));
-		searchB.setForeground(Color.white);
-		searchB.setBorderPainted(false);
-		searchB.setBounds(265, 10, 80, 30);
-		searchB.setBackground(new Color(96, 96, 96));
-		frame.getContentPane().add(searchB);
-		searchB.addActionListener(new ActionListener()
+		searchBtn = new JButton("Search");
+		searchBtn.setFont(new Font("Serif", Font.BOLD, 16));
+		searchBtn.setForeground(Color.white);
+		searchBtn.setBorderPainted(false);
+		searchBtn.setBounds(390, 33, 80, 35);
+		searchBtn.setBackground(new Color(96, 96, 96));
+		frame.getContentPane().add(searchBtn);
+		searchBtn.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
 				Client client = new Client();
-				client.sendAction("AllComplaints");
-				client.sendCustomerId(searchField.getText());
+				client.sendAction("ByCategory");
+				client.sendCategory(categorySelected);
 				client.receiveResponse();
 			}
 	});
-		
-		bckBtn = new JButton("Back");
-		bckBtn.setFont(new Font("Serif", Font.BOLD, 14));
-		bckBtn.setForeground(Color.white);
-		bckBtn.setBorderPainted(false);
-		bckBtn.setBounds(365, 10, 80, 30);
-		bckBtn.setBackground(new Color(96, 96, 96));
-		bckBtn.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				new CustomerDashboard();
-				frame.dispose();
-			}
-		});
-		frame.getContentPane().add(bckBtn);
+		frame.add(searchBtn);
 		frame.setVisible(true);
 	    navbar();
 	 }
@@ -212,16 +220,124 @@ public class ViewAllComplaint
 		frame.add(menuBar);
 		frame.setJMenuBar(menuBar); 
 		frame.setVisible(true);
+		
+//		Client client = new Client();
+//		client.sendAction("All Complaints");
+//		client.sendCustomerId("1334");
+//		client.receiveResponse();
+		
+		
+//		//Create the Menu Bar
+//		menuBar = new JMenuBar();
+//		
+//		
+//		//Build Menu
+//		menu = new JMenu("Services");
+//		menu.setMnemonic(KeyEvent.VK_A);
+//		menu.getAccessibleContext().setAccessibleDescription(null);
+//		menu.setBounds(250,70,50,15);
+//	    menu.setFont(new Font("Ariel", Font.BOLD, 12));
+//	    menu.setOpaque(true);
+//	    menuBar.add(menu);
+//		//menuItem = new JMenuItem("")
+//		
+//		//menu items
+//		menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
+//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
+//		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+//		menuItem.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new LodgeComplaintWindow();
+//			}
+//			
+//		});
+//	
+//		menuItem.setBackground(Color.green);
+//	    menu.setForeground(Color.yellow);
+//		menu.add(menuItem);
+//		
+//		
+//		menuItem = new JMenuItem("Live Chat", KeyEvent.VK_T);
+//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
+//		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+//		menuItem.setBackground(Color.yellow);
+//	    menu.setForeground(Color.yellow);
+//		menu.add(menuItem);
+//		menuItem.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				//new ChatWindow();
+//			}
+//			
+//		});
+//		
+//		menuItem = new JMenuItem("Video Call A Representative", KeyEvent.VK_T);
+//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
+//		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+//		menuItem.setBackground(Color.yellow);
+//	    menu.setForeground(Color.yellow);
+//		menu.add(menuItem);
+//		menuItem.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				//new VideoCall();
+//			}
+//			
+//		});
+//		
+//		menu = new JMenu("Back");
+//		
+//		menu.setFont(new Font("Ariel", Font.BOLD, 12));
+//		menu.setMnemonic(KeyEvent.VK_A);
+//		menu.getAccessibleContext().setAccessibleDescription(null);
+//		menuBar.add(menu);
+//		menu.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				new EmployeePortal();
+//			}
+//			
+//		});
+//		
+//		
+//		menu = new JMenu("Help");
+//		menu.setFont(new Font("Ariel", Font.BOLD, 12));
+//		menu.setMnemonic(KeyEvent.VK_A);
+//		menu.getAccessibleContext().setAccessibleDescription(null);
+//		menuBar.add(menu);
+//		menuItem.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				//new LiveChat();
+//			}
+//			
+//		});
+//		
+//		menu = new JMenu("Log Out");
+//		menu.setFont(new Font("Ariel", Font.BOLD, 12));
+//		menu.setMnemonic(KeyEvent.VK_A);
+//		menu.getAccessibleContext().setAccessibleDescription(null);
+//		menuBar.add(menu);
+//		//menuItem = new JMenuItem("")
+//		
+//		class MenuListener{
+//		  MenuListener listener =  new MenuListener();
+//		}
+		
+		//frame.add(menuBar);
+		//frame.setJMenuBar(menuBar); 
 		}
 	public void callClient()
 	{
 		Client client = new Client();
-		client.sendAction("AllComplaints");
-		client.sendCustomerId("1001");
+		client.sendAction("ByCategory");
+		client.sendCategory(categorySelected);
 		client.receiveResponse();
 	}
 	public void table(Queue<Complaints> allComplaints) 
 	{	
+		System.out.println("Table");
 		Object[]columns = {"cNo", "Category", "Date", "Details", "CustomerId", "Status","ResponseDate", "Respondent"};
 		JTable table = new JTable();
 		DefaultTableModel mode = (DefaultTableModel) table.getModel();
@@ -232,6 +348,7 @@ public class ViewAllComplaint
 		{
             Object[] row = {complaint.getcNo(),complaint.getCategory(),complaint.getDate(),complaint.getDetails(),complaint.getCustomerId(),complaint.getStatus(),complaint.getResponseDate(),complaint.getRespondent()};
 			mode.addRow(row);
+			System.out.println(complaint.getcNo());
         }
 
 		table.setModel(mode);
@@ -253,6 +370,6 @@ public class ViewAllComplaint
 		
 		public static void main(String[] args) 
 		{
-			new ViewAllComplaint();
+			new ViewByCategory();
 		}
 }

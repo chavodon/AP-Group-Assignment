@@ -36,6 +36,7 @@ public class QueryAccountStatus implements ActionListener
     public JButton searchB = new JButton ("Search");
 	public JPanel panel = new JPanel();
     private JLabel titleLbl;
+    private JButton bckBtn;
     
     Payments payment = new Payments();
     
@@ -48,7 +49,7 @@ public class QueryAccountStatus implements ActionListener
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(160, 160, 160));
 		
-		titleLbl = new JLabel("Payment No: ");
+		titleLbl = new JLabel("Customer Id: ");
 		titleLbl.setBounds(20, 10, 290, 35); //x, y, width, length
 	    titleLbl.setFont(new Font("Serif", Font.BOLD, 16));
 	    frame.getContentPane().add(titleLbl);
@@ -78,13 +79,30 @@ public class QueryAccountStatus implements ActionListener
 			public void actionPerformed(ActionEvent e) 
 			{
 				payment.setpNo(searchField.getText());
-				client.sendAction("Query");
+				client.sendAction("QueryStatus");
 				client.sendCustomerId(payment.getpNo());
 				client.receiveResponse();			
-				frame.dispose();
+				//frame.dispose();
 			}
 	});
 		frame.getContentPane().add(searchB);
+		
+		bckBtn = new JButton("Back");
+		bckBtn.setFont(new Font("Serif", Font.BOLD, 14));
+		bckBtn.setForeground(Color.white);
+		bckBtn.setBorderPainted(false);
+		bckBtn.setBounds(365, 10, 80, 30);
+		bckBtn.setBackground(new Color(96, 96, 96));
+		bckBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new CustomerDashboard();
+				frame.dispose();
+			}
+		});
+		frame.getContentPane().add(bckBtn);
 		menu();
 		frame.setVisible(true);
 		}
@@ -173,8 +191,9 @@ public class QueryAccountStatus implements ActionListener
 	 }
     public void setText(Payments pay)
 	 {
+    	searchField.setText(pay.getCustomerId());
 		 resultTxt.setVisible(true);
-		 resultTxt.setText("Payment No: " + pay.getpNo() + "\nCustomer Id: " + pay.getCustomerId() + "\nAmount Due " + pay.getAmountDue() + "\nAmount Paid: " + pay.getAmountPaid() + "\nDue Date: "+pay.getDueDate()+"\nPayment Date: " + pay.getPaymentDate() +  "\nStatus: " + pay.getStatus());
+		 resultTxt.setText("Payment No: " + pay.getpNo() + "\nCustomer Id: " + pay.getCustomerId() + "\nAmount Due: $" + pay.getAmountDue() + "\nAmount Paid: $" + pay.getAmountPaid() + "\nDue Date: "+pay.getDueDate()+"\nPayment Date: " + pay.getPaymentDate() +  "\nStatus: " + pay.getStatus());
 		 resultTxt.setEditable(false);
 	 }	
 public static void main(String[] args) {

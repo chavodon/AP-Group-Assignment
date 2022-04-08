@@ -35,9 +35,9 @@ import com.mysql.cj.xdevapi.Table;
 import client.Client;
 import customer.Complaints;
 
-public class RespondToComplaint implements ActionListener 
+public class ViewAllDetails implements ActionListener 
 {
-	private JFrame frame = new JFrame("Respond To Complaint");
+	private JFrame frame = new JFrame("View Complaint & Account Details");
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
 	public JMenuItem menuItem;
@@ -49,46 +49,52 @@ public class RespondToComplaint implements ActionListener
     public JButton searchB = new JButton ("Search");
 	public JPanel panel = new JPanel();
     private JLabel titleLbl;
-    
-    private JLabel responseLbl;
-    private JTextArea responseTxt;
-    private JLabel dateLbl;
-    private JTextField dateTxt;
-    private JButton respondBtn;
+    private JLabel compLbl;
+    private JTextField compTxt;
     
     Complaints complaint = new Complaints();
 	
-	public RespondToComplaint()
+	public ViewAllDetails()
 	{
 		frame.setResizable(false);
-		frame.setBounds(700, 300, 584, 581); //x, y, width, length
+		frame.setBounds(700, 300, 884, 731);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null); //center output on screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(160, 160, 160));
 		
-		titleLbl = new JLabel("Complaint Id: ");
+		titleLbl = new JLabel("Customer Id: ");
 		titleLbl.setBounds(20, 10, 290, 35); //x, y, width, length
-	    titleLbl.setFont(new Font("Serif", Font.BOLD, 16));
+	    titleLbl.setFont(new Font("Serif", Font.BOLD, 18));
 	    frame.getContentPane().add(titleLbl);
 	    
+		searchField = new JTextField();
+		searchField.setFont(new Font("Serif", Font.PLAIN, 14));
+		searchField.setBounds(137, 10, 130, 30);
+		frame.getContentPane().add(searchField );
+		
+		compLbl = new JLabel("Complaint Id: ");
+		compLbl.setBounds(20, 60, 290, 35); //x, y, width, length
+	    compLbl.setFont(new Font("Serif", Font.BOLD, 18));
+	    frame.getContentPane().add(compLbl);
+	    
+		compTxt = new JTextField();
+		compTxt.setFont(new Font("Serif", Font.PLAIN, 14));
+		compTxt.setBounds(137, 60, 130, 30);
+		frame.getContentPane().add(compTxt);
+	    
 	    resultTxt = new JTextArea();
-	    resultTxt.setBounds(50, 60, 430, 200); //x, y, width, length
+	    resultTxt.setBounds(50, 90, 430, 300);
 	    resultTxt.setFont(new Font("Serif", Font.PLAIN, 16));
 	    resultTxt.setBackground(new Color(192, 192, 192));
 	    resultTxt.setVisible(false);
 	    frame.getContentPane().add(resultTxt);
 	    
-		searchField = new JTextField();
-		searchField.setFont(new Font("Serif", Font.PLAIN, 14));
-		searchField.setBounds(117, 10, 130, 30);
-		frame.getContentPane().add(searchField );
-	
 		searchB = new JButton("Search");
 		searchB.setFont(new Font("Serif", Font.BOLD, 18));
 		searchB.setForeground(Color.white);
 		searchB.setBorderPainted(false);
-		searchB.setBounds(265, 10, 110, 30);
+		searchB.setBounds(285, 35, 90, 40);
 		searchB.setBackground(new Color(96, 96, 96));
 		frame.getContentPane().add(searchB);
 		searchB.addActionListener(new ActionListener()
@@ -99,59 +105,15 @@ public class RespondToComplaint implements ActionListener
 				Client client = new Client();
 				
 				complaint.setcNo(searchField.getText());
-				client.sendAction("Respond");
+				client.sendAction("ViewDetails");
 				client.sendComplaintId(complaint.getcNo());
+				client.sendCustomerId(compTxt.getText());
+				
 				client.receiveResponse();			
 				frame.dispose();
 			}
 	});
-		responseLbl = new JLabel("Response: ");
-		responseLbl.setBounds(20, 280, 290, 35); //x, y, width, length
-	    responseLbl.setFont(new Font("Serif", Font.BOLD, 16));
-	    responseLbl.setVisible(false);
-	    frame.getContentPane().add(responseLbl);
-	    
-	    responseTxt = new JTextArea();
-	    responseTxt.setBounds(110, 280, 290, 35); //x, y, width, length
-	    responseTxt.setSize(330,100);
-	    responseTxt.setFont(new Font("Serif", Font.PLAIN, 16));
-	    responseTxt.setVisible(false);
-	    frame.getContentPane().add(responseTxt);
-	    
-		dateLbl = new JLabel("Date To Visit: ");
-		dateLbl.setBounds(20, 390, 290, 35); //x, y, width, length
-	    dateLbl.setFont(new Font("Serif", Font.BOLD, 16));
-	    dateLbl.setVisible(false);
-	    frame.getContentPane().add(dateLbl);
-	    
-	    dateTxt = new JTextField();
-	    dateTxt.setBounds(120, 390, 230, 35); //x, y, length, width
-	    dateTxt.setFont(new Font("Serif", Font.PLAIN, 16));
-	    dateTxt.setVisible(false);
-	    frame.getContentPane().add(dateTxt);
-		
-	    respondBtn = new JButton("Respond");
-		respondBtn.setFont(new Font("Serif", Font.BOLD, 18));
-		respondBtn.setForeground(Color.white);
-		respondBtn.setBorderPainted(false);
-		respondBtn.setBounds(225, 450, 130, 30);
-		respondBtn.setBackground(new Color(96, 96, 96));
-		respondBtn.setVisible(false);
-		frame.getContentPane().add(respondBtn);
-		respondBtn.addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-//				Client client = new Client();
-//				
-//				complaint.setcNo(searchField.getText());
-//				client.sendAction("Respond");
-//				client.sendComplaintId(complaint.getcNo());
-//				client.receiveResponse();			
-//				frame.dispose();
-			}
-	});
+
 		menu();
 		frame.setVisible(true);
 		}
@@ -243,14 +205,9 @@ public class RespondToComplaint implements ActionListener
 			 resultTxt.setVisible(true);
 			 resultTxt.setText("Complaint No: " + co.getcNo() + "\nCustomer Id: " + co.getCustomerId() + "\nCategory: " + co.getCategory() + "\nDetails: " + co.getDetails() + "\nStatus: " + co.getStatus() + "\nResponse Date: " + co.getResponseDate() + "\nRespondent: "+co.getRespondent());
 			 resultTxt.setEditable(false);
-			 responseLbl.setVisible(true);
-			 responseTxt.setVisible(true);
-			 dateLbl.setVisible(true);
-			 dateTxt.setVisible(true);
-			 respondBtn.setVisible(true);
 		 }	
 	public static void main(String[] args) {
-		new RespondToComplaint();
+		new ViewAllDetails();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -11,9 +11,12 @@ import javax.swing.JOptionPane;
 
 import customer.Complaints;
 import customer.Payments;
+import gui.EmployeePortal;
 import gui.QueryAccountStatus;
-import gui.RespondToComplaint;
+import gui.ResponseByRep;
+import gui.ResponseByTechnician;
 import gui.ViewAllComplaint;
+import gui.ViewByCategory;
 import gui.ViewComplaint;
 import gui.ViewPayments;
 import gui.WelcomeWindow;
@@ -72,7 +75,7 @@ public class Client
 	}
 	public void sendAction(String action)
 	{
-		System.out.println("In Send Action");
+		System.out.println("action");
 		this.action = action;
 		try
 		{
@@ -83,12 +86,12 @@ public class Client
 			e.printStackTrace();
 		}
 	}
-	public void sendComplaint(Complaints compObj, String customerId)
+	public void sendComplaint(Complaints compObj)
 	{
 		try
 		{
 			objOs.writeObject(compObj);
-			objOs.writeObject(customerId);
+			//objOs.writeObject(customerId);
 		}
 		catch(IOException e)
 		{
@@ -99,7 +102,6 @@ public class Client
 	{
 		try
 		{
-			System.out.println("In Send ComplaintId");
 			objOs.writeObject(comId);
 		}
 		catch(IOException e)
@@ -111,7 +113,6 @@ public class Client
 	{
 		try
 		{
-			System.out.println("In Send Customer Id");
 			objOs.writeObject(customerId);
 		}
 		catch(IOException e)
@@ -119,9 +120,55 @@ public class Client
 			e.printStackTrace();
 		}
 	}
+	public void sendCategory(String category)
+	{
+		try
+		{
+			objOs.writeObject(category);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public void sendTechResponse(String response, String date)
+	{
+		try
+		{
+			objOs.writeObject(response);
+			objOs.writeObject(date);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public void sendRepResponse(String response)
+	{
+		try
+		{
+			objOs.writeObject(response);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public void sendTechnician(String technician)
+	{
+		System.out.println("tech");
+		try
+		{
+			objOs.writeObject(technician);
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 	public void receiveResponse()
 	{
-		System.out.println("Receive");
 		try
 		{
 			if(action.equalsIgnoreCase("Add"))
@@ -129,12 +176,12 @@ public class Client
 				Boolean flag = (Boolean) objIs.readObject();
 				if(flag == true)
 				{
-					JOptionPane.showMessageDialog(null, "Record added successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Complaint Added Successfully","Lodge Status", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
-			if(action.equals("Search"))
+			if(action.equals("ViewComplaint"))
 			{
-				complaint =  (Complaints) objIs.readObject();
+				complaint = (Complaints) objIs.readObject();
 				
 				if(complaint == null)
 				{
@@ -146,10 +193,9 @@ public class Client
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
 					ViewComplaint view = new ViewComplaint();
 					view.setText(complaint);
-					System.out.println(complaint);
 				}
 			}
-			if(action.equals("Query"))
+			if(action.equals("QueryStatus"))
 			{
 				payment =  (Payments) objIs.readObject();
 				
@@ -166,7 +212,7 @@ public class Client
 					System.out.println(payment);
 				}
 			}
-			if(action.equals("All Complaints"))
+			if(action.equals("AllComplaints"))
 			{
 				allComplaints =  (Queue<Complaints>) objIs.readObject();
 				
@@ -182,7 +228,7 @@ public class Client
 					viewAll.table(allComplaints);
 				}
 			}
-			if(action.equals("All Payments"))
+			if(action.equals("AllPayments"))
 			{
 				allPayments =  (Queue<Payments>) objIs.readObject();
 				
@@ -195,14 +241,13 @@ public class Client
 				{
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
 					ViewPayments viewAll = new ViewPayments();
-					System.out.println(allPayments);
 					viewAll.table(allPayments);
 					
 				}
 			}
-			if(action.equals("Respond"))
+			if(action.equals("ResponseView"))
 			{
-				complaint =  (Complaints) objIs.readObject();
+				complaint = (Complaints) objIs.readObject();
 				
 				if(complaint == null)
 				{
@@ -212,10 +257,123 @@ public class Client
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
-					RespondToComplaint respond = new RespondToComplaint();
+					ResponseByRep respond = new ResponseByRep();
 					respond.setText(complaint);
-					System.out.println(complaint);
 				}
+			}
+			if(action.equals("ResponseViewTech"))
+			{
+				complaint = (Complaints) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					ResponseByTechnician respond = new ResponseByTechnician();
+					respond.setText(complaint);
+				}
+			}
+			if(action.equals("Respond"))
+			{
+				Boolean flag = (Boolean) objIs.readObject();
+				if(flag == true)
+				{
+					JOptionPane.showMessageDialog(null, "Record updated successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Record not saved","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+				if(action.equals("RepRespond"))
+				{
+						Boolean flag = (Boolean) objIs.readObject();
+						if(flag == true)
+						{
+							JOptionPane.showMessageDialog(null, "Record updated successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Record not saved","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+						}
+				}
+				if(action.equals("Assign"))
+				{
+					System.out.println("receive");
+					Boolean flag = (Boolean) objIs.readObject();
+					if(flag == true)
+					{
+						JOptionPane.showMessageDialog(null, "Record updated successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Record not saved","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+			if(action.equals("ByCategory"))
+			{
+				allComplaints =  (Queue<Complaints>) objIs.readObject();
+				if (complaint != null)
+				{
+					//JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					ViewByCategory viewAll = new ViewByCategory();
+					viewAll.table(allComplaints);
+				}
+			}
+			if(action.equals("Assign"))
+			{
+				allComplaints =  (Queue<Complaints>) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+//					ViewByCategory viewAll = new ViewByCategory();
+//					viewAll.table(allComplaints);
+				}
+			}
+			if(action.equals("ViewDetails"))
+			{
+				complaint = (Complaints) objIs.readObject();
+				payment = (Payments) objIs.readObject();
+				
+				if(complaint == null)
+				{
+					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					//ViewComplaint view = new ViewComplaint();
+					//view.setText(complaint);
+					System.out.println(complaint);
+					System.out.println(payment);
+				}
+			}
+			if(action.equals("CountRecords"))
+			{
+				int total = (int) objIs.readObject();
+				
+				if(total >= 0)
+				{
+					JOptionPane.showMessageDialog(null, "Record(s) Count Successful","Count Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(total == 0)
+				{
+					JOptionPane.showMessageDialog(null, "Failed To Count Records","Count Status", JOptionPane.INFORMATION_MESSAGE);
+				}
+				EmployeePortal emp = new EmployeePortal();
+				emp.setText(total);
 			}
 		}
 		catch(ClassNotFoundException ex)
@@ -234,6 +392,5 @@ public class Client
 	public static void main(String[] args) 
 	{
 		new Client();
-		//new WelcomeWindow();
 	}
 }

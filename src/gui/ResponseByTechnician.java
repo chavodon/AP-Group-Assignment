@@ -35,9 +35,9 @@ import com.mysql.cj.xdevapi.Table;
 import client.Client;
 import customer.Complaints;
 
-public class ViewComplaint implements ActionListener 
+public class ResponseByTechnician implements ActionListener 
 {
-	private JFrame frame = new JFrame("View Complaint");
+	private JFrame frame = new JFrame("Technician - Respond To Complaint");
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
 	public JMenuItem menuItem;
@@ -49,14 +49,19 @@ public class ViewComplaint implements ActionListener
     public JButton searchB = new JButton ("Search");
 	public JPanel panel = new JPanel();
     private JLabel titleLbl;
-    private JButton bckBtn;
+    
+    private JLabel responseLbl;
+    private JTextArea responseTxt;
+    private JLabel dateLbl;
+    private JTextField dateTxt;
+    private JButton respondBtn;
     
     Complaints complaint = new Complaints();
 	
-	public ViewComplaint()
+	public ResponseByTechnician()
 	{
 		frame.setResizable(false);
-		frame.setBounds(700, 300, 584, 531);
+		frame.setBounds(700, 300, 584, 581); //x, y, width, length
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null); //center output on screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,7 +73,7 @@ public class ViewComplaint implements ActionListener
 	    frame.getContentPane().add(titleLbl);
 	    
 	    resultTxt = new JTextArea();
-	    resultTxt.setBounds(50, 90, 430, 300);
+	    resultTxt.setBounds(50, 60, 430, 200); //x, y, width, length
 	    resultTxt.setFont(new Font("Serif", Font.PLAIN, 16));
 	    resultTxt.setBackground(new Color(192, 192, 192));
 	    resultTxt.setVisible(false);
@@ -80,10 +85,10 @@ public class ViewComplaint implements ActionListener
 		frame.getContentPane().add(searchField );
 	
 		searchB = new JButton("Search");
-		searchB.setFont(new Font("Serif", Font.BOLD, 14));
+		searchB.setFont(new Font("Serif", Font.BOLD, 18));
 		searchB.setForeground(Color.white);
 		searchB.setBorderPainted(false);
-		searchB.setBounds(265, 10, 80, 30);
+		searchB.setBounds(265, 10, 110, 30);
 		searchB.setBackground(new Color(96, 96, 96));
 		frame.getContentPane().add(searchB);
 		searchB.addActionListener(new ActionListener()
@@ -94,29 +99,62 @@ public class ViewComplaint implements ActionListener
 				Client client = new Client();
 				
 				complaint.setcNo(searchField.getText());
-				client.sendAction("ViewComplaint");
+				client.sendAction("ResponseViewTech");
 				client.sendComplaintId(complaint.getcNo());
 				client.receiveResponse();			
-				//frame.dispose();
+				frame.dispose();
 			}
 	});
-		bckBtn = new JButton("Back");
-		bckBtn.setFont(new Font("Serif", Font.BOLD, 14));
-		bckBtn.setForeground(Color.white);
-		bckBtn.setBorderPainted(false);
-		bckBtn.setBounds(365, 10, 80, 30);
-		bckBtn.setBackground(new Color(96, 96, 96));
-		bckBtn.addActionListener(new ActionListener()
+		responseLbl = new JLabel("Response: ");
+		responseLbl.setBounds(20, 280, 290, 35); //x, y, width, length
+	    responseLbl.setFont(new Font("Serif", Font.BOLD, 16));
+	    responseLbl.setVisible(false);
+	    frame.getContentPane().add(responseLbl);
+	    
+	    responseTxt = new JTextArea();
+	    responseTxt.setBounds(110, 280, 290, 35); //x, y, width, length
+	    responseTxt.setSize(330,100);
+	    responseTxt.setFont(new Font("Serif", Font.PLAIN, 16));
+	    responseTxt.setVisible(false);
+	    frame.getContentPane().add(responseTxt);
+	    
+		dateLbl = new JLabel("Date To Visit: ");
+		dateLbl.setBounds(20, 390, 290, 35); //x, y, width, length
+	    dateLbl.setFont(new Font("Serif", Font.BOLD, 16));
+	    dateLbl.setVisible(false);
+	    frame.getContentPane().add(dateLbl);
+	    
+	    dateTxt = new JTextField();
+	    dateTxt.setBounds(120, 390, 230, 35); //x, y, length, width
+	    dateTxt.setFont(new Font("Serif", Font.PLAIN, 16));
+	    dateTxt.setVisible(false);
+	    frame.getContentPane().add(dateTxt);
+		
+	    respondBtn = new JButton("Respond");
+		respondBtn.setFont(new Font("Serif", Font.BOLD, 18));
+		respondBtn.setForeground(Color.white);
+		respondBtn.setBorderPainted(false);
+		respondBtn.setBounds(225, 450, 130, 30);
+		respondBtn.setBackground(new Color(96, 96, 96));
+		respondBtn.setVisible(false);
+		frame.getContentPane().add(respondBtn);
+		respondBtn.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new CustomerDashboard();
+				Client client = new Client();
+				complaint.setcNo(searchField.getText());
+				complaint.setResponse(responseTxt.getText());
+				complaint.setVisitDate(dateTxt.getText());
+				
+				client.sendAction("Respond");
+				client.sendComplaintId(complaint.getcNo());
+				client.sendTechResponse(complaint.getResponse(), complaint.getVisitDate());
+				client.receiveResponse();			
 				frame.dispose();
 			}
-		});
-		frame.getContentPane().add(bckBtn);
-
+	});
 		menu();
 		frame.setVisible(true);
 		}
@@ -209,9 +247,14 @@ public class ViewComplaint implements ActionListener
 			 resultTxt.setVisible(true);
 			 resultTxt.setText("Complaint No: " + co.getcNo() + "\nCustomer Id: " + co.getCustomerId() + "\nCategory: " + co.getCategory() + "\nDetails: " + co.getDetails() + "\nStatus: " + co.getStatus() + "\nResponse Date: " + co.getResponseDate() + "\nRespondent: "+co.getRespondent());
 			 resultTxt.setEditable(false);
-		 }	
+			 responseLbl.setVisible(true);
+			 responseTxt.setVisible(true);
+			 dateLbl.setVisible(true);
+			 dateTxt.setVisible(true);
+			 respondBtn.setVisible(true);
+		 }		
 	public static void main(String[] args) {
-		new ViewComplaint();
+		new ResponseByTechnician();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

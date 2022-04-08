@@ -267,37 +267,43 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 	}
 	
 	@SuppressWarnings("unused")
-	public void actionPerformed(ActionEvent e) {
-		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
-		if (e.getSource() == viewBtn) {
-			ViewAllComplaint vc = new ViewAllComplaint();
-		}			
-		else if (e.getSource() == editBtn) {
-			CompleteSolution ww = new CompleteSolution(" ");	
-		} 	
-		else if (e.getSource() == vrcBtn) {
-			ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
-		}
-		else if (e.getSource() == custBtn) {
-			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-			vsc.makeQuery("Customer Service");
-		}
-		else if (e.getSource() == custBtn) {
-			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-			vsc.makeQuery("Product/Service");
-		}
-		else if (e.getSource() == custBtn) {
-			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-			vsc.makeQuery("Bill/Payment");
-		}
-		else if (e.getSource() == custBtn) {
-			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-			vsc.makeQuery("General");
-		}
-	}
+//	public void actionPerformed(ActionEvent e) {
+//		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
+//		if (e.getSource() == viewBtn) {
+//			//ViewAllComplaint vc = new ViewAllComplaint();
+//		}			
+//		else if (e.getSource() == editBtn) {
+//			CompleteSolution ww = new CompleteSolution(" ");	
+//		} 	
+//		else if (e.getSource() == vrcBtn) {
+//			ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
+//		}
+//		else if (e.getSource() == custBtn) {
+//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
+//			vsc.makeQuery("Customer Service");
+//		}
+//		else if (e.getSource() == custBtn) {
+//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
+//			vsc.makeQuery("Product/Service");
+//		}
+//		else if (e.getSource() == custBtn) {
+//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
+//			vsc.makeQuery("Bill/Payment");
+//		}
+//		else if (e.getSource() == custBtn) {
+//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
+//			vsc.makeQuery("General");
+//		}
+	//}
 
 	public static void main(String[] args) {
 		new CustomerServiceRepPortal();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

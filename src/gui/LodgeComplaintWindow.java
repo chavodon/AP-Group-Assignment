@@ -54,11 +54,14 @@ import customer.Complaints;
 		private JLabel dateLbl;
 		private JLabel detailsLbl;
 		private JTextField idTxt;
+		private JLabel customerLbl;
+		private JTextField customerTxt;
 		String category[]= {"Customer Service", "Product/Service", "Bill Payment", "General"};
 		JComboBox<String> categoryBox = new JComboBox<>(category);
 		private static JTextField dateTxt;
 		private JTextArea detailsTxt;
 		private JButton lodgeBtn;
+		private JButton bckBtn;
 		
 		public LodgeComplaintWindow()
 		{
@@ -139,14 +142,6 @@ import customer.Complaints;
 				new CustomerDashboard();
 			}
 			menu.addMenuListener(null);
-//			menu.addMenuListener(new MenuListener()			
-//			{
-//				
-//			});
-//			menuSelected(MenuEvent e)
-//			{
-//				
-//			}
 			menuBar.add(menu);
 			
 			menu = new JMenu("Log Out");
@@ -175,6 +170,14 @@ import customer.Complaints;
 			idLbl = new JLabel("cNo: ");
 			idLbl.setFont(new Font("Serif", Font.BOLD, 18));
 			idLbl.setForeground(Color.black);
+			
+			customerLbl = new JLabel("Customer: ");
+			customerLbl.setFont(new Font("Serif", Font.BOLD, 18));
+			customerLbl.setForeground(Color.black);
+			
+			customerTxt = new JTextField();
+			customerTxt.setFont(new Font("Serif", Font.PLAIN, 14));
+			customerTxt.setForeground(Color.black);
 			
 			categoryLbl = new JLabel("Category: ");
 			categoryLbl.setFont(new Font("Serif", Font.BOLD, 18));
@@ -216,13 +219,21 @@ import customer.Complaints;
 			detailsTxt = new JTextArea();
 			detailsTxt.setFont(new Font("Serif", Font.PLAIN, 14));
 			//detailsTxt.setPreferredSize(new Dimension(290, 100));
-	        detailsTxt.setLayout(null);  
+	        //detailsTxt.setLayout(null);  
+			detailsTxt.setBounds(10,90,100,30);
+			frame.add(detailsTxt);
 			
 			lodgeBtn = new JButton("Lodge");
 			lodgeBtn.setFont(new Font("Serif", Font.BOLD, 18));
 			lodgeBtn.setForeground(Color.white);
 			lodgeBtn.setBackground(new Color(96, 96, 96));
 			lodgeBtn.addActionListener(this);
+			
+			bckBtn = new JButton("Back");
+			bckBtn.setFont(new Font("Serif", Font.BOLD, 18));
+			bckBtn.setForeground(Color.white);
+			bckBtn.setBackground(new Color(96, 96, 96));
+			bckBtn.addActionListener(this);
 			
 			gbc = new GridBagConstraints();
 		////////////////////////////////////////////////////////////////////////////////////////////
@@ -236,6 +247,13 @@ import customer.Complaints;
 			gbc.insets = new Insets(-75,50,5,5);
 			frame.add(idLbl, gbc);
 			idLbl.setSize(150,20);
+			
+			gbc = new GridBagConstraints();
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.gridwidth = 3;
+			gbc.insets = new Insets(-75,14, 2,5);
+			frame.add(customerLbl, gbc);
 			
 			//Set size of the label for each components re=initalize the gridbag constraints
 			gbc = new GridBagConstraints();
@@ -263,7 +281,23 @@ import customer.Complaints;
 			//Amount of space between the component and the edges of its display area
 			gbc.insets = new Insets(5,7,10,10);
 			frame.add(idTxt, gbc);	//Add the component to the frame with all its constraints
-	////////////////////////////////////////////////////////////////////////////////////////////////////////		
+	////////////////////////////////////////////////////////////////////////////////////////////////////////	
+			
+			gbc = new GridBagConstraints();//Re-Initialize the gridbag
+			gbc.gridx = 2;
+			gbc.gridy = 0;
+			gbc.gridwidth = 3;
+			gbc.gridheight = 2;
+			//Set the internal padding for the components width
+			gbc.ipadx = 150;
+			gbc.ipady = 10;
+			//gbc.anchor = GridBagConstraints.NORTHWEST;
+			//The insets field specified the external padding of the component, the minimum
+			//Amount of space between the component and the edges of its display area
+			gbc.insets = new Insets(-100,7,6,6);
+			//gbc.insets = new Insets(5,7,10,10);
+			frame.add(customerTxt, gbc);	//Add the component to the frame with all its constraints
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//Label 
 			gbc = new GridBagConstraints();
 			gbc.gridx = 0;
@@ -336,31 +370,48 @@ import customer.Complaints;
 			gbc.anchor = GridBagConstraints.CENTER;
 			gbc.insets = new Insets(12,0,0,0);
 			frame.add(lodgeBtn, gbc);
+			
+			//Lodge button
+			gbc = new GridBagConstraints();
+			gbc.gridx = 1;
+			gbc.gridy = 9;
+			gbc.gridwidth = 6;
+			gbc.ipadx = 45;
+			gbc.ipady = 8;
+			gbc.anchor = GridBagConstraints.CENTER;
+			gbc.insets = new Insets(12,0,0,0);
+			frame.add(bckBtn, gbc);
 		
 			//button.addActionListener(this);
 			lodgeBtn.addActionListener(new ActionListener() 
 			{
-				//Client client = new Client();
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
 					Client client = new Client();
 					complaint.setcNo(idTxt.getText());
-					//complaint.setcNo("0001");
+					complaint.setCustomerId(customerTxt.getText());
 					complaint.setCategory(categoryBox.getSelectedItem().toString());					
 					complaint.setDate(dateTxt.getText());
 					complaint.setDetails(detailsTxt.getText());
 					complaint.setStatus("Unresolved");
 					complaint.setResponseDate("N/A");
 					complaint.setRespondent("N/A");
+					complaint.setResponse("N/A");
+					complaint.setAssignedTo("N/A");
+					complaint.setVisitDate("N/A");
 					
 					client.sendAction("Add");
-					client.sendComplaint(complaint, "1334");
-					
-					if (e.getSource() == lodgeBtn)
-					{
-						//CustomerPortal cport = new CustomerPortal();
-					} 
+					client.sendComplaint(complaint);
+				}
+			});
+			bckBtn.addActionListener(new ActionListener() 
+			{
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					dispose();
+					new CustomerDashboard();
 				}
 			});
 			frame.setVisible(true);
@@ -373,6 +424,5 @@ import customer.Complaints;
 @Override
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
-	
-}
+	}
 }

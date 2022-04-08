@@ -12,47 +12,53 @@ import connector.DatabaseConnection;
 
 public class Complaints implements Serializable
 {
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String cNo;
+	private Customer customer = new Customer();
+	private String customerId;
 	private String category;
 	private String details;
-	private Customer customer = new Customer();
-
-	private String customerId;
 	private String date;
 	private String status;
 	private String responseDate;
 	private String respondent;
+	private String response;
+	private String assignedTo;
+	private String visitDate;
 
 	private static Connection dbConnect = DatabaseConnection.getConnection();
-	//Scanner inp = new Scanner(System.in).useDelimiter("\\n");
 	
 	public Complaints() 
 	{
 		cNo = "";
+		customerId = customer.getId();
 		category = "";
 		details = "";
 		date = "";
 		status = "Unresolved";
 		responseDate = "N/A";
 		respondent = "N/A";
-		customerId = customer.getId();
+		response = "N/A";
+		assignedTo = "N/A";
+		visitDate = "N/A";
 	}
-	public Complaints(String id, String category, String details, String date, String status, String responseDate, String respondent) 
+	public Complaints(String cNo, String customerId, String category, String details, String date, String status,String responseDate, String respondent, String response, String assignedTo, String visitDate) 
 	{
-		this.cNo = id;
+		this.cNo = cNo;
+		this.customerId = customerId;
 		this.category = category;
 		this.details = details;
 		this.date = date;
 		this.status = status;
 		this.responseDate = responseDate;
 		this.respondent = respondent;
+		this.response = response;
+		this.assignedTo = assignedTo;
+		this.visitDate = visitDate;
 	}
-	
 	//Accessors
 	public String getcNo() 
 	{
@@ -89,6 +95,24 @@ public class Complaints implements Serializable
 		return respondent;
 	}
 	
+	public String getResponse() {
+		return response;
+	}
+	public void setResponse(String response) {
+		this.response = response;
+	}
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
+	}
+	public String getVisitDate() {
+		return visitDate;
+	}
+	public void setVisitDate(String visitDate) {
+		this.visitDate = visitDate;
+	}
 	//Mutators
 	public void setcNo(String cNo) 
 	{
@@ -173,48 +197,12 @@ public class Complaints implements Serializable
 			   e1.printStackTrace();
 		   }
 	}
-	
-	public void viewAllComplaints(String customerId)
-	{
-		try
-		{
-			String query = "SELECT * FROM complaints";
-			
-			//prepare the java statement
-		     PreparedStatement st =dbConnect.prepareStatement(query);
-		     
-		     // execute the query, and get a java resultset
-		     ResultSet rs = st.executeQuery(query);
-		     
-		     System.out.println("cNo \t\tCategory \t\t\tDate \tCustomerId \tStatus \tResponse Date \tRespondent");
-		     System.out.println("______________________________________________________________________________________");
-		     
-		     // iterate through the java resultset
-		      while (rs.next())
-		      {
-		    	  cNo = rs.getString("cNo");
-		    	  category = rs.getString("category");
-		    	  date = rs.getString("date");
-		    	  details = rs.getString("details");
-		    	  customerId = rs.getString("customerId");
-		    	  status = rs.getString("status");
-		    	  responseDate = rs.getString("responseDate");
-		    	  respondent = rs.getString("respondent");
-		    	  
-		    	  System.out.println(cNo + "\t" + category +"\t \t" + date +"\t"+ customerId +"\t"+ status + "\t\t"+ responseDate +"\t\t"+ respondent);
-		      }
-			   st.close();
-			   //logger.info("Complaints displayed.");
-		}
-		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		}
-	}
 	@Override
 	public String toString() {
-		return "Complaints [cNo=" + cNo + ", category=" + category + ", details=" + details + ", customerId="
-				+ customerId + ", date=" + date + ", status=" + status + ", responseDate=" + responseDate
-				+ ", respondent=" + respondent + "]";
+		return "Complaints [cNo=" + cNo + ", customerId=" + customerId + ", category=" + category + ", details="
+				+ details + ", date=" + date + ", status=" + status + ", responseDate=" + responseDate + ", respondent="
+				+ respondent + ", response=" + response + ", assignedTo=" + assignedTo + ", visitDate=" + visitDate
+				+ "]";
 	}
+	
 }

@@ -22,7 +22,7 @@ import client.Client;
 //import gui.CompleteSolution;
 //import gui.ViewResolvedComplaint;
 
-public class EmployeePortal extends JFrame implements ActionListener {
+public class EmployeePortal extends JFrame{
 	
 	//Declare global variables
 	private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	public JRadioButtonMenuItem rbtnMenuItem;
 	public JCheckBoxMenuItem rbMenuItem;
 	private JButton viewBtn;
-	private JButton editBtn;
+	private JButton byCategoryBtn;
 	private JButton vrcBtn;
 	private JButton custBtn;
 	private JButton prodBtn;
@@ -54,7 +54,9 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	private JLabel label12;
 	private JLabel label13;
 	
-	public EmployeePortal() {
+	public EmployeePortal()
+	{
+	    //Client client = new Client();
 		label = new JLabel("EMPLOYEE DASHBOARD");
 	    label.setBounds(500,25,250,20);
 	    label.setFont(new Font("Serif", Font.BOLD, 18));
@@ -80,7 +82,9 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	    label5.setFont(new Font("Serif", Font.BOLD, 12));
 	    label5.setForeground(Color.black);
 	    	    
-	    label6 = new JLabel("10");
+	    label6 = new JLabel();
+	    label6.setVisible(false);
+//	   label.setText(getName());
 	    label6.setBounds(778,170,20,20);
 	    label6.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label6.setForeground(Color.black);
@@ -145,7 +149,8 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		//--------------CREATE BUTTONS----------------------
 		
 		viewBtn = new JButton("Respond To Complaint");
-		editBtn= new JButton("EDIT SOLUTION");
+		byCategoryBtn= new JButton("View Complaints By Category");
+		
 		vrcBtn = new JButton("RESOLVED COMPLAINTS");
 		custBtn = new JButton("CUSTOMER SERVICE");
 		prodBtn = new JButton("PRODUCT/SERVICE");
@@ -161,9 +166,9 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		viewBtn.setForeground(Color.yellow);
 		viewBtn.setOpaque(true);
 		
-		editBtn.setBackground(Color.blue);
-		editBtn.setForeground(Color.yellow);
-		editBtn.setOpaque(true);
+		byCategoryBtn.setBackground(Color.blue);
+		byCategoryBtn.setForeground(Color.yellow);
+		byCategoryBtn.setOpaque(true);
 		
 		vrcBtn.setBackground(Color.blue);
 		vrcBtn.setForeground(Color.yellow);
@@ -188,7 +193,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		//--------------BUTTON BOUNDS---------------------
 		
 		viewBtn.setBounds(175,155,220,50);
-		editBtn.setBounds(175,255,220,50);
+		byCategoryBtn.setBounds(175,255,220,50);
 		vrcBtn.setBounds(175,355,220,50);
 		custBtn.setBounds(505,155,200,50);
 		prodBtn.setBounds(505,255,200,50);
@@ -201,20 +206,34 @@ public class EmployeePortal extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new RespondToComplaint();
+				new ResponseByTechnician();
 			}
 		});
-		
-		editBtn.addActionListener(this);
-		vrcBtn.addActionListener(this);
-		custBtn.addActionListener(this);
-		prodBtn.addActionListener(this);
-		billBtn.addActionListener(this);
-		genBtn.addActionListener(this);
+		byCategoryBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ViewByCategory();
+			}
+		});
+//		byCategoryBtn.addActionListener(new AcionListener()
+//		{
+//			@Override
+//			public void actionPerformed(ActionEvent e) 
+//			{
+//				new RespondToComplaint();
+//			}
+//		});
+//		vrcBtn.addActionListener(this);
+//		custBtn.addActionListener(this);
+//		prodBtn.addActionListener(this);
+//		billBtn.addActionListener(this);
+//		genBtn.addActionListener(this);
 
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
 		frame.add(viewBtn);
-		frame.add(editBtn);
+		frame.add(byCategoryBtn);
 		frame.add(vrcBtn);
 		frame.add(custBtn);
 		frame.add(prodBtn);
@@ -223,7 +242,6 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null);
 		navbar();
-	
 	}
 		
 	public void navbar() {
@@ -281,7 +299,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		if (e.getSource() == viewBtn) {
 			//ViewAllComplaint vc = new ViewAllComplaint();
 		}			
-		else if (e.getSource() == editBtn) {
+		else if (e.getSource() == byCategoryBtn) {
 			CompleteSolution ww = new CompleteSolution(" ");	
 		} 	
 		else if (e.getSource() == vrcBtn) {
@@ -295,10 +313,20 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	public void getClient()
 	{
 		Client client = new Client();
-		client.sendAction("ResolvedNum");
-		
+		//client.sendAction("ResolvedNum");
+		client.sendAction("CountRecords");
+		client.receiveResponse();
+	}
+	public void setText(int total)
+	{
+		System.out.println(total);
+		String text =Integer.toString(total);
+		label6.setText(text);
+		label6.setVisible(true);
 	}
 	public static void main(String[] args) {
-		new EmployeePortal();
+		//new EmployeePortal();
+		 EmployeePortal emp = new EmployeePortal ();
+		 emp.getClient();
 	}
 }
