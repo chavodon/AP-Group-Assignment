@@ -5,12 +5,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -79,32 +77,6 @@ public class AssignComplaint extends JFrame implements ActionListener {
 		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
 		JButton pressed = (JButton) e.getSource();
 		if(pressed.equals(assignBtn)) {
-			/*try {
-				Statement stm = dbConnect1.createStatement();
-				boolean check = stm.execute("SELECT * FROM techniciancomplaints WHERE cNo = '"+compID.getText()+"'");
-				if(check) {
-					JOptionPane.showMessageDialog(panel, "Record already exists", "Warning",
-					        JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					try {
-						Statement st = dbConnect1.createStatement();
-						int rows = st.executeUpdate("INSERT INTO techniciancomplaints SELECT * FROM complaints WHERE cNo = '"+compID.getText()+"'");
-						if (rows == 0) {
-							JOptionPane.showMessageDialog(panel, "Complaint doesn't exist.", "Warning",
-							        JOptionPane.WARNING_MESSAGE);
-						}
-						else {
-							JOptionPane.showMessageDialog(null, "Complaint has been assigned to a technician.");
-							frame.dispose();
-						}
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-				}
-			} catch (SQLException e2) {
-				e2.printStackTrace();
-			}*/
 			
 			try {
 				Statement st = dbConnect1.createStatement();
