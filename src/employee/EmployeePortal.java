@@ -41,7 +41,6 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	public JCheckBoxMenuItem rbMenuItem;
 	private JButton viewBtn;
 	private JButton editBtn;
-	private JButton vrcBtn;
 	private JButton custBtn;
 	private JButton prodBtn;
 	private JButton billBtn;
@@ -241,8 +240,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		//--------------CREATE BUTTONS----------------------
 		
 		viewBtn = new JButton("Respond To Complaint");
-		editBtn= new JButton("EDIT SOLUTION");
-		vrcBtn = new JButton("RESOLVED COMPLAINTS");
+		editBtn= new JButton("View Customer Complaint");
 		custBtn = new JButton("CUSTOMER SERVICE");
 		prodBtn = new JButton("PRODUCT/SERVICE");
 		billBtn = new JButton("BILL/PAYMENT");
@@ -256,10 +254,6 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		editBtn.setBackground(Color.blue);
 		editBtn.setForeground(Color.yellow);
 		editBtn.setOpaque(true);
-		
-		vrcBtn.setBackground(Color.blue);
-		vrcBtn.setForeground(Color.yellow);
-		vrcBtn.setOpaque(true);
 		
 		custBtn.setBackground(Color.blue);
 		custBtn.setForeground(Color.yellow);
@@ -281,7 +275,6 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		
 		viewBtn.setBounds(175,155,220,50);
 		editBtn.setBounds(175,255,220,50);
-		vrcBtn.setBounds(175,355,220,50);
 		custBtn.setBounds(505,155,200,50);
 		prodBtn.setBounds(505,255,200,50);
 		billBtn.setBounds(505,355,200,50);
@@ -295,10 +288,9 @@ public class EmployeePortal extends JFrame implements ActionListener {
 			{
 				new RespondToComplaint();
 			}
-		});
+		});		
 		
 		editBtn.addActionListener(this);
-		vrcBtn.addActionListener(this);
 		custBtn.addActionListener(this);
 		prodBtn.addActionListener(this);
 		billBtn.addActionListener(this);
@@ -307,7 +299,6 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------
 		frame.add(viewBtn);
 		frame.add(editBtn);
-		frame.add(vrcBtn);
 		frame.add(custBtn);
 		frame.add(prodBtn);
 		frame.add(billBtn);
@@ -372,10 +363,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		
 		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
 		if (e.getSource() == editBtn) {
-			CompleteSolution ww = new CompleteSolution(" ");	
-		} 	
-		else if (e.getSource() == vrcBtn) {
-			ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
+			ViewCustomerComplaint vc = new ViewCustomerComplaint();	
 		}
 		else if (e.getSource() == custBtn) {
 			ViewSpecificComplaint vsc = new ViewSpecificComplaint("Customer Service");
