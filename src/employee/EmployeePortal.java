@@ -21,13 +21,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
-
-
 import client.Client;
 import connector.DatabaseConnection;
-
-//import gui.CompleteSolution;
-//import gui.ViewResolvedComplaint;
 
 public class EmployeePortal extends JFrame implements ActionListener {
 	
@@ -72,7 +67,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	    label.setForeground(Color.black);
 	    
 	    label2 = new JLabel("Complaint Information");
-	    label2.setBounds(775,85,250,20);
+	    label2.setBounds(780,85,250,20);
 	    label2.setFont(new Font("Serif", Font.BOLD, 18));
 	    label2.setForeground(Color.black);
 	    
@@ -82,12 +77,12 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	    label3.setForeground(Color.black);
 	    
 	    label4 = new JLabel("Resolved Complaints");
-	    label4.setBounds(725,120,150,20);
+	    label4.setBounds(730,120,150,20);
 	    label4.setFont(new Font("Serif", Font.BOLD, 12));
 	    label4.setForeground(Color.black);
 	    
 	    label5 = new JLabel("Outstanding Complaints");
-	    label5.setBounds(920,120,150,20);
+	    label5.setBounds(925,120,150,20);
 	    label5.setFont(new Font("Serif", Font.BOLD, 12));
 	    label5.setForeground(Color.black);
 	    
@@ -113,12 +108,12 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		}
 	   
 	    label6 = new JLabel(s);
-	    label6.setBounds(778,170,20,20);
+	    label6.setBounds(783,170,20,20);
 	    label6.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label6.setForeground(Color.black);
 	    
 	    label7 = new JLabel(s1);
-	    label7.setBounds(978,170,20,20);
+	    label7.setBounds(983,170,20,20);
 	    label7.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label7.setForeground(Color.black);
 	    
@@ -144,12 +139,12 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		}
 	    
 	    label8 = new JLabel(s);
-	    label8.setBounds(778,270,20,20);
+	    label8.setBounds(783,270,20,20);
 	    label8.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label8.setForeground(Color.black);
 	    
 	    label9 = new JLabel(s1);
-	    label9.setBounds(978,270,20,20);
+	    label9.setBounds(983,270,20,20);
 	    label9.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label9.setForeground(Color.black);
 	    
@@ -175,12 +170,12 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		}
 	    
 	    label10 = new JLabel(s);
-	    label10.setBounds(778,370,20,20);
+	    label10.setBounds(783,370,20,20);
 	    label10.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label10.setForeground(Color.black);
 	    
 	    label11 = new JLabel(s1);
-	    label11.setBounds(978,370,20,20);
+	    label11.setBounds(983,370,20,20);
 	    label11.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label11.setForeground(Color.black);
 	    
@@ -206,12 +201,12 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		}
 	    
 	    label12 = new JLabel(s);
-	    label12.setBounds(778,470,20,20);
+	    label12.setBounds(783,470,20,20);
 	    label12.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label12.setForeground(Color.black);
 	    
 	    label13 = new JLabel(s1);
-	    label13.setBounds(978,470,20,20);
+	    label13.setBounds(983,470,20,20);
 	    label13.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label13.setForeground(Color.black);
 	    
