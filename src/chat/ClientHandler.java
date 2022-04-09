@@ -26,7 +26,7 @@ public class ClientHandler implements Runnable {
 			public void run() {
 				try {
 					Server window = new Server();
-					window.frmServerChat.setVisible(true);
+					window.serverFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
