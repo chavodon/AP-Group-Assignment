@@ -35,7 +35,7 @@ public class ServerChat
 {
 	static ServerSocket server;
 	static Socket con;
-	public JFrame serverFrame;
+	JFrame serverFrame;
     private static JTextArea chatArea;
     private JButton sendBtn;
     private JButton backBtn;
@@ -58,7 +58,7 @@ public class ServerChat
 	public void initialize() throws IOException 
 	{
 		serverFrame = new JFrame();	
-    	serverFrame.setTitle("Staff Chat");
+    		serverFrame.setTitle("Staff Chat");
 		serverFrame.setBounds(700, 300, 584, 531);
 		serverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		serverFrame.setResizable(false);
