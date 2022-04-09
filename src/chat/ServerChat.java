@@ -87,16 +87,16 @@ public class ServerChat
 
 	     status.setFont(new Font ("Serif", 1, 14));
 	     status.setBounds(10, 60, 300, 40);
-//		if (server.isClosed()) 
-//		{
-//			status.setText("Status: Offline");
-//			status.setForeground(new Color(139,0, 0));
-//		}
-//		if(!server.isClosed())
-//		{
-//			status.setText("Status: Online");
-//			status.setForeground(new Color(34,139,34));
-//		}
+		if (server.isClosed()) 
+		{
+			status.setText("Status: Offline");
+			status.setForeground(new Color(139,0, 0));
+		}
+		if(!server.isClosed())
+		{
+			status.setText("Status: Online");
+			status.setForeground(new Color(34,139,34));
+		}
 		chatPanel.add(status);
 	    chatPanel.add(scrollPanel);
 	    scrollPanel.setBounds(10, 90, 480, 250);

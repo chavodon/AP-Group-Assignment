@@ -27,8 +27,8 @@ public class ClientHandler implements Runnable {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Server window = new Server();
-					//window.frmServerChat.setVisible(true);
+					ServerChat window = new ServerChat();
+					window.serverFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -75,7 +75,7 @@ public class ClientChat
 				
 				DataInputStream input = new DataInputStream(con.getInputStream());
 				String string = input.readUTF();
-				chatArea.setText(chatArea.getText() + "Server: " + string +"\n");
+				chatArea.setText(chatArea.getText() + "Staff: " + string +"\n");
 			} 
 			catch (Exception ev) {
 				chatArea.setText(chatArea.getText() + "\nOops! Server Went Offline..");

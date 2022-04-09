@@ -279,7 +279,7 @@ public class TechnicianPortal extends JFrame implements ActionListener {
 			ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
 		}
 		else if (e.getSource() == custBtn) {
-			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
+			ViewSpecificComplaint vsc = new ViewSpecificComplaint("General");
 		}
 	}
 

@@ -289,7 +289,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new ResponseByRep();
+				new ViewCustomerComplaint();
 			}
 		});		
 		

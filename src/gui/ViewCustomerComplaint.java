@@ -274,7 +274,7 @@ public class ViewCustomerComplaint implements ActionListener
 			 respondBtn.setVisible(true);
 		 }	
 	public static void main(String[] args) {
-		new RespondToComplaint();
+		new ViewCustomerComplaint();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
