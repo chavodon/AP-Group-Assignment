@@ -33,10 +33,8 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.table.DefaultTableModel;
 
-import customer.Complaints;
-import customer.Customer;
-import employee.AssignComplaint;
 import connector.DatabaseConnection;
+import employee.AssignComplaint;
 
 public class ViewSpecificComplaint extends JFrame implements ActionListener {
 
@@ -252,9 +250,9 @@ public class ViewSpecificComplaint extends JFrame implements ActionListener {
 			rs.close();
 			st.close();
 
-			} catch (Exception e) {
-			System.out.println("Error..");
-		}		
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	}
 	
 	public static void main(String[] args) {
