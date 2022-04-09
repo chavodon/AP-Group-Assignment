@@ -14,6 +14,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -33,7 +35,7 @@ public class ServerChat
 {
 	static ServerSocket server;
 	static Socket con;
-	private JFrame serverFrame;
+	public JFrame serverFrame;
     private static JTextArea chatArea;
     private JButton sendBtn;
     private JButton backBtn;

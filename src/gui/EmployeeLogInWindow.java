@@ -22,7 +22,7 @@ import client.Client;
 //import gui.CompleteSolution;
 //import gui.ViewResolvedComplaint;
 
-public class EmployeePortal extends JFrame implements ActionListener {
+public class EmployeeLogInWindow extends JFrame implements ActionListener {
 	
 	//Declare global variables
 	private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	private JLabel label12;
 	private JLabel label13;
 	
-	public EmployeePortal() {
+	public EmployeeLogInWindow() {
 		label = new JLabel("EMPLOYEE DASHBOARD");
 	    label.setBounds(500,25,250,20);
 	    label.setFont(new Font("Serif", Font.BOLD, 18));
@@ -201,7 +201,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new RespondToComplaint();
+				new ResponseByRep();
 			}
 		});
 		
@@ -306,6 +306,6 @@ public class EmployeePortal extends JFrame implements ActionListener {
 		
 	}
 	public static void main(String[] args) {
-		new EmployeePortal();
+		new EmployeeLogInWindow();
 	}
 }

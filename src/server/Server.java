@@ -90,7 +90,6 @@ public class Server
 	}
 	private int numRecords()
 	{
-		System.out.println("counting");
 		int count = 0;
 		Complaints complaint = new Complaints();
 		String query = "SELECT * FROM complaints";
@@ -152,7 +151,6 @@ public class Server
 	}
 	private Complaints viewComplaint(String compId)
 	{
-		System.out.println("In View Complaint");
 		Complaints complaint = new Complaints();
 		String query = "SELECT * FROM complaints WHERE cNo = '"+compId+"' ";
 		try
@@ -261,10 +259,8 @@ public class Server
 				complaint.setResponse(result.getString(9));
 				complaint.setAssignedTo(result.getString(10));
 				complaint.setVisitDate(result.getString(11));
-				//System.out.println("1");
 				allComplaints.add(complaint);
 				complaint = new Complaints();
-				//System.out.println(complaint);
 			}
 		}
 		catch(SQLException e)
@@ -319,7 +315,6 @@ public class Server
 	}
 	private void assignComplaint(String compId, String technician)//FIX
 	{
-		System.out.println("method");
 		String query = "UPDATE complaints SET assignedTo = '"+technician+"' WHERE cNo = '"+compId+"' ";
 		try
 	     {
@@ -348,7 +343,6 @@ public class Server
 	//-------------ACCOUNT-PAYMENT RELATED FUNCTIONALIES------------------------
 	private Payments queryAccount(String customerId)
 	{
-		System.out.println("In Query");
 		Payments payment = new Payments();
 		
 		String query = "SELECT * FROM payments WHERE customerId = '"+customerId+"' ORDER BY dueDate DESC LIMIT 1 "; //get latest due date payment
@@ -365,8 +359,8 @@ public class Server
 				payment.setAmountDue(result.getDouble(3));
 				payment.setAmountPaid(result.getDouble(4));
 				payment.setPaymentDate(result.getString(5));
-				payment.setDueDate(result.getString(6));
-				payment.setStatus(result.getString(7));
+				payment.setStatus(result.getString(6));
+				payment.setDueDate(result.getString(7));
 			}
 		}
 		catch(SQLException e)
@@ -393,12 +387,11 @@ public class Server
 				payment.setAmountDue(result.getDouble(3));
 				payment.setAmountPaid(result.getDouble(4));
 				payment.setPaymentDate(result.getString(5));
-				payment.setDueDate(result.getString(6));
-				payment.setStatus(result.getString(7));
+				payment.setStatus(result.getString(6));
+				payment.setDueDate(result.getString(7));
 				
 				allPayments.add(payment);
 				payment = new Payments();
-				System.out.println(payment);
 			}
 		}
 		catch(SQLException e)

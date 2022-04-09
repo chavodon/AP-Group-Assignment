@@ -199,7 +199,7 @@ public class Client
 			{
 				payment =  (Payments) objIs.readObject();
 				
-				if(complaint == null)
+				if(payment == null)
 				{
 					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
 					return;
@@ -209,7 +209,6 @@ public class Client
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
 					QueryAccountStatus query = new QueryAccountStatus();
 					query.setText(payment);
-					System.out.println(payment);
 				}
 			}
 			if(action.equals("AllComplaints"))

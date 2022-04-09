@@ -1,4 +1,4 @@
-package gui;
+package employee;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,6 +25,9 @@ import javax.swing.KeyStroke;
 
 import client.Client;
 import connector.DatabaseConnection;
+import gui.ResponseByRep;
+import gui.ViewCustomerComplaint;
+import gui.ViewSpecificComplaint;
 
 //import gui.CompleteSolution;
 //import gui.ViewResolvedComplaint;
@@ -286,7 +289,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				new RespondToComplaint();
+				new ResponseByRep();
 			}
 		});		
 		

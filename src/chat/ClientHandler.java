@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import server.Server;
+
 public class ClientHandler implements Runnable {
 	private DataInputStream input;
 	private DataOutputStream output;
@@ -26,7 +28,7 @@ public class ClientHandler implements Runnable {
 			public void run() {
 				try {
 					Server window = new Server();
-					window.frmServerChat.setVisible(true);
+					//window.frmServerChat.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
