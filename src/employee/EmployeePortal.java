@@ -6,6 +6,10 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -17,7 +21,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
+
+
 import client.Client;
+import connector.DatabaseConnection;
 
 //import gui.CompleteSolution;
 //import gui.ViewResolvedComplaint;
@@ -26,6 +33,7 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	
 	//Declare global variables
 	private static final long serialVersionUID = 1L;
+	private static Connection dbConnect = DatabaseConnection.getConnection();
 	public JMenuBar menuBar;
 	public JMenu menu, subMenu;
 	public JMenuItem menuItem;
@@ -54,6 +62,10 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	private JLabel label12;
 	private JLabel label13;
 	
+	private int rCount;
+	private int uCount;
+	private String s,s1;
+	
 	public EmployeePortal() {
 		label = new JLabel("EMPLOYEE DASHBOARD");
 	    label.setBounds(500,25,250,20);
@@ -79,43 +91,127 @@ public class EmployeePortal extends JFrame implements ActionListener {
 	    label5.setBounds(920,120,150,20);
 	    label5.setFont(new Font("Serif", Font.BOLD, 12));
 	    label5.setForeground(Color.black);
-	    	    
-	    label6 = new JLabel("10");
+	    
+		try {
+			Statement st = dbConnect.createStatement();
+			Statement st1 = dbConnect.createStatement();
+			String query = "SELECT count(*) FROM complaints WHERE category = '"+"Customer Service"+"' AND status = '"+"Resolved"+"'";
+	    	String query2 = "SELECT count(*) FROM complaints WHERE category = '"+"Customer Service"+"' AND status = '"+"Unresolved"+"'";
+			ResultSet rs = st.executeQuery(query);
+			ResultSet rs1 = st1.executeQuery(query2);
+	    	rs.next();
+	    	rs1.next();
+	    	rCount = rs.getInt(1);
+	    	uCount = rs1.getInt(1);
+	    	s = Integer.toString(rCount);
+	    	s1 = Integer.toString(uCount);
+	    	rs.close();
+	    	rs1.close();
+	    	st.close();
+	    	st1.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	   
+	    label6 = new JLabel(s);
 	    label6.setBounds(778,170,20,20);
 	    label6.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label6.setForeground(Color.black);
 	    
-	    label7 = new JLabel("10");
+	    label7 = new JLabel(s1);
 	    label7.setBounds(978,170,20,20);
 	    label7.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label7.setForeground(Color.black);
 	    
-	    label8 = new JLabel("20");
+	    try {
+			Statement st = dbConnect.createStatement();
+			Statement st1 = dbConnect.createStatement();
+			String query = "SELECT count(*) FROM complaints WHERE category = '"+"Product/Service"+"' AND status = '"+"Resolved"+"'";
+	    	String query2 = "SELECT count(*) FROM complaints WHERE category = '"+"Product/Service"+"' AND status = '"+"Unresolved"+"'";
+			ResultSet rs = st.executeQuery(query);
+			ResultSet rs1 = st1.executeQuery(query2);
+	    	rs.next();
+	    	rs1.next();
+	    	rCount = rs.getInt(1);
+	    	uCount = rs1.getInt(1);
+	    	s = Integer.toString(rCount);
+	    	s1 = Integer.toString(uCount);
+	    	rs.close();
+	    	rs1.close();
+	    	st.close();
+	    	st1.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	    
+	    label8 = new JLabel(s);
 	    label8.setBounds(778,270,20,20);
 	    label8.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label8.setForeground(Color.black);
 	    
-	    label9 = new JLabel("25");
+	    label9 = new JLabel(s1);
 	    label9.setBounds(978,270,20,20);
 	    label9.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label9.setForeground(Color.black);
 	    
-	    label10 = new JLabel("30");
+	    try {
+			Statement st = dbConnect.createStatement();
+			Statement st1 = dbConnect.createStatement();
+			String query = "SELECT count(*) FROM complaints WHERE category = '"+"Bill Payment"+"' AND status = '"+"Resolved"+"'";
+	    	String query2 = "SELECT count(*) FROM complaints WHERE category = '"+"Bill Payment"+"' AND status = '"+"Unresolved"+"'";
+			ResultSet rs = st.executeQuery(query);
+			ResultSet rs1 = st1.executeQuery(query2);
+	    	rs.next();
+	    	rs1.next();
+	    	rCount = rs.getInt(1);
+	    	uCount = rs1.getInt(1);
+	    	s = Integer.toString(rCount);
+	    	s1 = Integer.toString(uCount);
+	    	rs.close();
+	    	rs1.close();
+	    	st.close();
+	    	st1.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	    
+	    label10 = new JLabel(s);
 	    label10.setBounds(778,370,20,20);
 	    label10.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label10.setForeground(Color.black);
 	    
-	    label11 = new JLabel("35");
+	    label11 = new JLabel(s1);
 	    label11.setBounds(978,370,20,20);
 	    label11.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label11.setForeground(Color.black);
 	    
-	    label12 = new JLabel("40");
+	    try {
+			Statement st = dbConnect.createStatement();
+			Statement st1 = dbConnect.createStatement();
+			String query = "SELECT count(*) FROM complaints WHERE category = '"+"General"+"' AND status = '"+"Resolved"+"'";
+	    	String query2 = "SELECT count(*) FROM complaints WHERE category = '"+"General"+"' AND status = '"+"Unresolved"+"'";
+			ResultSet rs = st.executeQuery(query);
+			ResultSet rs1 = st1.executeQuery(query2);
+	    	rs.next();
+	    	rs1.next();
+	    	rCount = rs.getInt(1);
+	    	uCount = rs1.getInt(1);
+	    	s = Integer.toString(rCount);
+	    	s1 = Integer.toString(uCount);
+	    	rs.close();
+	    	rs1.close();
+	    	st.close();
+	    	st1.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	    
+	    label12 = new JLabel(s);
 	    label12.setBounds(778,470,20,20);
 	    label12.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label12.setForeground(Color.black);
 	    
-	    label13 = new JLabel("45");
+	    label13 = new JLabel(s1);
 	    label13.setBounds(978,470,20,20);
 	    label13.setFont(new Font("Ariel", Font.BOLD, 15));
 	    label13.setForeground(Color.black);
