@@ -14,6 +14,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -33,7 +35,7 @@ public class ServerChat
 {
 	static ServerSocket server;
 	static Socket con;
-	private JFrame serverFrame;
+	JFrame serverFrame;
     private static JTextArea chatArea;
     private JButton sendBtn;
     private JButton backBtn;
@@ -56,7 +58,7 @@ public class ServerChat
 	public void initialize() throws IOException 
 	{
 		serverFrame = new JFrame();	
-    	serverFrame.setTitle("Staff Chat");
+    		serverFrame.setTitle("Staff Chat");
 		serverFrame.setBounds(700, 300, 584, 531);
 		serverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		serverFrame.setResizable(false);
