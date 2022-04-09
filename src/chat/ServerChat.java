@@ -44,6 +44,7 @@ public class ServerChat
     private JScrollPane scrollPanel;
     private JTextField messageText;
     
+    private static ExecutorService pool = Executors.newFixedThreadPool(4);
     private static final Logger logger = LogManager.getLogger(ServerChat.class);
 
 	public ServerChat() throws IOException
@@ -250,6 +251,11 @@ public class ServerChat
 				}
 			}
 		});
-		 serverConnection();
+		
+		while (true) {
+			 serverConnection();	
+			 ClientHandler clientThread = new ClientHandler(con);
+			 pool.execute(clientThread);
+		}		
 	}
 }
