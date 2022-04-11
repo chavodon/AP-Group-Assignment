@@ -1,4 +1,4 @@
-package client;
+package clientTCP;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,8 +9,12 @@ import java.util.Queue;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import customer.Complaints;
 import customer.Payments;
+import gui.CustomerDashboard;
 import gui.EmployeePortal;
 import gui.QueryAccountStatus;
 import gui.ResponseByRep;
@@ -31,6 +35,7 @@ public class Client
 	Payments payment = new Payments();
 	Queue<Complaints> allComplaints = new LinkedList<Complaints>();
 	Queue<Payments> allPayments = new LinkedList<Payments>();
+	//private static final Logger logger = LogManager.getLogger(Client.class);
 	
 	public Client()
 	{
@@ -75,7 +80,6 @@ public class Client
 	}
 	public void sendAction(String action)
 	{
-		System.out.println("action");
 		this.action = action;
 		try
 		{
@@ -91,7 +95,7 @@ public class Client
 		try
 		{
 			objOs.writeObject(compObj);
-			//objOs.writeObject(customerId);
+			//logger.info("Client Sent Complaint to Server");
 		}
 		catch(IOException e)
 		{
@@ -166,9 +170,22 @@ public class Client
 			e.printStackTrace();
 		}
 	}
-	
+	public void sendLoginDetails(String id, String password)
+	{
+		try
+		{
+			objOs.writeObject(id);
+			objOs.writeObject(password);
+			//logger.info("Client Sent Login Details to Server");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+	}	
 	public void receiveResponse()
 	{
+		boolean found=false;
 		try
 		{
 			if(action.equalsIgnoreCase("Add"))
@@ -177,6 +194,7 @@ public class Client
 				if(flag == true)
 				{
 					JOptionPane.showMessageDialog(null, "Complaint Added Successfully","Lodge Status", JOptionPane.INFORMATION_MESSAGE);
+				//	logger.info("Request To Add Complaint Successful");
 				}
 			}
 			if(action.equals("ViewComplaint"))
@@ -191,6 +209,7 @@ public class Client
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+				//	logger.info("Request To View Complaint Successful");
 					ViewComplaint view = new ViewComplaint();
 					view.setText(complaint);
 				}
@@ -207,6 +226,7 @@ public class Client
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+				//	logger.info("Request To Query Account Status Successful");
 					QueryAccountStatus query = new QueryAccountStatus();
 					query.setText(payment);
 				}
@@ -361,18 +381,48 @@ public class Client
 			if(action.equals("CountRecords"))
 			{
 				int total = (int) objIs.readObject();
-				
+				System.out.println(total);
 				if(total >= 0)
 				{
-					JOptionPane.showMessageDialog(null, "Record(s) Count Successful","Count Status", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Record(s) Count Successful","Count Status", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 				if(total == 0)
 				{
-					JOptionPane.showMessageDialog(null, "Failed To Count Records","Count Status", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Failed To Count Records","Count Status", JOptionPane.ERROR_MESSAGE);
 				}
 				EmployeePortal emp = new EmployeePortal();
-				emp.setText(total);
+				emp.setNewText(total);
+			}
+			if(action.equals("EmployeeLogin"))
+			{
+				found = (boolean) objIs.readObject();
+				
+				if(found == false)
+				{
+					JOptionPane.showMessageDialog(null, "Incorrect Login Details","Login Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Login Sucessful","Login Status", JOptionPane.INFORMATION_MESSAGE);
+					EmployeePortal empPortal = new EmployeePortal();
+				}
+			}
+			if(action.equals("CustomerLogin"))
+			{
+				found = (boolean) objIs.readObject();
+				
+				if(found == false)
+				{
+					JOptionPane.showMessageDialog(null, "Incorrect Login Details","Login Status", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Login Sucessful","Login Status", JOptionPane.INFORMATION_MESSAGE);
+					CustomerDashboard cusDash = new CustomerDashboard();
+				}
 			}
 		}
 		catch(ClassNotFoundException ex)

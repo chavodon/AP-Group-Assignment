@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 
 import chat.ClientChat;
 import chat.ServerChat;
-import client.Client;
+import clientTCP.Client;
 
 public class CustomerDashboard extends JFrame
 {

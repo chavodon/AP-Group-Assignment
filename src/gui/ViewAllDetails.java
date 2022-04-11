@@ -32,7 +32,7 @@ import javax.swing.table.TableCellRenderer;
 
 import com.mysql.cj.xdevapi.Table;
 
-import client.Client;
+import clientTCP.Client;
 import customer.Complaints;
 
 public class ViewAllDetails implements ActionListener 
@@ -110,7 +110,7 @@ public class ViewAllDetails implements ActionListener
 				client.sendCustomerId(compTxt.getText());
 				
 				client.receiveResponse();			
-				frame.dispose();
+				//frame.dispose();
 			}
 	});
 

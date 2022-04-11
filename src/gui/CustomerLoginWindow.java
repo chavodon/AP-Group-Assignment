@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import clientTCP.Client;
+
 public class CustomerLoginWindow extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -77,8 +79,12 @@ public class CustomerLoginWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				dispose();
-				new CustomerDashboard();
+				Client client = new Client();
+				client.sendAction("CustomerLogin");
+				client.sendLoginDetails(usernameTxt.getText(),passwordTxt.getText());
+				client.receiveResponse();
+//				dispose();
+//				new CustomerDashboard();
 			}
 		});
 		add(loginBtn);

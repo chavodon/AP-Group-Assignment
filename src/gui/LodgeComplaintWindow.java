@@ -34,7 +34,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-import client.Client;
+import clientTCP.Client;
 import customer.Complaints;
 
 	public class LodgeComplaintWindow extends JFrame implements ActionListener
@@ -171,7 +171,7 @@ import customer.Complaints;
 			idLbl.setFont(new Font("Serif", Font.BOLD, 18));
 			idLbl.setForeground(Color.black);
 			
-			customerLbl = new JLabel("Customer: ");
+			customerLbl = new JLabel("Customer Id: ");
 			customerLbl.setFont(new Font("Serif", Font.BOLD, 18));
 			customerLbl.setForeground(Color.black);
 			

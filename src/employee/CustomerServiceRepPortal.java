@@ -17,9 +17,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
+import clientTCP.Client;
 import gui.CompleteSolution;
+import gui.ViewCustomerComplaint;
 import gui.ViewResolvedComplaint;
 import gui.ViewSpecificComplaint;
+
+//import gui.CompleteSolution;
+//import gui.ViewResolvedComplaint;
 
 public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 	
@@ -38,7 +43,7 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 	private JButton billBtn;
 	private JButton genBtn;
 
-	private JFrame frame = new JFrame("Customer Service Representative Dashboard");
+	private JFrame frame = new JFrame("Employee Portal");
 	private JLabel label;
 	private JLabel label2;
 	private JLabel label3;
@@ -54,29 +59,29 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 	private JLabel label13;
 	
 	public CustomerServiceRepPortal() {
-		label = new JLabel("Customer Service Representative Dashboard");
-	    label.setBounds(400,25,500,20);
-	    label.setFont(new Font("Ariel", Font.BOLD, 18));
+		label = new JLabel("EMPLOYEE DASHBOARD");
+	    label.setBounds(500,25,250,20);
+	    label.setFont(new Font("Serif", Font.BOLD, 18));
 	    label.setForeground(Color.black);
 	    
 	    label2 = new JLabel("Complaint Information");
 	    label2.setBounds(775,85,250,20);
-	    label2.setFont(new Font("Ariel", Font.BOLD, 18));
+	    label2.setFont(new Font("Serif", Font.BOLD, 18));
 	    label2.setForeground(Color.black);
 	    
 	    label3 = new JLabel("Services");
 	    label3.setBounds(250,85,100,20);
-	    label3.setFont(new Font("Ariel", Font.BOLD, 18));
+	    label3.setFont(new Font("Serif", Font.BOLD, 18));
 	    label3.setForeground(Color.black);
 	    
 	    label4 = new JLabel("Resolved Complaints");
 	    label4.setBounds(725,120,150,20);
-	    label4.setFont(new Font("Ariel", Font.BOLD, 12));
+	    label4.setFont(new Font("Serif", Font.BOLD, 12));
 	    label4.setForeground(Color.black);
 	    
 	    label5 = new JLabel("Outstanding Complaints");
 	    label5.setBounds(920,120,150,20);
-	    label5.setFont(new Font("Ariel", Font.BOLD, 12));
+	    label5.setFont(new Font("Serif", Font.BOLD, 12));
 	    label5.setForeground(Color.black);
 	    	    
 	    label6 = new JLabel("10");
@@ -137,13 +142,13 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 		frame.getContentPane().setBackground(new Color(160, 160, 160));
 		frame.setResizable(false);
 		frame.setSize(new Dimension(1200,600));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 		//frame.getContentPane().setBackground(Color.BLACK);
 		
 		//--------------CREATE BUTTONS----------------------
 		
-		viewBtn = new JButton("VIEW ALL COMPLAINTS");
+		viewBtn = new JButton("Respond To Complaint");
 		editBtn= new JButton("EDIT SOLUTION");
 		vrcBtn = new JButton("RESOLVED COMPLAINTS");
 		custBtn = new JButton("CUSTOMER SERVICE");
@@ -195,7 +200,15 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 		genBtn.setBounds(505,455,200,50);
 		
 		//-----------------ADD LISTENERS---------------------
-		viewBtn.addActionListener(this);
+		viewBtn.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				new ViewCustomerComplaint();
+			}
+		});
+		
 		editBtn.addActionListener(this);
 		vrcBtn.addActionListener(this);
 		custBtn.addActionListener(this);
@@ -227,13 +240,13 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 		menu.setMnemonic(KeyEvent.VK_A);
 		menu.getAccessibleContext().setAccessibleDescription(null);
 		menu.setBounds(250,70,50,15);
-	    menu.setFont(new Font("Ariel", Font.BOLD, 12));
+	    menu.setFont(new Font("Serif", Font.BOLD, 12));
 	    menu.setOpaque(true);
 	    menuBar.add(menu);
 		//menuItem = new JMenuItem("")
 		
 		//menu items
-		menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
+		menuItem = new JMenuItem("Make a Complaint", KeyEvent.VK_T);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
 		menuItem.setBackground(Color.green);
@@ -267,43 +280,30 @@ public class CustomerServiceRepPortal extends JFrame implements ActionListener {
 	}
 	
 	@SuppressWarnings("unused")
-//	public void actionPerformed(ActionEvent e) {
-//		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
-//		if (e.getSource() == viewBtn) {
-//			//ViewAllComplaint vc = new ViewAllComplaint();
-//		}			
-//		else if (e.getSource() == editBtn) {
-//			CompleteSolution ww = new CompleteSolution(" ");	
-//		} 	
-//		else if (e.getSource() == vrcBtn) {
-//			ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
-//		}
-//		else if (e.getSource() == custBtn) {
-//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-//			vsc.makeQuery("Customer Service");
-//		}
-//		else if (e.getSource() == custBtn) {
-//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-//			vsc.makeQuery("Product/Service");
-//		}
-//		else if (e.getSource() == custBtn) {
-//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-//			vsc.makeQuery("Bill/Payment");
-//		}
-//		else if (e.getSource() == custBtn) {
-//			ViewSpecificComplaint vsc = new ViewSpecificComplaint();
-//			vsc.makeQuery("General");
-//		}
-	//}
+	public void actionPerformed(ActionEvent e) {
+		//IF statement to select or determine what specific method to execute if the user clicks a particular button.
+		if (e.getSource() == viewBtn) {
+			//ViewAllComplaint vc = new ViewAllComplaint();
+		}			
+		else if (e.getSource() == editBtn) {
+			CompleteSolution ww = new CompleteSolution(" ");	
+		} 	
+		else if (e.getSource() == vrcBtn) {
+			ViewResolvedComplaint vrc = new ViewResolvedComplaint();	
+		}
+		else if (e.getSource() == custBtn) {
+			ViewSpecificComplaint vsc = new ViewSpecificComplaint("General");
+			vsc.table("Customer Service");
+		}
+	}
 
+	public void getClient()
+	{
+		Client client = new Client();
+		client.sendAction("ResolvedNum");
+		
+	}
 	public static void main(String[] args) {
 		new CustomerServiceRepPortal();
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

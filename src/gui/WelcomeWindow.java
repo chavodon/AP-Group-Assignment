@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import clientTCP.Client;
+
 public class WelcomeWindow extends JFrame
 { 
 	//Declare global variables
@@ -57,8 +59,8 @@ public WelcomeWindow()
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				 new EmployeeLogInWindow();
 				dispose();
+				 new EmployeeLogInWindow();
 			}
 		});
 		customerBtn.addActionListener(new ActionListener()
@@ -66,8 +68,8 @@ public WelcomeWindow()
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				 new CustomerLoginWindow();	
 				dispose();
+				 new CustomerLoginWindow();	
 			}
 		});
 		//-----------------ADD / DISPLAY BUTTONS ON SCREEN-----------------------

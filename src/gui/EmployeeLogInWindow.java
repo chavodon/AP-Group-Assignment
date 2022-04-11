@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import clientTCP.Client;
+
 public class EmployeeLogInWindow extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
@@ -77,8 +79,13 @@ public class EmployeeLogInWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				dispose();
-				new EmployeePortal();
+				Client client = new Client();
+				client.sendAction("EmployeeLogin");
+				client.sendLoginDetails(usernameTxt.getText(),passwordTxt.getText());
+				client.receiveResponse();
+				
+				//dispose();
+				//new EmployeePortal();
 			}
 		});
 		add(loginBtn);

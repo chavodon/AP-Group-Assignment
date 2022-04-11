@@ -14,6 +14,7 @@ public class Customer implements Serializable
 	private String email;
 	private String contact;
 	private String address;
+	private String password;
 	
 	//Default Constructor
 	public Customer() 
@@ -24,18 +25,24 @@ public class Customer implements Serializable
 		this.email = "";
 		this.contact = "";
 		this.address = "";
+		this.password="";
 	}
-	//Primary Constructor
-	public Customer(String id, String fName, String lName, String email, String contact, String address) 
-	{
+	public Customer(String id, String fName, String lName, String email, String contact, String address,
+			String password) {
 		this.id = id;
 		this.fName = fName;
 		this.lName = lName;
 		this.email = email;
 		this.contact = contact;
 		this.address = address;
+		this.password = password;
 	}
-	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	//Accessors
 	public String getId() 
 	{

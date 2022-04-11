@@ -32,7 +32,7 @@ import javax.swing.table.TableCellRenderer;
 
 import com.mysql.cj.xdevapi.Table;
 
-import client.Client;
+import clientTCP.Client;
 import customer.Complaints;
 
 public class ResponseByTechnician implements ActionListener 

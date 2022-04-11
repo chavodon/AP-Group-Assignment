@@ -30,7 +30,7 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.table.DefaultTableModel;
 
-import client.Client;
+import clientTCP.Client;
 import customer.Complaints;
 
 public class ViewAllComplaint extends JFrame implements ActionListener

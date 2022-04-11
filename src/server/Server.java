@@ -18,7 +18,14 @@ import java.util.Queue;
 import javax.swing.JOptionPane;
 
 import customer.Complaints;
+import customer.Customer;
 import customer.Payments;
+import employee.Employee;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import chat.ServerChat;
 
 public class Server 
 {
@@ -28,8 +35,10 @@ public class Server
 	private ObjectInputStream objIs;
 	
 	private static Connection dBConn;
+	private static Connection empConn;
 	private java.sql.Statement stmt;
 	private ResultSet result;
+    private static final Logger logger = LogManager.getLogger(Server.class);
 	
 	public Server()
 	{
@@ -66,6 +75,23 @@ public class Server
 			{
 				String url = "jdbc:mysql://localhost:3306/customersdb";
 				dBConn = DriverManager.getConnection(url, "root", "");
+				JOptionPane.showMessageDialog(null, "DB Connection Successful!","Connection Status", JOptionPane.INFORMATION_MESSAGE);
+			}
+			catch(SQLException e)
+			{
+				JOptionPane.showMessageDialog(null, "Failed To Connect To Database!" + e,"Connection Failure", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return dBConn;
+	}
+	private static Connection getEmpDatabaseConnection()
+	{
+		if(empConn == null)
+		{
+			try
+			{
+				String url = "jdbc:mysql://localhost:3306/employeedb";
+				empConn = DriverManager.getConnection(url, "root", "");
 				JOptionPane.showMessageDialog(null, "DB Connection Successful!","Connection Status", JOptionPane.INFORMATION_MESSAGE);
 			}
 			catch(SQLException e)
@@ -134,6 +160,7 @@ public class Server
 			{
 				objOs.writeObject(true);
 				JOptionPane.showMessageDialog(null, "Record added successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+   			 	logger.info("Added new complaint");
 			}
 			else
 			{
@@ -189,12 +216,12 @@ public class Server
 			if((stmt.executeUpdate(query)==1))
 			{
 				objOs.writeObject(true);
-				JOptionPane.showMessageDialog(null, "Record updated in update successfully","Record Status", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Response recorded","Respond Status", JOptionPane.INFORMATION_MESSAGE);
+				logger.info("Responded to complaint");
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "sql wrong","Record Status", JOptionPane.INFORMATION_MESSAGE);
-				
+				JOptionPane.showMessageDialog(null, "Unable to respond to complaint","Respond Status", JOptionPane.INFORMATION_MESSAGE);
 				objOs.writeObject(false);
 				}
 	     } 
@@ -237,7 +264,6 @@ public class Server
 	}
 	private Queue<Complaints> viewPastComplaint(String customerId)
 	{
-		System.out.println("In View All Complaint");
 		Complaints complaint = new Complaints();
 		String query = "SELECT * FROM complaints WHERE customerId  = '"+customerId+"' ";
 		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
@@ -400,7 +426,69 @@ public class Server
 		}
 		return allPayments;
 	}
-	
+	private boolean employeeLogin(String id, String password)
+	{
+		Employee emp = new Employee();
+		boolean found = false;
+		String query = "SELECT * FROM employee";
+		try
+		{
+			stmt = empConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			while(result.next())
+			{
+				emp.setId(result.getString(1));
+				emp.setfName(result.getString(2));
+				emp.setlName(result.getString(3));
+				emp.setType(result.getString(4));
+				emp.setPassword(result.getString(5));
+				
+				if(emp.getId().equals(id) && emp.getPassword().equals(password))
+				{
+					found = true;
+					break;
+				}
+			}	
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return found;
+	}
+	private boolean customerLogin(String id, String password)
+	{
+		Customer customer = new Customer();
+		boolean found = false;
+		String query = "SELECT * FROM customers";
+		try
+		{
+			stmt = dBConn.createStatement();
+			result = stmt.executeQuery(query);
+			
+			while(result.next())
+			{
+				customer.setId(result.getString(1));
+				customer.setfName(result.getString(2));
+				customer.setlName(result.getString(3));
+				customer.setEmail(result.getString(4));
+				customer.setContact(result.getString(5));
+				customer.setPassword(result.getString(6));
+				
+				if(customer.getId().equals(id) && customer.getPassword().equals(password))
+				{
+					found = true;
+					break;
+				}
+			}	
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return found;
+	}
 	//---------WAIT FOR REQUEST TO EXECUTE---------------------------------
 	private void waitForRequests()
 	{
@@ -408,7 +496,9 @@ public class Server
 		String customerId = "";
 		String category = "";
 		String complaintId = "";
+		boolean found = false;
 		getDatabaseConnection();
+		getEmpDatabaseConnection();
 		Complaints complaint = new Complaints();
 		Payments payment = new Payments();
 		Queue<Complaints> allComplaints = new LinkedList<Complaints>();
@@ -517,7 +607,22 @@ public class Server
 						objOs.writeObject(complaint);
 						objOs.writeObject(payment);
 					}
-					
+					else if (action.equals("EmployeeLogin"))
+					{
+						System.out.println("Wait for Requests");
+						String id = (String)objIs.readObject();
+						String password =  (String)objIs.readObject();
+						found = employeeLogin(id, password);
+						objOs.writeObject(found);
+					}
+					else if (action.equals("CustomerLogin"))
+					{
+						System.out.println("Wait for Requests");
+						String id = (String)objIs.readObject();
+						String password =  (String)objIs.readObject();
+						found = customerLogin(id, password);
+						objOs.writeObject(found);
+					}
 					else if (action.equals("CountRecords"))
 					{
 						System.out.println("Wait for Requests");

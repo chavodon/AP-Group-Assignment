@@ -23,7 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
-import client.Client;
+import clientTCP.Client;
 import customer.Complaints;
 import customer.Payments;
 

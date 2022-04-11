@@ -1,6 +1,8 @@
 package employee;
 
-public class Employee 
+import user.User;
+
+public class Employee extends User
 {
 	private String staffID;
 	private String password;
@@ -11,6 +13,7 @@ public class Employee
 	//Default Constructor
 	public Employee() 
 	{
+		super();
 		this.staffID = "";
 		this.password = "";
 		this.fName = "";
@@ -18,6 +21,15 @@ public class Employee
 		this.type = "";
 	}
 	
+	public Employee(String staffID, String password, String fName, String lName, String type, String id) {
+		super(id, password);
+		this.staffID = staffID;
+		this.password = password;
+		this.fName = fName;
+		this.lName = lName;
+		this.type = type;
+	}
+
 	//Primary Constructor
 	public Employee(String staffID, String password, String fName, String lName, String type) 
 	{
