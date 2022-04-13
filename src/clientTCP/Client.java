@@ -13,13 +13,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import customer.Complaints;
+import customer.Customer;
 import customer.Payments;
 import gui.CustomerDashboard;
-import gui.EmployeePortal;
+import gui.EmployeeLogInWindow;
 import gui.QueryAccountStatus;
+import gui.RepPortal;
 import gui.ResponseByRep;
 import gui.ResponseByTechnician;
+import gui.TechPortal;
 import gui.ViewAllComplaint;
+import gui.ViewAllDetails;
 import gui.ViewByCategory;
 import gui.ViewComplaint;
 import gui.ViewPayments;
@@ -35,7 +39,7 @@ public class Client
 	Payments payment = new Payments();
 	Queue<Complaints> allComplaints = new LinkedList<Complaints>();
 	Queue<Payments> allPayments = new LinkedList<Payments>();
-	//private static final Logger logger = LogManager.getLogger(Client.class);
+	private static final Logger logger = LogManager.getLogger(Client.class);
 	
 	public Client()
 	{
@@ -84,10 +88,12 @@ public class Client
 		try
 		{
 			objOs.writeObject(action);
+			 logger.info("Client Sent Action Request");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Action To Server");
 		}
 	}
 	public void sendComplaint(Complaints compObj)
@@ -95,11 +101,12 @@ public class Client
 		try
 		{
 			objOs.writeObject(compObj);
-			//logger.info("Client Sent Complaint to Server");
+			logger.info("Client Sent Complaint to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Complaint To Server");
 		}
 	}
 	public void sendComplaintId(String comId)
@@ -107,10 +114,13 @@ public class Client
 		try
 		{
 			objOs.writeObject(comId);
+			logger.info("Client Sent Complaint Id to Server");
+			
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Complaint Id To Server");
 		}
 	}
 	public void sendCustomerId(String customerId)
@@ -118,10 +128,25 @@ public class Client
 		try
 		{
 			objOs.writeObject(customerId);
+			logger.info("Client Sent Customer Id to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Customer Id To Server");
+		}
+	}
+	public void sendTechId(String techId)
+	{
+		try
+		{
+			objOs.writeObject(techId);
+			logger.info("Client Sent Technician Id to Server");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Technician Id To Server");
 		}
 	}
 	public void sendCategory(String category)
@@ -129,45 +154,54 @@ public class Client
 		try
 		{
 			objOs.writeObject(category);
+			logger.info("Client Sent Complaint Category to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Category To Server");
 		}
 	}
-	public void sendTechResponse(String response, String date)
+	public void sendTechResponse(String id, String response, String date)
 	{
 		try
 		{
+			objOs.writeObject(id);
 			objOs.writeObject(response);
 			objOs.writeObject(date);
+			logger.info("Client Sent Technician Response to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Technician Response To Server");
 		}
 	}
-	public void sendRepResponse(String response)
+	public void sendRepResponse(String id, String response)
 	{
 		try
 		{
+			objOs.writeObject(id);
 			objOs.writeObject(response);
+			logger.info("Client Sent Representative Response to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Representative Response To Server");
 		}
 	}
 	public void sendTechnician(String technician)
 	{
-		System.out.println("tech");
 		try
 		{
 			objOs.writeObject(technician);
+			logger.info("Client Sent Technician to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Technician Info To Server");
 		}
 	}
 	public void sendLoginDetails(String id, String password)
@@ -176,16 +210,20 @@ public class Client
 		{
 			objOs.writeObject(id);
 			objOs.writeObject(password);
-			//logger.info("Client Sent Login Details to Server");
+			logger.info("Client Sent Login Details to Server");
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
+			logger.error("Input/Output Exception Sending Login Details To Server");
 		}
 	}	
 	public void receiveResponse()
 	{
-		boolean found=false;
+		int value = 0;
+		boolean found = false;
+		complaint = null;
+		Customer customer = new Customer();
 		try
 		{
 			if(action.equalsIgnoreCase("Add"))
@@ -194,24 +232,38 @@ public class Client
 				if(flag == true)
 				{
 					JOptionPane.showMessageDialog(null, "Complaint Added Successfully","Lodge Status", JOptionPane.INFORMATION_MESSAGE);
-				//	logger.info("Request To Add Complaint Successful");
+					logger.info("Request To Add Complaint Successful");
 				}
 			}
 			if(action.equals("ViewComplaint"))
 			{
 				complaint = (Complaints) objIs.readObject();
-				
 				if(complaint == null)
 				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					logger.error("Request To View Complaint Unsuccessful");
 					return;
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
-				//	logger.info("Request To View Complaint Successful");
+					logger.info("Request To View Complaint Successful");
 					ViewComplaint view = new ViewComplaint();
 					view.setText(complaint);
+				}
+			}
+			if(action.equals("ViewDetails"))
+			{
+				complaint = (Complaints) objIs.readObject();
+				customer = (Customer) objIs.readObject();
+				if(complaint == null)
+				{
+					logger.error("Request To View Complaint Unsuccessful");
+					return;
+				}
+				else
+				{
+					logger.info("Request To View Complaint Successful");
+					ViewAllDetails view = new ViewAllDetails();
+					view.setText(complaint,customer);
 				}
 			}
 			if(action.equals("QueryStatus"))
@@ -220,48 +272,47 @@ public class Client
 				
 				if(payment == null)
 				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					logger.error("Request To Query Account Status Unsuccessful");
 					return;
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
-				//	logger.info("Request To Query Account Status Successful");
+					logger.info("Request To Query Account Status Successful");
 					QueryAccountStatus query = new QueryAccountStatus();
 					query.setText(payment);
 				}
 			}
 			if(action.equals("AllComplaints"))
 			{
+				allComplaints = null;
 				allComplaints =  (Queue<Complaints>) objIs.readObject();
 				
-				if(complaint == null)
+				if(allComplaints == null)
 				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					logger.error("Request To View Past Complaints Unsuccessful");
 					return;
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					logger.info("Request To View Past Complaints Successful");
 					ViewAllComplaint viewAll = new ViewAllComplaint();
 					viewAll.table(allComplaints);
 				}
 			}
 			if(action.equals("AllPayments"))
 			{
+				logger.error("Request To View Past Payments Unsuccessful");
 				allPayments =  (Queue<Payments>) objIs.readObject();
 				
-				if(complaint == null)
+				if(allPayments == null)
 				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					logger.info("Request To View Past Payments Successful");
 					ViewPayments viewAll = new ViewPayments();
 					viewAll.table(allPayments);
-					
 				}
 			}
 			if(action.equals("ResponseView"))
@@ -270,12 +321,10 @@ public class Client
 				
 				if(complaint == null)
 				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
 					ResponseByRep respond = new ResponseByRep();
 					respond.setText(complaint);
 				}
@@ -286,12 +335,12 @@ public class Client
 				
 				if(complaint == null)
 				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "No Such Complaint Assigned!","View Status", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Complaint Found!","View  Status", JOptionPane.INFORMATION_MESSAGE);
 					ResponseByTechnician respond = new ResponseByTechnician();
 					respond.setText(complaint);
 				}
@@ -301,11 +350,13 @@ public class Client
 				Boolean flag = (Boolean) objIs.readObject();
 				if(flag == true)
 				{
-					JOptionPane.showMessageDialog(null, "Record updated successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+					logger.info("Request To Respond To Complaint Successful");
+					JOptionPane.showMessageDialog(null, "Response Recorded Successfully!","Response Status", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "Record not saved","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+					logger.error("Request To Respond To Complaint Unsuccessful");
+					JOptionPane.showMessageDialog(null, "Response Not Recorded!","Response Status", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 				if(action.equals("RepRespond"))
@@ -313,100 +364,71 @@ public class Client
 						Boolean flag = (Boolean) objIs.readObject();
 						if(flag == true)
 						{
-							JOptionPane.showMessageDialog(null, "Record updated successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+							logger.info("Request To Respond To Complaint Successful");
+							JOptionPane.showMessageDialog(null, "Response Recorded Successfully!","Response Status", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else
 						{
-							JOptionPane.showMessageDialog(null, "Record not saved","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+							logger.error("Request To Respond To Complaint Unsuccessful");
+							JOptionPane.showMessageDialog(null, "Response Not Recorded!","Response Status", JOptionPane.ERROR_MESSAGE);
 						}
 				}
 				if(action.equals("Assign"))
 				{
-					System.out.println("receive");
 					Boolean flag = (Boolean) objIs.readObject();
 					if(flag == true)
 					{
-						JOptionPane.showMessageDialog(null, "Record updated successfully","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+						logger.info("Request To Assign Complaint Successful");
+						JOptionPane.showMessageDialog(null, "Complaint Assigned Sucessfully!","Assign Status", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null, "Record not saved","Add Record Status", JOptionPane.INFORMATION_MESSAGE);
+						logger.error("Request To Assign Complaint Unsuccessful");
+						JOptionPane.showMessageDialog(null, "Complaint Not Assigned!","Assign Status", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			if(action.equals("ByCategory"))
 			{
+				allComplaints=null;
 				allComplaints =  (Queue<Complaints>) objIs.readObject();
-				if (complaint != null)
+				
+				if (allComplaints != null)
 				{
-					//JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
+					logger.info("Request To View Complaints By Category Successful");
 					ViewByCategory viewAll = new ViewByCategory();
 					viewAll.table(allComplaints);
 				}
 			}
-			if(action.equals("Assign"))
+			if(action.equals("Count"))
 			{
-				allComplaints =  (Queue<Complaints>) objIs.readObject();
-				
-				if(complaint == null)
-				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
-//					ViewByCategory viewAll = new ViewByCategory();
-//					viewAll.table(allComplaints);
-				}
-			}
-			if(action.equals("ViewDetails"))
-			{
-				complaint = (Complaints) objIs.readObject();
-				payment = (Payments) objIs.readObject();
-				
-				if(complaint == null)
-				{
-					JOptionPane.showMessageDialog(null, "Record could not be found","Find Record Status", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				else
-				{
-					JOptionPane.showMessageDialog(null, "Search successful","Find Record Status", JOptionPane.INFORMATION_MESSAGE);
-					//ViewComplaint view = new ViewComplaint();
-					//view.setText(complaint);
-					System.out.println(complaint);
-					System.out.println(payment);
-				}
-			}
-			if(action.equals("CountRecords"))
-			{
-				int total = (int) objIs.readObject();
-				System.out.println(total);
-				if(total >= 0)
-				{
-					JOptionPane.showMessageDialog(null, "Record(s) Count Successful","Count Status", JOptionPane.INFORMATION_MESSAGE);
-					return;
-				}
-				if(total == 0)
-				{
-					JOptionPane.showMessageDialog(null, "Failed To Count Records","Count Status", JOptionPane.ERROR_MESSAGE);
-				}
-				EmployeePortal emp = new EmployeePortal();
-				emp.setNewText(total);
+				int numUnresolved = (int) objIs.readObject();
+				int numResolved = (int) objIs.readObject();
+				RepPortal rep = new RepPortal();
+				rep.setNumComplaints(numUnresolved, numResolved);
 			}
 			if(action.equals("EmployeeLogin"))
 			{
-				found = (boolean) objIs.readObject();
-				
-				if(found == false)
+				value = (int) objIs.readObject();
+//				int numUnresolved = (int) objIs.readObject();
+//				int numResolved = (int) objIs.readObject();
+//				
+				if(value == 1)
 				{
-					JOptionPane.showMessageDialog(null, "Incorrect Login Details","Login Status", JOptionPane.ERROR_MESSAGE);
-					return;
+					logger.info("Request to Login Successful");
+					TechPortal tech = new TechPortal();
 				}
-				else
+				if(value == 2)
 				{
-					JOptionPane.showMessageDialog(null, "Login Sucessful","Login Status", JOptionPane.INFORMATION_MESSAGE);
-					EmployeePortal empPortal = new EmployeePortal();
+					logger.info("Request to Login Successful");
+					RepPortal rep = new RepPortal();
+//					rep.setNumComplaints(numUnresolved, numResolved);
+//					numResolved = 0;
+//					numUnresolved = 0;
+				}
+				if(value == -1)
+				{
+					logger.error("Request to Login Failed");
+					EmployeeLogInWindow login = new EmployeeLogInWindow();
 				}
 			}
 			if(action.equals("CustomerLogin"))
@@ -416,11 +438,13 @@ public class Client
 				if(found == false)
 				{
 					JOptionPane.showMessageDialog(null, "Incorrect Login Details","Login Status", JOptionPane.ERROR_MESSAGE);
+					logger.error("Request to Login Failed");
 					return;
 				}
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Login Sucessful","Login Status", JOptionPane.INFORMATION_MESSAGE);
+					logger.info("Request to Login Successful");
 					CustomerDashboard cusDash = new CustomerDashboard();
 				}
 			}
@@ -428,14 +452,17 @@ public class Client
 		catch(ClassNotFoundException ex)
 		{
 			ex.printStackTrace();
+			logger.error("Class Not Found Exception");
 		}
 		catch(ClassCastException e)
 		{
 			e.printStackTrace();
+			logger.error("Class Cast Exception");
 		}
 		catch(IOException ioe)
 		{
 			ioe.printStackTrace();
+			logger.error("Input/Output Exception");
 		}
 	}
 	public static void main(String[] args) 

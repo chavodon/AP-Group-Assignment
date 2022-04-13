@@ -4,101 +4,171 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Queue;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.table.DefaultTableModel;
 
 import clientTCP.Client;
 import customer.Complaints;
-import customer.Payments;
 
-public class ViewPayments 
+public class LodgeComplaint
 {
-	private JFrame frame = new JFrame("View Past Payments");
+	private JFrame frame;
+	private JLabel idLbl;
+	private JLabel categoryLbl;
+	private JLabel dateLbl;
+	private JLabel detailsLbl;
+	private JTextField idTxt;
+	private JLabel customerLbl;
+	private JTextField customerTxt;
+	String category[]= {"Customer Service", "Product/Service", "Bill Payment", "General"};
+	JComboBox<String> categoryBox = new JComboBox<>(category);
+	private static JTextField dateTxt;
+	private JTextArea detailsTxt;
+	private JButton lodgeBtn;
+	private JButton bckBtn;
+	
 	public JMenuBar serviceBar;
 	public JMenu serviceMenu, subMenu;
 	public JMenuItem menuItem;
-	public JTextArea textArea;
-	public JTextField searchField = new JTextField(30);
-    public JButton searchB = new JButton ("Search");
-    public JTable result = new JTable();
-	public JPanel panel = new JPanel();
-    public JScrollPane scrollPane = new JScrollPane(result);
-    private JButton bckBtn;
-    private JLabel titleLbl;
-    
-    Complaints complaint = new Complaints();
 	
-	public ViewPayments() 
-	{
-		frame.setResizable(false);
-		frame.setBounds(700, 300, 980, 591);
+    Complaints complaint = new Complaints();
+    
+    public LodgeComplaint()
+    {
+    	frame = new JFrame("Lodge Complaint");
+    	frame.setResizable(false);
+		frame.setBounds(700, 300, 584, 531);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null); //center output on screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setBackground(new Color(160, 160, 160));
-		frame.setVisible(true);
 		
-		titleLbl = new JLabel("Customer Id: ");
-		titleLbl.setBounds(20, 10, 290, 35); //x, y, width, length
-	    titleLbl.setFont(new Font("Serif", Font.BOLD, 16));
-	    frame.getContentPane().add(titleLbl);
+		customerLbl = new JLabel("Customer Id: ");
+		customerLbl.setBounds(20, 10, 290, 35); //x, y, width, length
+		customerLbl.setForeground(Color.black);
+	    customerLbl.setFont(new Font("Serif", Font.BOLD, 16));
+	    frame.getContentPane().add(customerLbl);
 	    
-		searchField = new JTextField();
-		searchField.setFont(new Font("Serif", Font.PLAIN, 14));
-		searchField.setBounds(117, 10, 130, 30);
-		frame.getContentPane().add(searchField );
+		customerTxt = new JTextField();
+		customerTxt.setFont(new Font("Serif", Font.PLAIN, 16));
+		customerTxt.setBounds(117, 10, 130, 30);
+		frame.getContentPane().add(customerTxt);
+	
+		idLbl = new JLabel("cNo: ");
+		idLbl.setFont(new Font("Serif", Font.BOLD, 16));
+		idLbl.setForeground(Color.black);
+		idLbl.setBounds(20, 50, 290, 35); //x, y, width, length
+	    frame.getContentPane().add(idLbl);
 		
-		searchB = new JButton("Search");
-		searchB.setFont(new Font("Serif", Font.BOLD, 14));
-		searchB.setForeground(Color.white);
-		searchB.setBorderPainted(false);
-		searchB.setBounds(265, 10, 80, 30);
-		searchB.setBackground(new Color(96, 96, 96));
-		frame.getContentPane().add(searchB);
-		searchB.addActionListener(new ActionListener()
+		idTxt = new JTextField();
+		idTxt.setFont(new Font("Serif", Font.PLAIN, 14));
+		Random rand = new Random();
+		idTxt.setText(String.format("%04d",rand.nextInt(10000)));
+		idTxt.setBounds(117, 50, 130, 30); //x, y, width, length
+		idTxt.setEditable(false);
+		frame.getContentPane().add(idTxt);
+		
+		categoryLbl = new JLabel("Category: ");
+		categoryLbl.setFont(new Font("Serif", Font.BOLD, 16));
+		categoryLbl.setForeground(Color.black);
+		categoryLbl.setBounds(20, 90, 290, 35); //x, y, width, length
+	    frame.getContentPane().add(categoryLbl);
+	    
+		categoryBox.setFont(new Font("Serif", Font.PLAIN, 16));
+		categoryBox.setBounds(117, 90, 150, 30);
+		categoryBox.setSelectedIndex(0);
+		frame.getContentPane().add(categoryBox);
+		
+		dateLbl = new JLabel("Date: ");
+		dateLbl.setFont(new Font("Serif", Font.BOLD, 16));
+		dateLbl.setForeground(Color.black);
+		dateLbl.setBounds(20, 130, 290, 35); //x, y, width, length
+	    frame.getContentPane().add(dateLbl);
+	    
+		dateTxt = new JTextField();
+		dateTxt.setFont(new Font("Serif", Font.PLAIN, 16));
+		dateTxt.setBounds(117, 130, 130, 30);
+		dateTxt.setText("mm/dd/yyyy");
+		dateTxt.addFocusListener(new FocusListener()
+		{
+			@Override
+			public void focusGained(FocusEvent e) 
+			{
+				dateTxt.setText("");	
+			}
+			@Override
+			public void focusLost(FocusEvent e)
+			{
+				// TODO Auto-generated method stub
+			}
+        });
+		frame.getContentPane().add(dateTxt);
+		
+		detailsLbl = new JLabel("Details: ");
+		detailsLbl.setForeground(Color.black);
+		detailsLbl.setBounds(20, 170, 290, 35); //x, y, length, width
+	    detailsLbl.setFont(new Font("Serif", Font.BOLD, 16));
+	    frame.getContentPane().add(detailsLbl);
+	    
+	    detailsTxt = new JTextArea();
+	    detailsTxt.setBounds(117, 170, 290, 35); //x, y, width, length
+	    detailsTxt.setSize(330,170);
+	    detailsTxt.setFont(new Font("Serif", Font.PLAIN, 16));
+	    frame.getContentPane().add(detailsTxt);
+		
+		lodgeBtn = new JButton("Lodge");
+		lodgeBtn.setFont(new Font("Serif", Font.BOLD, 18));
+		lodgeBtn.setForeground(Color.white);
+		lodgeBtn.setBackground(new Color(96, 96, 96));
+		lodgeBtn.setBounds(390, 370, 100, 30);
+		lodgeBtn.addActionListener(new ActionListener() 
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(searchField.getText().equals(""))
+				if(idTxt.getText().equals("")||detailsTxt.getText().equals("")||dateTxt.getText().equals(""))
 				{
-					JOptionPane.showMessageDialog(null, "Customer Id Missing!","View Status", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Some Complaint Information Missing!","Lodge Status", JOptionPane.WARNING_MESSAGE);
 				}
 				else
 				{
 					Client client = new Client();
-					client.sendAction("AllPayments");
-					client.sendCustomerId(searchField.getText());
-					client.receiveResponse();
+					complaint.setcNo(idTxt.getText());
+					complaint.setId(customerTxt.getText());
+					complaint.setCategory(categoryBox.getSelectedItem().toString());					
+					complaint.setDate(dateTxt.getText());
+					complaint.setDetails(detailsTxt.getText());
+
+					client.sendAction("Add");
+					client.sendComplaint(complaint);
 				}
 			}
-	});
-		
+		});
+		frame.getContentPane().add(lodgeBtn);
+
 		bckBtn = new JButton("Back");
-		bckBtn.setFont(new Font("Serif", Font.BOLD, 14));
+		bckBtn.setFont(new Font("Serif", Font.BOLD, 18));
 		bckBtn.setForeground(Color.white);
-		bckBtn.setBorderPainted(false);
-		bckBtn.setBounds(365, 10, 80, 30);
 		bckBtn.setBackground(new Color(96, 96, 96));
+		bckBtn.setBounds(90, 370, 100, 30); 
 		bckBtn.addActionListener(new ActionListener()
 		{
 			@Override
@@ -109,11 +179,7 @@ public class ViewPayments
 			}
 		});
 		frame.getContentPane().add(bckBtn);
-	    navbar();
-	 }
-	
-	public void navbar() 
-	{
+		
 		//Create the Menu Bar
 		serviceBar = new JMenuBar();
 		serviceMenu = new JMenu("Services");
@@ -134,6 +200,7 @@ public class ViewPayments
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
 				new LodgeComplaint();
 			}	
 		});
@@ -267,41 +334,9 @@ public class ViewPayments
 		frame.add(serviceBar);
 		frame.setJMenuBar(serviceBar); 
 		frame.setVisible(true);
+    }
+	public static void main(String args[])
+	{
+		  new LodgeComplaint(); 
 	}
-
-	public void table(Queue<Payments> allPayments) 
-	{	
-		Object[]columns = {"pNo", "Customer Id", "AmountDue", "AmountPaid", "DueDate", "PaymentDate", "Status"};
-		JTable table = new JTable();
-		DefaultTableModel mode = (DefaultTableModel) table.getModel();
-		table.setFont(new Font("Serif", Font.PLAIN, 14));
-		mode.setColumnIdentifiers(columns);
-	
-		for (Payments payment: allPayments) 
-		{
-			searchField.setText(payment.getId());
-            Object[] row = {payment.getpNo(),payment.getId(),payment.getAmountDue(),payment.getAmountPaid(),payment.getDueDate(),payment.getPaymentDate(),payment.getStatus()};
-			mode.addRow(row);
-        }
-
-		table.setModel(mode);
-		table.setBackground(Color.white);
-		table.setForeground(Color.black);
-		table.setSelectionBackground(Color.lightGray);
-		table.setSelectionForeground(Color.white);
-		table.setGridColor(Color.red);
-		table.setRowHeight(30);
-		
-		JScrollPane scroll = new JScrollPane(table);
-		scroll.setForeground(Color.lightGray);
-		scroll.setBackground(Color.WHITE);
-		scroll.setBounds(20,80,930,350);
-
-		frame.add(scroll);
-		frame.setVisible(true);
-		} 
-		public static void main(String[] args) 
-		{
-			new ViewPayments();
-		}
 }

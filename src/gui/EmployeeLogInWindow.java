@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -47,7 +48,7 @@ public class EmployeeLogInWindow extends JFrame {
 	     title.setBounds(200, 30, 480, 60); //x axis, y axis, length, width
 		 add(title);
 		 
-		usernameLbl = new JLabel("Username:");
+		usernameLbl = new JLabel("Staff ID:");
 		usernameLbl.setForeground(Color.black);
 		usernameLbl.setFont(new Font("Serif", Font.BOLD, 18));
 		usernameLbl.setBounds(90, 110, 480, 60); 
@@ -79,13 +80,17 @@ public class EmployeeLogInWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Client client = new Client();
-				client.sendAction("EmployeeLogin");
-				client.sendLoginDetails(usernameTxt.getText(),passwordTxt.getText());
-				client.receiveResponse();
-				
-				//dispose();
-				//new EmployeePortal();
+				if(usernameTxt.getText().equals("")||passwordTxt.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Login Details Missing!","Login Status", JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
+					Client client = new Client();
+					client.sendAction("EmployeeLogin");
+					client.sendLoginDetails(usernameTxt.getText(),passwordTxt.getText());
+					client.receiveResponse();
+				}
 			}
 		});
 		add(loginBtn);

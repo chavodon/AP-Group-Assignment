@@ -1,0 +1,198 @@
+[INFO ] 2022-04-12 13:44:07.248 [main] Server - Server Fullfilled Add Complaint Request
+[INFO ] 2022-04-12 14:21:30.244 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 14:21:47.505 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 14:24:33.708 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 14:24:39.161 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 18:44:09.141 [main] Server - Server Fullfilled Add Complaint Request
+[INFO ] 2022-04-12 18:44:17.953 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 18:48:41.014 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 18:50:55.820 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 18:53:42.981 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 18:54:12.133 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:02:46.125 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:03:04.078 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:13:01.206 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:15:53.305 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:16:18.723 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:17:41.189 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 19:17:47.615 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 20:02:59.864 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 20:03:08.407 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 20:04:43.194 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 20:04:49.272 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 20:05:07.205 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 20:05:10.553 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:09:05.134 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:10:11.259 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:10:33.136 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 20:13:43.905 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:14:06.131 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 20:14:47.177 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:14:59.477 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 20:15:14.109 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 20:15:20.717 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-12 20:16:16.725 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:20:11.243 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:21:03.406 [main] Server - Server Fullfilled View Past Payments Request
+[INFO ] 2022-04-12 20:21:11.783 [main] Server - Server Fullfilled View Past Payments Request
+[INFO ] 2022-04-12 20:21:19.611 [main] Server - Server Fullfilled View Past Payments Request
+[INFO ] 2022-04-12 20:27:29.413 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:27:57.656 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 20:28:05.411 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 20:58:09.388 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 20:58:23.745 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:13:36.684 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:13:58.117 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:14:27.176 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:14:42.133 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:16:18.308 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:16:43.669 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 21:16:53.107 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 21:23:09.414 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:24:05.456 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:24:31.217 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 21:24:36.938 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 21:24:44.046 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 21:25:21.344 [main] Server - Server Fullfilled View Past Payments Request
+[INFO ] 2022-04-12 21:26:48.934 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:26:55.533 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:30:15.945 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:31:57.777 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:36:18.055 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:36:22.142 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:37:02.483 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 21:39:31.409 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:42:11.292 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:42:27.795 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:42:58.627 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:43:21.421 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-12 21:52:45.662 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:53:08.526 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:56:54.470 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:57:13.719 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 21:59:03.984 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 21:59:19.185 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 22:02:02.507 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:02:17.702 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 22:04:22.266 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:05:29.161 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-12 22:20:13.181 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:20:32.208 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 22:21:42.137 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:22:19.066 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 22:26:38.259 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:26:54.213 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-12 22:28:56.189 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:34:27.097 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:34:57.410 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-12 22:35:11.132 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-12 22:37:08.712 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:37:28.206 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-12 22:40:13.093 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:41:04.309 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-12 22:43:41.207 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 22:43:52.504 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-12 22:44:21.395 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-12 22:45:14.735 [main] Server - Server Fullfilled Assign Complaint Request
+[INFO ] 2022-04-12 22:45:39.733 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-12 22:46:01.372 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-12 22:47:52.704 [main] Server - Server Started/Connected
+[INFO ] 2022-04-12 22:48:07.351 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-12 22:49:01.256 [main] Server - Server Fullfilled View Past Payments Request
+[INFO ] 2022-04-12 23:40:34.453 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:09:06.354 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:09:53.611 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:11:46.920 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:15:02.993 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:16:58.857 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:18:20.510 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:19:12.679 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:23:29.885 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:27:56.885 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 00:28:13.827 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 00:38:39.229 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 00:38:43.971 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 00:41:22.429 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 02:07:58.060 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:08:13.356 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 02:13:28.526 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-13 02:13:46.419 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-13 02:14:11.509 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:15:08.352 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:17:33.369 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:17:47.550 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-13 02:22:04.914 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:25:24.228 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:31:18.879 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 02:31:53.826 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 02:32:05.191 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 02:34:27.817 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 02:37:40.575 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[ERROR] 2022-04-13 02:37:40.824 [main] Server - Server Connection Terminated
+[INFO ] 2022-04-13 02:40:04.391 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:44:54.268 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:45:18.303 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-13 02:47:46.855 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:48:01.095 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-13 02:48:08.254 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-13 02:48:31.678 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-13 02:50:12.300 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:50:26.957 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 02:53:49.708 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:54:08.040 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 02:57:23.314 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 02:58:24.700 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 02:58:58.599 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 03:01:25.143 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 03:01:51.974 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 03:03:12.457 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 03:08:16.017 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 03:13:40.424 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-13 03:14:10.132 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-13 03:14:30.220 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-13 03:19:22.006 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 03:19:37.682 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-13 03:20:25.249 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-13 03:22:03.362 [main] Server - Server Fullfilled Technician View Complaint Request
+[INFO ] 2022-04-13 13:42:38.247 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 13:43:00.078 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 13:43:35.736 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 13:44:10.875 [main] Server - Server Fullfilled Assign Complaint Request
+[INFO ] 2022-04-13 13:44:45.436 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 13:45:51.600 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:26:38.815 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 14:26:54.361 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 14:27:34.610 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 14:27:45.996 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 14:29:04.524 [main] Server - Server Fullfilled Add Complaint Request
+[INFO ] 2022-04-13 14:29:53.902 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-13 14:30:05.100 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-13 14:30:33.142 [main] Server - Server Fullfilled Query Account Status Request
+[INFO ] 2022-04-13 14:32:02.124 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 14:32:22.101 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 14:32:34.020 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-13 14:33:41.491 [main] Server - Server Fullfilled View Past Payments Request
+[INFO ] 2022-04-13 14:34:34.948 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:34:44.624 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:35:43.172 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 14:35:54.572 [main] Server - Server Fullfilled View Complaints By Category Request
+[INFO ] 2022-04-13 14:37:03.631 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[ERROR] 2022-04-13 14:37:17.208 [main] Server - Server Connection Terminated
+[INFO ] 2022-04-13 14:37:51.388 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 14:38:09.943 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:38:26.539 [main] Server - Server Fullfilled Representative View Complaint Request
+[INFO ] 2022-04-13 14:38:51.655 [main] Server - Server Fullfilled Customer Rep Respond Request
+[INFO ] 2022-04-13 14:39:11.563 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:39:48.665 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 14:40:06.267 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-13 14:40:42.463 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:41:05.669 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:41:27.200 [main] Server - Server Fullfilled Assign Complaint Request
+[INFO ] 2022-04-13 14:41:34.020 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:41:40.893 [main] Server - Server Fullfilled View Complaints & Account Info Request
+[INFO ] 2022-04-13 14:42:13.043 [main] Server - Server Started/Connected
+[INFO ] 2022-04-13 14:42:31.932 [main] Server - Server Fullfilled Customer Login Request
+[INFO ] 2022-04-13 14:42:39.780 [main] Server - Server Fullfilled View Complaint Request
+[INFO ] 2022-04-13 14:43:04.667 [main] Server - Server Fullfilled View Past Complaints Request
+[INFO ] 2022-04-13 14:44:13.464 [main] Server - Server Fullfilled Employee Login Request
+[INFO ] 2022-04-13 14:44:32.480 [main] Server - Server Fullfilled Technician View Complaint Request

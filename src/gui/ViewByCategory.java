@@ -9,6 +9,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -37,11 +39,9 @@ import customer.Complaints;
 public class ViewByCategory 
 {
 	private JFrame frame = new JFrame("View Complaints By Category");
-	public JMenuBar menuBar;
-	public JMenu menu, subMenu;
+	public JMenuBar serviceBar;
+	public JMenu serviceMenu, subMenu;
 	public JMenuItem menuItem;
-	public JRadioButtonMenuItem rbtnMenuItem;
-	public JCheckBoxMenuItem rbMenuItem;
 	public JTextArea textArea;
 	public JTextField searchField = new JTextField(30);
     public JButton searchBtn;
@@ -57,7 +57,7 @@ public class ViewByCategory
 	public ViewByCategory() 
 	{
 		frame.setResizable(false);
-		frame.setBounds(700, 300, 720, 531);
+		frame.setBounds(700, 300, 980, 591);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null); //center output on screen
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,7 +102,7 @@ public class ViewByCategory
 		searchBtn.setBorderPainted(false);
 		searchBtn.setBounds(390, 33, 80, 35);
 		searchBtn.setBackground(new Color(96, 96, 96));
-		frame.getContentPane().add(searchBtn);
+		//frame.getContentPane().add(searchBtn);
 		searchBtn.addActionListener(new ActionListener()
 		{
 			@Override
@@ -118,23 +118,20 @@ public class ViewByCategory
 		frame.setVisible(true);
 	    navbar();
 	 }
-	
-	
 	public void navbar() 
 	{
 		//Create the Menu Bar
-		menuBar = new JMenuBar();
-		//Build Menu
-		menu = new JMenu("Services");
-		menu.setFont(new Font("Serif", Font.BOLD, 14));
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menu.setBounds(250,70,50,15);
-	    menu.setOpaque(true);
-	    menuBar.add(menu);
+		serviceBar = new JMenuBar();
+		serviceMenu = new JMenu("Services");
+		serviceMenu.setFont(new Font("Serif", Font.BOLD, 14));
+		serviceMenu.setMnemonic(KeyEvent.VK_A);
+		serviceMenu.getAccessibleContext().setAccessibleDescription(null);
+		serviceMenu.setBounds(250,70,50,15);
+	    serviceMenu.setOpaque(true);
+	    serviceBar.add(serviceMenu);
 		
 		//menu items
-		menuItem = new JMenuItem("Lodge New Complaint", KeyEvent.VK_T);
+		menuItem = new JMenuItem("Respond To Complaint", KeyEvent.VK_T);
 		menuItem.setFont(new Font("Serif", Font.BOLD, 14));
 		menuItem.setBackground(new Color(255, 255, 255));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
@@ -143,191 +140,125 @@ public class ViewByCategory
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new LodgeComplaintWindow();
+				frame.dispose();
+				new ResponseByRep();
 			}	
 		});
-		menu.add(menuItem);		
+		serviceMenu.add(menuItem);		
 		
-		menuItem = new JMenuItem("Live Chat", KeyEvent.VK_T);
+		menuItem = new JMenuItem("View Complaint By Category", KeyEvent.VK_T);
 		menuItem.setFont(new Font("Serif", Font.BOLD, 14));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
 		menuItem.setBackground(new Color(255, 255, 255));
 		menuItem.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				//new ChatWindow();
+			public void actionPerformed(ActionEvent e) 
+			{
+				frame.dispose();
+				new ViewByCategory();
 			}			
 		});
-		menu.add(menuItem);
+		serviceMenu.add(menuItem);
 		
-		menuItem = new JMenuItem("Video Call A Representative", KeyEvent.VK_T);
+		menuItem = new JMenuItem("Assign Complaint", KeyEvent.VK_T);
 		menuItem.setFont(new Font("Serif", Font.BOLD, 14));
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
 		menuItem.setBackground(new Color(255, 255, 255));
 		menuItem.addActionListener(new ActionListener(){
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				//new VideoCall();
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.dispose();
+				new AssignComplaint();
 			}
 		});
-		menu.add(menuItem);
+		serviceMenu.add(menuItem);
 		
-		menu = new JMenu("Back");
-		menu.setFont(new Font("Serif", Font.BOLD, 14));
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menu.addActionListener(new ActionListener()
+		menuItem = new JMenuItem("View Complaint", KeyEvent.VK_T);
+		menuItem.setFont(new Font("Serif", Font.BOLD, 14));
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_4, ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
+		menuItem.setBackground(new Color(255, 255, 255));
+		menuItem.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.dispose();
+				new ViewComplaint();
+			}
+		});
+		serviceMenu.add(menuItem);
+	
+		serviceMenu = new JMenu("Back");
+		serviceMenu.setFont(new Font("Serif", Font.BOLD, 14));
+		serviceMenu.setMnemonic(KeyEvent.VK_A);
+		serviceMenu.getAccessibleContext().setAccessibleDescription(null);
+		serviceMenu.addMouseListener(new MouseListener()
 		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				new CustomerDashboard();
-			}	
-		});
-		
-		if(menu.isSelected())
-		{
-			new CustomerDashboard();
-		}
-		menu.addMenuListener(null);
-//		menu.addMenuListener(new MenuListener()			
-//		{
-//			
-//		});
-//		menuSelected(MenuEvent e)
-//		{
-//			
-//		}
-		menuBar.add(menu);
-		
-		menu = new JMenu("Log Out");
-		menu.setFont(new Font("Serif", Font.BOLD, 14));
-		menu.setMnemonic(KeyEvent.VK_A);
-		menu.getAccessibleContext().setAccessibleDescription(null);
-		menu.addActionListener(new ActionListener(){
+			public void mouseClicked(MouseEvent e) {
+				frame.dispose();
+				new RepPortal();
+			}
 			@Override
-			public void actionPerformed(ActionEvent e) {
-			}	
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
 		});
-		menuBar.add(menu);
+		serviceBar.add(serviceMenu);
 		
+		serviceMenu = new JMenu("Log Out");
+		serviceMenu.setFont(new Font("Serif", Font.BOLD, 14));
+		serviceMenu.setMnemonic(KeyEvent.VK_A);
+		serviceMenu.getAccessibleContext().setAccessibleDescription(null);
+		serviceMenu.addMouseListener(new MouseListener()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.dispose();
+				new EmployeeLogInWindow();
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			});
+			serviceBar.add(serviceMenu);
+	    
 		class MenuListener
 		{
 		  MenuListener listener =  new MenuListener();
 		}
-		
-		frame.add(menuBar);
-		frame.setJMenuBar(menuBar); 
+		frame.add(serviceBar);
+		frame.setJMenuBar(serviceBar); 
 		frame.setVisible(true);
-		
-//		Client client = new Client();
-//		client.sendAction("All Complaints");
-//		client.sendCustomerId("1334");
-//		client.receiveResponse();
-		
-		
-//		//Create the Menu Bar
-//		menuBar = new JMenuBar();
-//		
-//		
-//		//Build Menu
-//		menu = new JMenu("Services");
-//		menu.setMnemonic(KeyEvent.VK_A);
-//		menu.getAccessibleContext().setAccessibleDescription(null);
-//		menu.setBounds(250,70,50,15);
-//	    menu.setFont(new Font("Ariel", Font.BOLD, 12));
-//	    menu.setOpaque(true);
-//	    menuBar.add(menu);
-//		//menuItem = new JMenuItem("")
-//		
-//		//menu items
-//		menuItem = new JMenuItem("Make a Complain", KeyEvent.VK_T);
-//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-//		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-//		menuItem.addActionListener(new ActionListener(){
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new LodgeComplaintWindow();
-//			}
-//			
-//		});
-//	
-//		menuItem.setBackground(Color.green);
-//	    menu.setForeground(Color.yellow);
-//		menu.add(menuItem);
-//		
-//		
-//		menuItem = new JMenuItem("Live Chat", KeyEvent.VK_T);
-//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
-//		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-//		menuItem.setBackground(Color.yellow);
-//	    menu.setForeground(Color.yellow);
-//		menu.add(menuItem);
-//		menuItem.addActionListener(new ActionListener(){
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				//new ChatWindow();
-//			}
-//			
-//		});
-//		
-//		menuItem = new JMenuItem("Video Call A Representative", KeyEvent.VK_T);
-//		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, ActionEvent.ALT_MASK));
-//		menuItem.getAccessibleContext().setAccessibleDescription("Complaint");
-//		menuItem.setBackground(Color.yellow);
-//	    menu.setForeground(Color.yellow);
-//		menu.add(menuItem);
-//		menuItem.addActionListener(new ActionListener(){
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				//new VideoCall();
-//			}
-//			
-//		});
-//		
-//		menu = new JMenu("Back");
-//		
-//		menu.setFont(new Font("Ariel", Font.BOLD, 12));
-//		menu.setMnemonic(KeyEvent.VK_A);
-//		menu.getAccessibleContext().setAccessibleDescription(null);
-//		menuBar.add(menu);
-//		menu.addActionListener(new ActionListener(){
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				new EmployeePortal();
-//			}
-//			
-//		});
-//		
-//		
-//		menu = new JMenu("Help");
-//		menu.setFont(new Font("Ariel", Font.BOLD, 12));
-//		menu.setMnemonic(KeyEvent.VK_A);
-//		menu.getAccessibleContext().setAccessibleDescription(null);
-//		menuBar.add(menu);
-//		menuItem.addActionListener(new ActionListener(){
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				//new LiveChat();
-//			}
-//			
-//		});
-//		
-//		menu = new JMenu("Log Out");
-//		menu.setFont(new Font("Ariel", Font.BOLD, 12));
-//		menu.setMnemonic(KeyEvent.VK_A);
-//		menu.getAccessibleContext().setAccessibleDescription(null);
-//		menuBar.add(menu);
-//		//menuItem = new JMenuItem("")
-//		
-//		class MenuListener{
-//		  MenuListener listener =  new MenuListener();
-//		}
-		
-		//frame.add(menuBar);
-		//frame.setJMenuBar(menuBar); 
-		}
+	}
 	public void callClient()
 	{
 		Client client = new Client();
@@ -336,9 +267,8 @@ public class ViewByCategory
 		client.receiveResponse();
 	}
 	public void table(Queue<Complaints> allComplaints) 
-	{	
-		System.out.println("Table");
-		Object[]columns = {"cNo", "Category", "Date", "Details", "CustomerId", "Status","ResponseDate", "Respondent"};
+	{
+		Object[]columns = {"cNo", "Category", "Date", "Details", "CustomerId", "Status"};
 		JTable table = new JTable();
 		DefaultTableModel mode = (DefaultTableModel) table.getModel();
 		table.setFont(new Font("Serif", Font.PLAIN, 14));
@@ -346,9 +276,8 @@ public class ViewByCategory
 	
 		for (Complaints complaint: allComplaints) 
 		{
-            Object[] row = {complaint.getcNo(),complaint.getCategory(),complaint.getDate(),complaint.getDetails(),complaint.getCustomerId(),complaint.getStatus(),complaint.getResponseDate(),complaint.getRespondent()};
+            Object[] row = {complaint.getcNo(),complaint.getCategory(),complaint.getDate(),complaint.getDetails(),complaint.getId(),complaint.getStatus()};
 			mode.addRow(row);
-			System.out.println(complaint.getcNo());
         }
 
 		table.setModel(mode);
@@ -362,7 +291,7 @@ public class ViewByCategory
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setForeground(Color.lightGray);
 		scroll.setBackground(Color.WHITE);
-		scroll.setBounds(40,80,630,350);
+		scroll.setBounds(20,80,910,350);
 
 		frame.add(scroll);
 		frame.setVisible(true);

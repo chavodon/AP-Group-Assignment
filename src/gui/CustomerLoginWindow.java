@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -47,14 +48,14 @@ public class CustomerLoginWindow extends JFrame {
 	     title.setBounds(200, 30, 480, 60); //x axis, y axis, length, width
 		 add(title);
 		 
-		usernameLbl = new JLabel("Username:");
+		usernameLbl = new JLabel("Customer ID:");
 		usernameLbl.setForeground(Color.black);
 		usernameLbl.setFont(new Font("Serif", Font.BOLD, 18));
 		usernameLbl.setBounds(90, 110, 480, 60); 
 		add(usernameLbl);
 		
 		usernameTxt = new JTextField();
-		usernameTxt.setBounds(190, 124, 270, 30);
+		usernameTxt.setBounds(200, 124, 270, 30);
 	    usernameTxt.setFont(new Font ("Serif", Font.PLAIN, 14));
 	    add(usernameTxt);
 		
@@ -65,7 +66,7 @@ public class CustomerLoginWindow extends JFrame {
 		add(passwordLbl);
 		
 		passwordTxt = new JPasswordField();
-		passwordTxt.setBounds(190, 184, 270, 30);
+		passwordTxt.setBounds(200, 184, 270, 30);
 	    passwordTxt.setFont(new Font ("Serif", Font.PLAIN, 14));
 	    add(passwordTxt);
 	    
@@ -79,10 +80,17 @@ public class CustomerLoginWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				Client client = new Client();
-				client.sendAction("CustomerLogin");
-				client.sendLoginDetails(usernameTxt.getText(),passwordTxt.getText());
-				client.receiveResponse();
+				if(usernameTxt.getText().equals("")||passwordTxt.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Login Details Missing!","Login Status", JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
+					Client client = new Client();
+					client.sendAction("CustomerLogin");
+					client.sendLoginDetails(usernameTxt.getText(),passwordTxt.getText());
+					client.receiveResponse();
+				}
 //				dispose();
 //				new CustomerDashboard();
 			}

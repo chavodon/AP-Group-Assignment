@@ -4,7 +4,7 @@ import user.User;
 
 public class Employee extends User
 {
-	private String staffID;
+	protected String staffID;
 	private String password;
 	private String fName;
 	private String lName;
@@ -21,8 +21,8 @@ public class Employee extends User
 		this.type = "";
 	}
 	
-	public Employee(String staffID, String password, String fName, String lName, String type, String id) {
-		super(id, password);
+	public Employee(String staffID, String password, String fName, String lName, String type) {
+		super(staffID, password);
 		this.staffID = staffID;
 		this.password = password;
 		this.fName = fName;
@@ -31,14 +31,14 @@ public class Employee extends User
 	}
 
 	//Primary Constructor
-	public Employee(String staffID, String password, String fName, String lName, String type) 
-	{
-		this.staffID = staffID;
-		this.password = password;
-		this.fName = fName;
-		this.lName = lName;
-		this.type = type;
-	}
+//	public Employee(String staffID, String password, String fName, String lName, String type) 
+//	{
+//		this.staffID = staffID;
+//		this.password = password;
+//		this.fName = fName;
+//		this.lName = lName;
+//		this.type = type;
+//	}
 	
 	//Accessors
 	public String getStaffID() {

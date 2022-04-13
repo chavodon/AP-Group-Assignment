@@ -11,10 +11,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import chat.ClientChat;
-import chat.ServerChat;
-import clientTCP.Client;
-
 public class CustomerDashboard extends JFrame
 {
 		//Declare global variables
@@ -86,7 +82,7 @@ public class CustomerDashboard extends JFrame
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				  new LodgeComplaintWindow();
+				  new LodgeComplaint();
 				  dispose();
 			}
 		});

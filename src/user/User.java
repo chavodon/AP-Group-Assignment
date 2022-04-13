@@ -2,15 +2,16 @@ package user;
 
 public class User 
 {
-	private String id;
-	private String password;
+	protected String id;
+	protected String password;
 	
-	public User()
+	public User() 
 	{
 		id = "";
 		password = "";
 	}
-	public User(String id, String password) {
+	public User(String id, String password) 
+	{
 		this.id = id;
 		this.password = password;
 	}
@@ -31,4 +32,3 @@ public class User
 		return "User [id=" + id + ", password=" + password + "]";
 	}
 }
-

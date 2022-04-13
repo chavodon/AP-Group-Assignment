@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import clientTCP.Client;
-
 public class WelcomeWindow extends JFrame
 { 
 	//Declare global variables
@@ -30,7 +28,7 @@ public WelcomeWindow()
 		setLocationRelativeTo(null); //center output on screen
 		
 		//--------------CREATE BUTTONS----------------------
-		adminBtn = new JButton("Admin Login");
+		adminBtn = new JButton("Employee Login");
 		customerBtn= new JButton("Customer Login");
 		//--------------BUTTON LAYOUT AND ALIGNMENT----------
 		 title = new JLabel();
@@ -50,7 +48,7 @@ public WelcomeWindow()
 		customerBtn.setBackground(Color.cyan);
 		customerBtn.setOpaque(true);
 		
-		adminBtn.setBounds(95,205,150,50);
+		adminBtn.setBounds(95,205,180,50);
 		customerBtn.setBounds(295,205,170,50); //x,y,length, width
 		
 		//-----------------ADD LISTENERS---------------------
